@@ -7,6 +7,15 @@ Contains deployment scripts, deployed addresses and versions for the Zora 1155 C
 - [Deployment scripts](./script/) for deployment Zora Protocol Contracts
 - [Deployed addresses](./addresses/) containing deployed addresses and contract versions by chain.
 
+## Prerequisites
+
+### Install dependencies
+
+```bash
+cd packages/1155-deployments
+pnpm i
+```
+
 ### Deploy
 
 #### 1. deploy implementations
