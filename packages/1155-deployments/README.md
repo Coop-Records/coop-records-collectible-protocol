@@ -14,6 +14,7 @@ Contains deployment scripts, deployed addresses and versions for the Zora 1155 C
 ```bash
 cd packages/1155-deployments
 pnpm i
+pnpm link-contracts
 ```
 
 ### Deploy
