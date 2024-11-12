@@ -11,6 +11,7 @@ import {DeployerBase} from "./DeployerBase.sol";
 contract DeploySwapHelperSimple is DeployerBase {
 
     function run() public {
+        address zoraStrategyAddress = 0x633B528311ED1DeEcD622863717D1a29b1B02BCB;
         // Read existing deployment config
         DeploymentConfig memory config = readDeployment();
 
@@ -22,7 +23,7 @@ contract DeploySwapHelperSimple is DeployerBase {
         // Get required addresses
         IWETH weth = IWETH(getWeth());
         ISwapRouter swapRouter = ISwapRouter(getUniswapSwapRouter());
-        IZoraTimedSaleStrategy zoraStrategy = IZoraTimedSaleStrategy(0x633B528311ED1DeEcD622863717D1a29b1B02BCB);
+        IZoraTimedSaleStrategy zoraStrategy = IZoraTimedSaleStrategy(zoraStrategyAddress);
 
         // Set Uniswap pool fee (1% = 10_000)
         uint24 uniswapPoolFee = 10_000;

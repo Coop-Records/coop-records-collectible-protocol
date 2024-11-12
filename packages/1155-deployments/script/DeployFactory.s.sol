@@ -11,7 +11,7 @@ contract DeployFactory is Script {
     function run() public {
         vm.startBroadcast();
 
-        address factoryImpl = 0xB805ccd51d559E573a20596603052af3aD7F3087;
+        address factoryImpl = 0x517B1CA64DdAB8126640A0C92e308acd909BD774;
 
         // Initialize data for proxy
         bytes memory initData = abi.encodeWithSelector(
