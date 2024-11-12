@@ -44,5 +44,3 @@ package/chainConfigs.ts
 
 **/vocs.config.ts.*
 .vercel
-
-pnpm-lock.yaml
