@@ -9,3 +9,4 @@ forge-std/=node_modules/forge-std/src/
 _imagine=node_modules/@zoralabs/zora-1155-contracts/_imagine
 solemate/=/node_modules/solemate/src/
 solady/=node_modules/solady/src/
+@1155-contracts/=../1155-contracts/

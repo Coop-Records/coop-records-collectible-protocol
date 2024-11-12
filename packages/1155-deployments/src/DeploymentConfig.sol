@@ -88,8 +88,7 @@ abstract contract DeploymentConfig is Script {
     }
 
     function getTimedSaleStrategyDeployment() internal view returns (address) {
-        string memory json = vm.readFile(string.concat("../erc20z/addresses/", Strings.toString(chainId()), ".json"));
-        return json.readAddress("SALE_STRATEGY");
+        return 0x633B528311ED1DeEcD622863717D1a29b1B02BCB;
     }
 
     function readAddressOrDefaultToZero(string memory json, string memory key) internal view returns (address addr) {
