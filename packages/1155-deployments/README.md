@@ -48,5 +48,11 @@ forge script script/DeployFactory.s.sol:DeployFactory --rpc-url https://sepolia.
 #### 6. deploy SecondarySwap
 
 ```bash
+cd ..
+cd erc20z
+pnpm i
+```
+
+```bash
 forge script script/DeploySwapHelperSimple.s.sol:DeploySwapHelperSimple --rpc-url https://sepolia.base.org --private-key PRIVATE_KEY --broadcast --verify --etherscan-api-key BASESCAN_API_KEY -vvvv
 ```
