@@ -11,15 +11,17 @@ contract DeployFactory is Script {
     function run() public {
         vm.startBroadcast();
 
+        address factoryImpl = 0xB805ccd51d559E573a20596603052af3aD7F3087;
+
         // Initialize data for proxy
         bytes memory initData = abi.encodeWithSelector(
             ZoraCreator1155FactoryImpl.initialize.selector,
-            0x749B7b7A6944d72266Be9500FC8C221B6A7554Ce  // initial owner address
+            0x58BE4B98fec63651287A2741665E7a200De43916  // initial owner address
         );
 
         // Deploy proxy
         Zora1155Factory proxy = new Zora1155Factory(
-            0x7Db1785CAB53907208398c7943272EBD13DC39ba,
+            factoryImpl,
             initData
         );
 
