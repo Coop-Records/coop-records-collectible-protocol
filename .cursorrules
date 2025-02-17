@@ -108,76 +108,79 @@ The goal is to help you maintain a big picture as well as the progress of the ta
 
 # Scratchpad
 
-## Current Task: Deploy Latest Collectibles Protocol on Base Sepolia
+## Current Task: Create deploy-protocol Script
 
 ### Task Description
 
-Deploy the latest version of the collectibles protocol on Base Sepolia testnet.
+Create a `deploy-protocol` script that will automate the deployment of the latest version of the collectibles protocol to any desired network.
 
 ### Analysis & Requirements
 
-1. Deployment Requirements:
+1. Script Requirements:
 
-   - Verify current contract versions
-   - Ensure compatibility with Base Sepolia
-   - Prepare deployment configuration
-   - Set up environment variables
+   - Execute all deployment steps from README
+   - Support multiple networks
+   - Handle environment setup
+   - Verify contracts automatically
+   - Update addresses files
 
-2. Verification Requirements:
-   - Contract verification setup (Etherscan API key present)
-   - Proper verification API endpoints
-   - Documentation of deployed addresses
+2. Steps to Automate:
+   - Load environment variables
+   - Deploy implementations
+   - Copy deployed contracts
+   - Deploy factory proxy
+   - Update addresses
+   - Verify all contracts
 
 ### Action Plan
 
-[X] Step 1: Deploy Implementations
+[X] Step 1: Create Base Script Structure
 
-- Successfully deployed ERC20Minter to: 0x9B85a2e2Eb612d62afBaE5c9875062D319080749
-- Successfully deployed ZoraCreator1155Impl to: 0xB214EBeF8aCAC15Ae9b220b0d9fFfe2ecb01f2B4
-- Successfully deployed ZoraCreator1155FactoryImpl to: 0xC160db965C264BfbADc7946e84c0AeF769057120
-- Note: Contract verification in progress
+Added `deploy-protocol` script to package.json that:
 
-[X] Step 2: Copy Deployed Contracts
+- Sources environment variables
+- Deploys implementation contracts
+- Copies deployed contract addresses
+- Deploys factory proxy
+- Updates addresses file
+- Verifies all contracts
 
-- Successfully ran copy-deployed-contracts script
-- Addresses updated in packages/1155-deployments/addresses/84532.json
-- Verified addresses match deployment output
+Required Environment Variables:
 
-[X] Step 3: Update Factory Implementation
+- RPC_URL: Network RPC endpoint
+- PRIVATE_KEY: Deployer wallet private key
+- ETHERSCAN_API_KEY: API key for contract verification
 
-Code Changes Made:
+[ ] Step 2: Implement Core Deployment Logic
 
-- Modified DeployFactory.s.sol to inherit from ZoraDeployerBase
-- Added automatic loading of factory implementation from deployment JSON
-- Added automatic loading of owner address from chain config
-- Added proper return of updated deployment JSON
+- Add implementation deployment commands
+- Add factory deployment commands
+- Add contract verification commands
+- Add address update commands
 
-[X] Step 4: Deploy Factory Proxy
+[ ] Step 3: Add Error Handling & Validation
 
-- Successfully deployed factory proxy to: 0x6bcfe4b122515fa0514c8ff3fe0df3ba3372f2e9
-- Contract verified on Base Sepolia
-- Initialization successful with proper ownership and implementation
+- Validate environment variables
+- Check for required dependencies
+- Add error recovery mechanisms
+- Add deployment validation checks
 
-[X] Step 5: Update Addresses File
+[ ] Step 4: Add Documentation
 
-Files Updated:
-
-- packages/1155-deployments/addresses/84532.json
-  - FACTORY_PROXY successfully updated to: 0x6bcFE4b122515Fa0514c8FF3fe0df3BA3372F2e9
-  - Timestamp updated to: 1739796590
-  - All other addresses preserved
-  - JSON format maintained
+- Add usage instructions
+- Document required environment variables
+- Add network-specific configuration notes
+- Update main README.md
 
 ### Progress
 
-Current Status: ✅ All deployment steps completed successfully!
+Current Status: Completed base script structure ✅
 
-Deployment Summary:
+Next steps:
 
-1. [x] Deploy implementation contracts
-2. [x] Run copy-deployed-contracts script
-3. [x] Update factory implementation address
-4. [x] Deploy factory proxy
-5. [x] Update addresses file with FACTORY_PROXY
+1. [x] Create base script structure
+2. [ ] Test the deploy-protocol script
+3. [ ] Add error handling
+4. [ ] Add documentation
 
-All tasks completed! The latest version of the collectibles protocol has been successfully deployed to Base Sepolia testnet with all contracts verified and addresses properly recorded.
+Would you like me to add documentation for the deploy-protocol script usage?
