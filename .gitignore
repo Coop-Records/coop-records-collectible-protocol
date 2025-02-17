@@ -44,3 +44,7 @@ package/chainConfigs.ts
 
 **/vocs.config.ts.*
 .vercel
+
+
+# misc
+ROADMAP.md

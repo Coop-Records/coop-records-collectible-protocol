@@ -107,68 +107,85 @@ The goal is to help you maintain a big picture as well as the progress of the ta
 
 # Scratchpad
 
-## Current Task: Migrate ZoraCreator1155FactoryImpl to New Repo
+## Current Task: Deploy Latest Collectibles Protocol on Base Sepolia
 
 ### Task Description
 
-Migrate the ZoraCreator1155FactoryImpl contract and its dependencies to a new, clean repository that will be compatible with zkSync.
+Deploy the latest version of the collectibles protocol on Base Sepolia testnet.
 
 ### Analysis & Requirements
 
-1. Contract Migration Requirements:
+1. Deployment Requirements:
 
-   - Identify all dependencies of ZoraCreator1155FactoryImpl
-   - Copy necessary files one by one
-   - Maintain proper import paths
-   - Ensure all required interfaces and base contracts are included
+   - Verify current contract versions
+   - Ensure compatibility with Base Sepolia
+   - Prepare deployment configuration
+   - Set up environment variables
 
-2. Setup Requirements:
-   - Clean foundry.toml configuration
-   - Proper dependency management
-   - Correct compiler version (0.8.17)
+2. Verification Requirements:
+   - Contract verification setup (Etherscan API key present)
+   - Proper verification API endpoints
+   - Documentation of deployed addresses
 
 ### Action Plan
 
-[X] Initial Setup
+[X] Pre-deployment Setup Review
 
-- Create new foundry.toml with basic configuration
-- Set up .gitignore and other repo basics
+- Found main deployment scripts in packages/1155-deployments/script/
+- Found deployment process in README.md with exact commands
+- Base Sepolia RPC: https://sepolia.base.org
 
-[X] Dependency Analysis
+[X] Environment Setup Review
 
-- List all imports from ZoraCreator1155FactoryImpl
-- Map out dependency tree
-- Identify required interfaces and base contracts
+- Found .env file with configuration
+- Private key present for deployment
+- Etherscan API key configured
 
-[ ] File Migration (in order)
+[ ] Deployment Process (from README.md)
 
-- Copy base contracts and utilities first
-- Copy interfaces
-- Copy implementation contracts
-- Migrate ZoraCreator1155FactoryImpl.sol last
+1.  Deploy implementations
+    - Run DeployMintersAndImplementations script
+    - Use Base Sepolia RPC
+2.  Copy deployed addresses
+    - Run copy-deployed-contracts.ts script
+3.  Update factory implementation address
+    - Modify DeployFactory.s.sol with new address
+4.  Deploy factory proxy
+    - Run DeployFactory script
+5.  Update addresses file
+    - Add FACTORY_PROXY address
 
-[ ] Configuration & Testing
+[ ] Post-deployment Tasks
 
-- Update import paths
-- Configure build settings
-- Verify compilation
+- Document deployed addresses
+- Verify contract functionality
+- Update deployment records
 
 ### Progress
 
-[X] Initial repository setup
-[X] Dependencies identified
+Current Status: Ready to start deployment sequence
 
-- Found first contracts to migrate:
-  1. IVersionedContract.sol (interface)
-  2. ContractVersionBase.sol (implementation)
-     [ ] Base contracts migrated
-     [ ] Interfaces migrated
-     [ ] Main contract migrated
-     [ ] Build verification
+Key Findings:
+
+1. Deployment Process:
+
+   - Clear step-by-step process in README.md
+   - No need to modify foundry.toml
+   - RPC URL passed directly to forge commands
+   - Verification handled by --verify flag
+
+2. Required Steps:
+   - Deploy implementations first
+   - Copy addresses to chain config
+   - Deploy factory with new implementation
+   - Document FACTORY_PROXY address
 
 Next steps:
-[X] Create new repository
-[X] Set up basic foundry configuration
-[X] Begin identifying and listing dependencies
-[ ] Copy IVersionedContract.sol
-[ ] Copy ContractVersionBase.sol
+
+1. [ ] Run DeployMintersAndImplementations script
+2. [ ] Run copy-deployed-contracts script
+3. [ ] Update factory implementation address
+4. [ ] Deploy factory proxy
+5. [ ] Update addresses file with FACTORY_PROXY
+
+Would you like me to proceed with the first deployment step (DeployMintersAndImplementations)?
