@@ -6,27 +6,33 @@ import "forge-std/console2.sol";
 
 import {Zora1155Factory} from "@1155-contracts/src/proxies/Zora1155Factory.sol";
 import {ZoraCreator1155FactoryImpl} from "@1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {ZoraDeployerBase} from "../src/ZoraDeployerBase.sol";
+import {Deployment, ChainConfig} from "../src/DeploymentConfig.sol";
 
-contract DeployFactory is Script {
-    function run() public {
+contract DeployFactory is ZoraDeployerBase {
+    function run() public returns (string memory) {
+        Deployment memory deployment = getDeployment();
+        ChainConfig memory chainConfig = getChainConfig();
+
         vm.startBroadcast();
-
-        address factoryImpl = 0x517B1CA64DdAB8126640A0C92e308acd909BD774;
 
         // Initialize data for proxy
         bytes memory initData = abi.encodeWithSelector(
             ZoraCreator1155FactoryImpl.initialize.selector,
-            0x58BE4B98fec63651287A2741665E7a200De43916  // initial owner address
+            chainConfig.factoryOwner  // initial owner address from chain config
         );
 
         // Deploy proxy
         Zora1155Factory proxy = new Zora1155Factory(
-            factoryImpl,
+            deployment.factoryImpl, // factory implementation from deployment JSON
             initData
         );
 
+        deployment.factoryProxy = address(proxy);
         console2.log("Factory proxy deployed to:", address(proxy));
 
         vm.stopBroadcast();
+
+        return getDeploymentJSON(deployment);
     }
 } 
