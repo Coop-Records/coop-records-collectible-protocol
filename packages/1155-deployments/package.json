@@ -14,7 +14,8 @@
     "unlink-1155": "rm -rf ./node_modules/@zoralabs/zora-1155-contracts && cp -r ../1155-contracts ./node_modules/@zoralabs/zora-1155-contracts",
     "unlink-contracts": "pnpm unlink-common && pnpm run unlink-protocol-rewards && pnpm run unlink-1155",
     "link-contracts": "rm -rf ./node_modules && cd .. && pnpm install",
-    "generate": "pnpm tsx script/generateForkTests.ts"
+    "generate": "pnpm tsx script/generateForkTests.ts",
+    "deploy-protocol": "source .env && forge script script/DeployMintersAndImplementations.s.sol:DeployMintersAndImplementations --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts && forge script script/DeployFactory.s.sol:DeployFactory --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts"
   },
   "devDependencies": {
     "@lavamoat/preinstall-always-fail": "2.0.0",

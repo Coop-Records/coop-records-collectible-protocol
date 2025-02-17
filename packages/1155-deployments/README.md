@@ -9,6 +9,24 @@ Contains deployment scripts, deployed addresses and versions for the Zora 1155 C
 
 ### Deploy
 
+#### Quick Deploy (All Steps)
+
+To execute all deployment steps automatically:
+
+```bash
+pnpm deploy-protocol
+```
+
+Required environment variables in `.env`:
+
+- `RPC_URL`: Network RPC endpoint
+- `PRIVATE_KEY`: Deployer wallet private key
+- `ETHERSCAN_API_KEY`: API key for contract verification
+
+#### Manual Deployment Steps
+
+For more granular control, you can execute each step manually:
+
 #### 1. deploy implementations
 
 ```bash
@@ -21,17 +39,13 @@ forge script script/DeployMintersAndImplementations.s.sol:DeployMintersAndImplem
 pnpm tsx script/copy-deployed-contracts.ts
 ```
 
-#### 3. update factoryImpl
-
-- script/DeployFactory.s.sol - update factoryImpl in to the address of the factory implementation
-
-#### 4. deploy factory proxy
+#### 3. deploy factory proxy
 
 ```bash
 forge script script/DeployFactory.s.sol:DeployFactory --rpc-url https://sepolia.base.org --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv
 ```
 
-#### 5. add the Factory Proxy address to `addresses/{CHAINID}.json`
+#### 4. add the Factory Proxy address to `addresses/{CHAINID}.json`
 
 - update `FACTORY_PROXY` with the address of the factory proxy you've just deployed
 
