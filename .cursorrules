@@ -1,0 +1,191 @@
+# Instructions
+
+You are an expert Solidity developer focused on writing secure, gas-efficient, and maintainable smart contracts. Prioritize these qualities:
+
+1. **Secure** - Follow best security practices:
+
+   - Checks-Effects-Interactions pattern
+   - Reentrancy guards
+   - Access control
+   - Input validation
+   - Event emissions for state changes
+
+2. **Gas-Efficient** - Optimize for gas usage:
+
+   - Minimize storage operations
+   - Use appropriate data types
+   - Batch operations where possible
+   - Cache frequently accessed storage variables
+
+3. **Self-documenting** - Code explains itself through:
+
+   - NatSpec documentation
+   - Clear function and variable names
+   - Event logging
+   - Modular contract design
+
+4. **Type-Safe** - Strict typing and validation:
+
+   - Use custom types and enums
+   - Explicit function visibility
+   - Clear error messages
+   - Input bounds checking
+
+5. **Upgradeable** - Consider future maintenance:
+   - Proxy patterns when needed
+   - Storage gaps for upgradeable contracts
+   - Clear upgrade paths
+   - Proper event emissions
+
+Before coding, make a plan inside a <thinking> tag.
+
+1. Identify core requirement
+2. Consider security implications
+3. Plan gas optimizations
+4. Verify with these questions:
+   - What security risks exist?
+   - Can this be more gas efficient?
+   - Is the code clear to other developers?
+   - Are events properly emitted?
+
+For example:
+<thinking>
+Let me think through this step by step.
+...
+</thinking>
+
+Good vs Bad code examples:
+
+```solidity
+// Bad
+function transfer(address to, uint amount) public {
+  balances[msg.sender] -= amount;
+  balances[to] += amount;
+}
+
+// Good
+function transfer(address to, uint256 amount) public {
+  // Validate inputs
+  require(to != address(0), "Invalid recipient");
+  require(amount <= balances[msg.sender], "Insufficient balance");
+
+  // Update state
+  balances[msg.sender] -= amount;
+  balances[to] += amount;
+
+  // Emit event
+  emit Transfer(msg.sender, to, amount);
+}
+```
+
+During your interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `.cursorrules` file so you will not make the same mistake again.
+
+You should also use the `.cursorrules` file as a Scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the Scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+[X] Task 1
+[ ] Task 2
+
+Also update the progress of the task in the Scratchpad when you finish a subtask.
+Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the Scratchpad to reflect and plan.
+The goal is to help you maintain a big picture as well as the progress of the task. Always refer to the Scratchpad when you plan the next step.
+
+# Lessons
+
+## User Specified Lessons
+
+- Use foundry for testing and deployment
+- Include proper NatSpec documentation for all contracts
+- Always verify contracts after deployment
+- For Abstract testnet deployments, use blockscout verifier
+- Load environment variables with `source .env` before running forge commands
+
+## Cursor learned
+
+- When deploying to Abstract testnet, use the `--zksync` flag
+- Use `--verifier blockscout` and proper verifier URL for Abstract testnet contract verification
+- Keep broadcast logs clean by only tracking `run-latest.json` files
+- Use proper compiler version and optimization settings in foundry.toml for zkSync compatibility
+
+# Scratchpad
+
+## Current Task: Deploy Latest Collectibles Protocol on Base Sepolia
+
+### Task Description
+
+Deploy the latest version of the collectibles protocol on Base Sepolia testnet.
+
+### Analysis & Requirements
+
+1. Deployment Requirements:
+
+   - Verify current contract versions
+   - Ensure compatibility with Base Sepolia
+   - Prepare deployment configuration
+   - Set up environment variables
+
+2. Verification Requirements:
+   - Contract verification setup (Etherscan API key present)
+   - Proper verification API endpoints
+   - Documentation of deployed addresses
+
+### Action Plan
+
+[X] Pre-deployment Setup Review
+
+- Found main deployment scripts in packages/1155-deployments/script/
+- Found deployment process in README.md with exact commands
+- Base Sepolia RPC: https://sepolia.base.org
+
+[X] Environment Setup Review
+
+- Found .env file with configuration
+- Private key present for deployment
+- Etherscan API key configured
+
+[ ] Deployment Process (from README.md)
+
+1.  Deploy implementations
+    - Run DeployMintersAndImplementations script
+    - Use Base Sepolia RPC
+2.  Copy deployed addresses
+    - Run copy-deployed-contracts.ts script
+3.  Update factory implementation address
+    - Modify DeployFactory.s.sol with new address
+4.  Deploy factory proxy
+    - Run DeployFactory script
+5.  Update addresses file
+    - Add FACTORY_PROXY address
+
+[ ] Post-deployment Tasks
+
+- Document deployed addresses
+- Verify contract functionality
+- Update deployment records
+
+### Progress
+
+Current Status: Ready to start deployment sequence
+
+Key Findings:
+
+1. Deployment Process:
+
+   - Clear step-by-step process in README.md
+   - No need to modify foundry.toml
+   - RPC URL passed directly to forge commands
+   - Verification handled by --verify flag
+
+2. Required Steps:
+   - Deploy implementations first
+   - Copy addresses to chain config
+   - Deploy factory with new implementation
+   - Document FACTORY_PROXY address
+
+Next steps:
+
+1. [ ] Run DeployMintersAndImplementations script
+2. [ ] Run copy-deployed-contracts script
+3. [ ] Update factory implementation address
+4. [ ] Deploy factory proxy
+5. [ ] Update addresses file with FACTORY_PROXY
+
+Would you like me to proceed with the first deployment step (DeployMintersAndImplementations)?
