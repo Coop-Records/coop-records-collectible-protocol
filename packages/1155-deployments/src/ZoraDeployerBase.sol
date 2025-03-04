@@ -12,7 +12,7 @@ import {ScriptDeploymentConfig, Deployment, ChainConfig} from "./DeploymentConfi
 import {ZoraDeployerUtils} from "./ZoraDeployerUtils.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";
 import {DeterministicDeployerScript} from "./DeterministicDeployerScript.sol";
-import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {DeploymentTestingUtils} from "./DeploymentTestingUtils.sol";
 
 /// @notice Deployment drops for base where
@@ -73,7 +73,7 @@ abstract contract ZoraDeployerBase is DeploymentTestingUtils, ScriptDeploymentCo
         ensureCanOwn(chainConfig.factoryOwner);
 
         deployment.factoryImpl = address(
-            new ZoraCreator1155FactoryImpl({
+            new CoopCreator1155FactoryImpl({
                 _zora1155Impl: CoopCreator1155Impl(payable(deployment.contract1155Impl)),
                 _merkleMinter: IMinter1155(deployment.merkleMintSaleStrategy),
                 _redeemMinterFactory: IMinter1155(deployment.redeemMinterFactory),
@@ -110,8 +110,8 @@ abstract contract ZoraDeployerBase is DeploymentTestingUtils, ScriptDeploymentCo
         require(factoryProxyAddress == determinticFactoryProxyAddress(), "address not expected deterministic address");
 
         require(
-            keccak256(abi.encodePacked(ZoraCreator1155FactoryImpl(factoryProxyAddress).contractName())) ==
-                keccak256(abi.encodePacked("ZORA 1155 Contract Factory"))
+            keccak256(abi.encodePacked(CoopCreator1155FactoryImpl(factoryProxyAddress).contractName())) ==
+                keccak256(abi.encodePacked("COOP 1155 Contract Factory"))
         );
 
         deployment.factoryProxy = factoryProxyAddress;

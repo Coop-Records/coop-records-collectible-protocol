@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {Zora1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155Factory.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
-import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";
 import {Deployment, ChainConfig} from "./DeploymentConfig.sol";
 import {ProxyShim} from "@zoralabs/zora-1155-contracts/src/utils/ProxyShim.sol";
@@ -54,7 +54,7 @@ library ZoraDeployerUtils {
 
         contract1155ImplAddress = address(zoraCreator1155Impl);
         factoryImplAddress = address(
-            new ZoraCreator1155FactoryImpl({
+            new CoopCreator1155FactoryImpl({
                 _zora1155Impl: zoraCreator1155Impl,
                 _merkleMinter: merkleMinter,
                 _redeemMinterFactory: redeemMinterFactory,

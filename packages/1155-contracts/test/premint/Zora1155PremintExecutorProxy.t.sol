@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import "forge-std/Test.sol";
 import {Zora1155FactoryFixtures} from "../fixtures/Zora1155FactoryFixtures.sol";
 import {Zora1155PremintFixtures} from "../fixtures/Zora1155PremintFixtures.sol";
-import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "../../src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
@@ -27,7 +27,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
     address internal collector;
     address internal zora;
     Zora1155Factory internal factoryProxy;
-    ZoraCreator1155FactoryImpl factoryAtProxy;
+    CoopCreator1155FactoryImpl factoryAtProxy;
     ZoraCreator1155PremintExecutorImpl preminterAtProxy;
 
     MintArguments defaultMintArguments;
@@ -40,11 +40,11 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
 
         vm.startPrank(zora);
         (, , , factoryProxy, ) = Zora1155FactoryFixtures.setup1155AndFactoryProxy(zora, zora);
-        factoryAtProxy = ZoraCreator1155FactoryImpl(address(factoryProxy));
+        factoryAtProxy = CoopCreator1155FactoryImpl(address(factoryProxy));
         vm.stopPrank();
 
         // create preminter implementation
-        ZoraCreator1155PremintExecutorImpl preminterImplementation = new ZoraCreator1155PremintExecutorImpl(ZoraCreator1155FactoryImpl(address(factoryProxy)));
+        ZoraCreator1155PremintExecutorImpl preminterImplementation = new ZoraCreator1155PremintExecutorImpl(CoopCreator1155FactoryImpl(address(factoryProxy)));
 
         // build the proxy
         Zora1155PremintExecutor proxy = new Zora1155PremintExecutor(address(preminterImplementation), "");
@@ -58,7 +58,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
 
     function test_canInvokeImplementationMethods() external {
         // create premint config
-        IMinter1155 fixedPriceMinter = ZoraCreator1155FactoryImpl(address(factoryProxy)).fixedPriceMinter();
+        IMinter1155 fixedPriceMinter = CoopCreator1155FactoryImpl(address(factoryProxy)).fixedPriceMinter();
 
         PremintConfigV2 memory premintConfig = PremintConfigV2({
             tokenConfig: Zora1155PremintFixtures.makeDefaultTokenCreationConfigV2(fixedPriceMinter, creator),
@@ -110,7 +110,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
         preminterAtProxy.upgradeTo(address(this));
 
         // upgrade to good contract which has correct name - it shouldn't revert
-        ZoraCreator1155PremintExecutorImpl newImplementation = new ZoraCreator1155PremintExecutorImpl(ZoraCreator1155FactoryImpl(address(factoryProxy)));
+        ZoraCreator1155PremintExecutorImpl newImplementation = new ZoraCreator1155PremintExecutorImpl(CoopCreator1155FactoryImpl(address(factoryProxy)));
 
         vm.prank(owner);
         preminterAtProxy.upgradeTo(address(newImplementation));
@@ -125,7 +125,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
     //     address upgradeGate = 0xbC50029836A59A4E5e1Bb8988272F46ebA0F9900;
     //     // get premint and factory proxies from forked deployments
     //     ZoraCreator1155PremintExecutorImpl forkedPreminterProxy = ZoraCreator1155PremintExecutorImpl(preminterProxy);
-    //     ZoraCreator1155FactoryImpl forkedFactoryAtProxy = ZoraCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory()));
+    //     CoopCreator1155FactoryImpl forkedFactoryAtProxy = CoopCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory()));
     //     IMinter1155 fixedPriceMinter = forkedFactoryAtProxy.fixedPriceMinter();
 
     //     // build and sign v1 premint config
@@ -156,7 +156,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
 
     //     // 2. upgrade premint executor and factory to current version
     //     // create new factory proxy implementation
-    //     (, , ZoraCreator1155FactoryImpl newFactoryVersion) = Zora1155FactoryFixtures.setupNew1155AndFactory(zora, IUpgradeGate(upgradeGate), fixedPriceMinter);
+    //     (, , CoopCreator1155FactoryImpl newFactoryVersion) = Zora1155FactoryFixtures.setupNew1155AndFactory(zora, IUpgradeGate(upgradeGate), fixedPriceMinter);
 
     //     // upgrade factory proxy
     //     address upgradeOwner = forkedPreminterProxy.owner();
@@ -202,7 +202,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
         address upgradeGate = 0xbC50029836A59A4E5e1Bb8988272F46ebA0F9900;
         // get premint and factory proxies from forked deployments
         ZoraCreator1155PremintExecutorImpl forkedPreminterProxy = ZoraCreator1155PremintExecutorImpl(preminterProxy);
-        ZoraCreator1155FactoryImpl forkedFactoryAtProxy = ZoraCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory()));
+        CoopCreator1155FactoryImpl forkedFactoryAtProxy = CoopCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory()));
         IMinter1155 fixedPriceMinter = forkedFactoryAtProxy.fixedPriceMinter();
 
         // build and sign v1 premint config
@@ -233,7 +233,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
 
         // 2. upgrade premint executor and factory to current version
         // create new factory proxy implementation
-        (, , ZoraCreator1155FactoryImpl newFactoryVersion) = Zora1155FactoryFixtures.setupNew1155AndFactory(zora, IUpgradeGate(upgradeGate), fixedPriceMinter);
+        (, , CoopCreator1155FactoryImpl newFactoryVersion) = Zora1155FactoryFixtures.setupNew1155AndFactory(zora, IUpgradeGate(upgradeGate), fixedPriceMinter);
 
         // upgrade factory proxy
         address upgradeOwner = forkedPreminterProxy.owner();
@@ -275,7 +275,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
 
         assertEq(deterministicAddress.code.length, 0);
 
-        IMinter1155 fixedPriceMinter = ZoraCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory())).fixedPriceMinter();
+        IMinter1155 fixedPriceMinter = CoopCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory())).fixedPriceMinter();
         PremintConfigV2 memory premintConfig = PremintConfigV2({
             tokenConfig: Zora1155PremintFixtures.makeTokenCreationConfigV2WithCreateReferral(fixedPriceMinter, address(0), makeAddr("creator")),
             uid: 100,
@@ -297,12 +297,12 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
 
         // 2. upgrade to current version of preminter
         // first upgrade 1155 factory to current version
-        (, , ZoraCreator1155FactoryImpl newFactoryVersion) = Zora1155FactoryFixtures.setupNew1155AndFactory(
+        (, , CoopCreator1155FactoryImpl newFactoryVersion) = Zora1155FactoryFixtures.setupNew1155AndFactory(
             zora,
             IUpgradeGate(address(0x1234)),
             fixedPriceMinter
         );
-        ZoraCreator1155FactoryImpl factory = ZoraCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory()));
+        CoopCreator1155FactoryImpl factory = CoopCreator1155FactoryImpl(address(forkedPreminterProxy.zora1155Factory()));
         vm.prank(factory.owner());
         factory.upgradeTo(address(newFactoryVersion));
         // now contract has been created; upgrade to latest version of premint executor

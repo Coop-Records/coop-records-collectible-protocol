@@ -108,95 +108,16 @@ The goal is to help you maintain a big picture as well as the progress of the ta
 - When using Forge with complex project structures, ensure all required directories are in the `allow_paths` section of foundry.toml
 - When working with projects that use multiple import paths for the same contracts, standardize the imports to avoid verification issues
 - When renaming contracts, make sure to update all references including those in node_modules or create symbolic links
+- When updating protocol fee structures, ensure all percentage calculations are accurate and maintain the total fee amount
 
 # Scratchpad
 
-## Current Task: Update Protocol Fee Structure
+## Current Task: Ready for new task
 
-### Task Description
+The scratchpad has been cleared and is ready for a new task. When a new task is assigned, I will:
 
-Update the protocol fee structure to align with the Coop strategy as specified in the roadmap:
-
-- Total fee: 0.0004 ETH
-- Distribution:
-  - 75% to the creatorReward (0.0003 ETH)
-  - 12.5% to the mintReferalReward (0.00005 ETH)
-  - 12.5% to Zora (0.00005 ETH)
-  - 0% to createReferralReward (0 ETH)
-
-### Analysis & Requirements
-
-1. Identify where the fee structure is defined in the codebase
-2. Understand the current fee distribution mechanism
-3. Update the fee amounts and distribution percentages
-4. Ensure all calculations are accurate and maintain the total fee amount
-5. Update any related documentation or comments
-
-### Action Plan
-
-[X] Step 1: Locate the fee structure in the codebase
-[X] Identify the contract(s) that define the protocol fees
-[X] Understand how fees are calculated and distributed
-
-[X] Step 2: Analyze the current implementation
-[X] Determine if fees are hardcoded or configurable
-[X] Identify all places where fee calculations occur
-[X] Understand the reward distribution mechanism
-
-[ ] Step 3: Implement the changes
-[ ] Update the fee amounts to match the new structure
-[ ] Modify the distribution percentages
-[ ] Ensure the total fee remains at 0.0004 ETH
-[ ] Update any related constants or variables
-
-[ ] Step 4: Test the changes
-[ ] Write or update tests to verify the new fee structure
-[ ] Ensure all fee calculations are correct
-[ ] Verify that rewards are distributed according to the new percentages
-
-[ ] Step 5: Documentation
-[ ] Update NatSpec comments to reflect the new fee structure
-[ ] Document any changes to the fee mechanism
-[ ] Update the ROADMAP.md to mark this task as completed
-
-### Research Findings
-
-1. **Current Fee Structure:**
-
-   - The mint fee is defined in `CoopCreator1155Impl.sol` as `MINT_FEE = 0.000111 ether`
-   - The reward distribution is handled by the `RewardSplitsLib` in `packages/protocol-rewards/src/abstract/RewardSplits.sol`
-   - Current distribution percentages:
-     - For free mints:
-       - Creator: 42.8571% (CREATOR_REWARD_PCT)
-       - Create Referral: 14.2285% (CREATE_REFERRAL_FREE_MINT_REWARD_PCT)
-       - Mint Referral: 14.2285% (MINT_REFERRAL_FREE_MINT_REWARD_PCT)
-       - First Minter: 14.2285% (FIRST_MINTER_REWARD_PCT)
-       - Zora: 14.2285% (ZORA_FREE_MINT_REWARD_PCT)
-     - For paid mints:
-       - Creator: 0% (no creator reward for paid mints)
-       - Create Referral: 28.5714% (CREATE_REFERRAL_PAID_MINT_REWARD_PCT)
-       - Mint Referral: 28.5714% (MINT_REFERRAL_PAID_MINT_REWARD_PCT)
-       - First Minter: 14.2285% (FIRST_MINTER_REWARD_PCT)
-       - Zora: 28.5714% (ZORA_PAID_MINT_REWARD_PCT)
-
-2. **Required Changes:**
-
-   - Update `MINT_FEE` in `CoopCreator1155Impl.sol` from 0.000111 ETH to 0.0004 ETH
-   - Modify percentage constants in `RewardSplitsLib`:
-     - CREATOR_REWARD_PCT: 75% (from 42.8571%)
-     - MINT_REFERRAL_FREE_MINT_REWARD_PCT: 12.5% (from 14.2285%)
-     - ZORA_FREE_MINT_REWARD_PCT: 12.5% (from 14.2285%)
-     - CREATE_REFERRAL_FREE_MINT_REWARD_PCT: 0% (from 14.2285%)
-     - For paid mints, adjust percentages accordingly
-
-3. **Implementation Considerations:**
-   - The fee distribution is calculated using percentages of the total reward
-   - The `RewardSplitsLib` is used by both ERC-721 and ERC-1155 contracts
-   - The `getRewards` function calculates the actual reward amounts based on the percentages
-   - The `zoraReward` is calculated as the remainder after all other rewards are subtracted from the total
-
-### Next Steps
-
-1. Implement the changes to the fee structure in the identified files
-2. Update the tests to verify the new fee distribution works correctly
-3. Document the changes in the codebase and update the ROADMAP.md
+1. Document the task requirements and objectives
+2. Break down the task into manageable steps
+3. Track progress using checkboxes
+4. Document any important findings or considerations
+5. Update the progress as steps are completed

@@ -15,7 +15,7 @@ import {ZoraCreator1155PremintExecutorImplLib} from "../../src/delegation/ZoraCr
 import {ZoraCreator1155Attribution} from "../../src/delegation/ZoraCreator1155Attribution.sol";
 import {TokenCreationConfigV3, PremintConfigV3, MintArguments, ContractWithAdditionalAdminsCreationConfig} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncoding.sol";
-import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
@@ -41,7 +41,7 @@ contract PremintERC20Test is Test {
     address internal factoryImpl;
     address internal premintImpl;
 
-    ZoraCreator1155FactoryImpl internal factory;
+    CoopCreator1155FactoryImpl internal factory;
     ZoraCreator1155PremintExecutorImpl internal premint;
 
     function setUp() public {
@@ -58,9 +58,9 @@ contract PremintERC20Test is Test {
 
         zora1155Impl = address(new CoopCreator1155Impl(zora, address(new UpgradeGate()), address(protocolRewards), makeAddr("timedSaleStrategy")));
         factoryImpl = address(
-            new ZoraCreator1155FactoryImpl(IZoraCreator1155(zora1155Impl), IMinter1155(address(0)), IMinter1155(address(0)), IMinter1155(address(0)))
+            new CoopCreator1155FactoryImpl(IZoraCreator1155(zora1155Impl), IMinter1155(address(0)), IMinter1155(address(0)), IMinter1155(address(0)))
         );
-        factory = ZoraCreator1155FactoryImpl(address(new Zora1155Factory(factoryImpl, abi.encodeWithSignature("initialize(address)", zora))));
+        factory = CoopCreator1155FactoryImpl(address(new Zora1155Factory(factoryImpl, abi.encodeWithSignature("initialize(address)", zora))));
         premintImpl = address(new ZoraCreator1155PremintExecutorImpl(factory));
         premint = ZoraCreator1155PremintExecutorImpl(address(new Zora1155PremintExecutor(premintImpl, abi.encodeWithSignature("initialize(address)", zora))));
 

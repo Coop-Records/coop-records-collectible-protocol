@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "forge-std/console2.sol";
 
 import {Zora1155Factory} from "@1155-contracts/src/proxies/Zora1155Factory.sol";
-import {ZoraCreator1155FactoryImpl} from "@1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {ZoraDeployerBase} from "../src/ZoraDeployerBase.sol";
 import {Deployment, ChainConfig} from "../src/DeploymentConfig.sol";
 
@@ -18,7 +18,7 @@ contract DeployFactory is ZoraDeployerBase {
 
         // Initialize data for proxy
         bytes memory initData = abi.encodeWithSelector(
-            ZoraCreator1155FactoryImpl.initialize.selector,
+            CoopCreator1155FactoryImpl.initialize.selector,
             chainConfig.factoryOwner  // initial owner address from chain config
         );
 

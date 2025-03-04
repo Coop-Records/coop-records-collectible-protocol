@@ -19,7 +19,7 @@ import {ContractCreationConfig, ContractWithAdditionalAdminsCreationConfig, Prem
 import {IZoraCreator1155PremintExecutor} from "../interfaces/IZoraCreator1155PremintExecutor.sol";
 import {IZoraCreator1155DelegatedCreationLegacy, IHasSupportedPremintSignatureVersions} from "../interfaces/IZoraCreator1155DelegatedCreation.sol";
 import {IZoraCreator1155PremintExecutorAllVersions} from "@zoralabs/shared-contracts/interfaces/IZoraCreator1155PremintExecutorAllVersions.sol";
-import {ZoraCreator1155FactoryImpl} from "../factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../factory/CoopCreator1155FactoryImpl.sol";
 import {IRewardsErrors} from "@zoralabs/protocol-rewards/src/interfaces/IRewardsErrors.sol";
 import {IERC1155} from "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import {IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
@@ -306,7 +306,7 @@ contract ZoraCreator1155PremintExecutorImpl is
 
     function mintFee(address collectionAddress) external view returns (uint256) {
         if (collectionAddress.code.length == 0) {
-            return ZoraCreator1155FactoryImpl(address(zora1155Factory)).zora1155Impl().mintFee();
+            return CoopCreator1155FactoryImpl(address(zora1155Factory)).zora1155Impl().mintFee();
         }
 
         return IZoraCreator1155(collectionAddress).mintFee();

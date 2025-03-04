@@ -14,7 +14,7 @@ import {IMinterErrors} from "../../src/interfaces/IMinterErrors.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
-import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "../../src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
 import {IZoraCreator1155PremintExecutor} from "../../src/interfaces/IZoraCreator1155PremintExecutor.sol";
 import {ZoraCreator1155Attribution, PremintEncoding} from "../../src/delegation/ZoraCreator1155Attribution.sol";
@@ -52,7 +52,7 @@ contract ZoraCreator1155PreminterTest is Test {
 
     ZoraCreator1155PremintExecutorImpl internal preminter;
     Zora1155Factory factoryProxy;
-    ZoraCreator1155FactoryImpl factory;
+    CoopCreator1155FactoryImpl factory;
 
     ICreatorRoyaltiesControl.RoyaltyConfiguration internal defaultRoyaltyConfig;
     uint256 internal mintFeeAmount = 0.000111 ether;
@@ -79,7 +79,7 @@ contract ZoraCreator1155PreminterTest is Test {
         (rewards, , , factoryProxy, ) = Zora1155FactoryFixtures.setup1155AndFactoryProxy(zora, zora);
         vm.stopPrank();
 
-        factory = ZoraCreator1155FactoryImpl(address(factoryProxy));
+        factory = CoopCreator1155FactoryImpl(address(factoryProxy));
 
         preminter = new ZoraCreator1155PremintExecutorImpl(factory);
 

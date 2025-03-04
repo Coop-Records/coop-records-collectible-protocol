@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";
 import {IZoraCreator1155PremintExecutor} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155PremintExecutor.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "@zoralabs/zora-1155-contracts/src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
-import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {ZoraCreator1155Attribution} from "@zoralabs/zora-1155-contracts/src/delegation/ZoraCreator1155Attribution.sol";
 import {ContractCreationConfig, PremintConfigV2, TokenCreationConfigV2, PremintConfig, TokenCreationConfig, MintArguments, PremintResult} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncoding.sol";
@@ -39,7 +39,7 @@ contract DeploymentTestingUtils is Script {
                 royaltyMintSchedule: 0,
                 royaltyBPS: 100,
                 royaltyRecipient: payoutRecipient,
-                fixedPriceMinter: address(ZoraCreator1155FactoryImpl(address(preminterAtProxy.zora1155Factory())).fixedPriceMinter())
+                fixedPriceMinter: address(CoopCreator1155FactoryImpl(address(preminterAtProxy.zora1155Factory())).fixedPriceMinter())
             }),
             uid: 101,
             version: 0,
@@ -105,7 +105,7 @@ contract DeploymentTestingUtils is Script {
                 mintDuration: 0,
                 royaltyBPS: 100,
                 payoutRecipient: payoutRecipient,
-                fixedPriceMinter: address(ZoraCreator1155FactoryImpl(address(preminterAtProxy.zora1155Factory())).fixedPriceMinter()),
+                fixedPriceMinter: address(CoopCreator1155FactoryImpl(address(preminterAtProxy.zora1155Factory())).fixedPriceMinter()),
                 createReferral: creator
             }),
             uid: uid,

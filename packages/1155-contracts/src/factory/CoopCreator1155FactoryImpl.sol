@@ -16,9 +16,9 @@ import {CREATE3} from "solmate/src/utils/CREATE3.sol";
 
 import {ContractVersionBase} from "../version/ContractVersionBase.sol";
 
-/// @title ZoraCreator1155FactoryImpl
-/// @notice Factory contract for creating new ZoraCreator1155 contracts
-contract ZoraCreator1155FactoryImpl is IZoraCreator1155Factory, Ownable2StepUpgradeable, ContractVersionBase, UUPSUpgradeable, IContractMetadata {
+/// @title CoopCreator1155FactoryImpl
+/// @notice Factory contract for creating new CoopCreator1155 contracts
+contract CoopCreator1155FactoryImpl is IZoraCreator1155Factory, Ownable2StepUpgradeable, ContractVersionBase, UUPSUpgradeable, IContractMetadata {
     IZoraCreator1155 public immutable zora1155Impl;
     IMinter1155 public immutable merkleMinter;
     IMinter1155 public immutable fixedPriceMinter;
@@ -59,7 +59,7 @@ contract ZoraCreator1155FactoryImpl is IZoraCreator1155Factory, Ownable2StepUpgr
         emit FactorySetup();
     }
 
-    /// @notice Creates a new ZoraCreator1155 contract
+    /// @notice Creates a new CoopCreator1155 contract
     /// @param newContractURI The URI for the contract metadata
     /// @param name The name of the contract
     /// @param defaultRoyaltyConfiguration The default royalty configuration for the contract
