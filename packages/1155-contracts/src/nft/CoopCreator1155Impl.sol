@@ -30,7 +30,7 @@ import {LegacyNamingControl} from "../legacy-naming/LegacyNamingControl.sol";
 import {PublicMulticall} from "../utils/PublicMulticall.sol";
 import {SharedBaseConstants} from "../shared/SharedBaseConstants.sol";
 import {TransferHelperUtils} from "../utils/TransferHelperUtils.sol";
-import {ZoraCreator1155StorageV1} from "./ZoraCreator1155StorageV1.sol";
+import {CoopCreator1155StorageV1} from "./CoopCreator1155StorageV1.sol";
 import {IZoraCreator1155Errors} from "../interfaces/IZoraCreator1155Errors.sol";
 import {ERC1155DelegationStorageV1} from "../delegation/ERC1155DelegationStorageV1.sol";
 import {IZoraCreator1155DelegatedCreation, ISupportsAABasedDelegatedTokenCreation, IHasSupportedPremintSignatureVersions} from "../interfaces/IZoraCreator1155DelegatedCreation.sol";
@@ -56,7 +56,7 @@ contract CoopCreator1155Impl is
     UUPSUpgradeable,
     CreatorRendererControl,
     LegacyNamingControl,
-    ZoraCreator1155StorageV1,
+    CoopCreator1155StorageV1,
     CreatorPermissionControl,
     CreatorRoyaltiesControl,
     RewardSplits,
