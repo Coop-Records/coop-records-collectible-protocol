@@ -6,7 +6,7 @@ import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/Z
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
-import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {ProxyShim} from "../../src/utils/ProxyShim.sol";
@@ -25,7 +25,7 @@ library Zora1155FactoryFixtures {
     }
 
     function upgradeFactoryProxyToUse1155(
-        Zora1155Factory factoryProxy,
+        Coop1155Factory factoryProxy,
         IZoraCreator1155 zoraCreator1155Impl,
         IMinter1155 fixedPriceMinter,
         address admin
@@ -38,9 +38,9 @@ library Zora1155FactoryFixtures {
         factoryAtProxy.initialize(admin);
     }
 
-    function setupFactoryProxy(address deployer) internal returns (Zora1155Factory factoryProxy) {
+    function setupFactoryProxy(address deployer) internal returns (Coop1155Factory factoryProxy) {
         address factoryShimAddress = address(new ProxyShim(deployer));
-        factoryProxy = new Zora1155Factory(factoryShimAddress, "");
+        factoryProxy = new Coop1155Factory(factoryShimAddress, "");
     }
 
     function setupNew1155AndFactory(
@@ -61,7 +61,7 @@ library Zora1155FactoryFixtures {
             ProtocolRewards rewards,
             CoopCreator1155Impl zoraCreator1155Impl,
             IMinter1155 fixedPriceMinter,
-            Zora1155Factory factoryProxy,
+            Coop1155Factory factoryProxy,
             IUpgradeGate upgradeGate
         )
     {

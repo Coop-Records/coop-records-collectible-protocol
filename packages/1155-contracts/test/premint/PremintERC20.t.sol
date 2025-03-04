@@ -18,7 +18,7 @@ import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncodin
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
-import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {Zora1155} from "../../src/proxies/Zora1155.sol";
 import {IERC20Minter} from "../../src/interfaces/IERC20Minter.sol";
 import {IMinterPremintSetup} from "../../src/interfaces/IMinterPremintSetup.sol";
@@ -60,7 +60,7 @@ contract PremintERC20Test is Test {
         factoryImpl = address(
             new CoopCreator1155FactoryImpl(IZoraCreator1155(zora1155Impl), IMinter1155(address(0)), IMinter1155(address(0)), IMinter1155(address(0)))
         );
-        factory = CoopCreator1155FactoryImpl(address(new Zora1155Factory(factoryImpl, abi.encodeWithSignature("initialize(address)", zora))));
+        factory = CoopCreator1155FactoryImpl(address(new Coop1155Factory(factoryImpl, abi.encodeWithSignature("initialize(address)", zora))));
         premintImpl = address(new ZoraCreator1155PremintExecutorImpl(factory));
         premint = ZoraCreator1155PremintExecutorImpl(address(new Zora1155PremintExecutor(premintImpl, abi.encodeWithSignature("initialize(address)", zora))));
 

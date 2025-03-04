@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import "forge-std/Script.sol";
 import "forge-std/console2.sol";
 
-import {Zora1155Factory} from "@1155-contracts/src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "@1155-contracts/src/proxies/Coop1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "@1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {ZoraDeployerBase} from "../src/ZoraDeployerBase.sol";
 import {Deployment, ChainConfig} from "../src/DeploymentConfig.sol";
@@ -23,7 +23,7 @@ contract DeployFactory is ZoraDeployerBase {
         );
 
         // Deploy proxy
-        Zora1155Factory proxy = new Zora1155Factory(
+        Coop1155Factory proxy = new Coop1155Factory(
             deployment.factoryImpl, // factory implementation from deployment JSON
             initData
         );

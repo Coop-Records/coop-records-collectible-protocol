@@ -1,7 +1,7 @@
 // spdx-license-identifier: mit
 pragma solidity ^0.8.17;
 
-import {Zora1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Coop1155Factory.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
@@ -133,7 +133,7 @@ library ZoraDeployerUtils {
         return
             Create2.computeAddress(
                 factoryProxySalt,
-                keccak256(abi.encodePacked(type(Zora1155Factory).creationCode, constructorArguments)),
+                keccak256(abi.encodePacked(type(Coop1155Factory).creationCode, constructorArguments)),
                 proxyDeployerAddress
             );
     }
