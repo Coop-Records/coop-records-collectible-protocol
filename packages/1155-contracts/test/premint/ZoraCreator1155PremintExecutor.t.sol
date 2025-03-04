@@ -13,7 +13,7 @@ import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {IMinterErrors} from "../../src/interfaces/IMinterErrors.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
-import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "../../src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
 import {IZoraCreator1155PremintExecutor} from "../../src/interfaces/IZoraCreator1155PremintExecutor.sol";
@@ -31,7 +31,7 @@ contract ZoraCreator1155PreminterTest is Test {
     uint256 internal constant PERMISSION_BIT_MINTER = 2 ** 2;
 
     ZoraCreator1155PremintExecutorImpl internal preminter;
-    Zora1155Factory factoryProxy;
+    Coop1155Factory factoryProxy;
     CoopCreator1155FactoryImpl factory;
 
     ICreatorRoyaltiesControl.RoyaltyConfiguration internal defaultRoyaltyConfig;

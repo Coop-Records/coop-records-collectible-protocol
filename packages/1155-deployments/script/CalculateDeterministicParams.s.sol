@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "forge-std/console2.sol";
 
 import {ZoraDeployerBase} from "../src/ZoraDeployerBase.sol";
-import {Zora1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Coop1155Factory.sol";
 import {ProxyShim} from "@zoralabs/zora-1155-contracts/src/utils/ProxyShim.sol";
 import {UpgradeGate} from "@zoralabs/zora-1155-contracts/src/upgrades/UpgradeGate.sol";
 import {LibString} from "solady/utils/LibString.sol";
@@ -37,7 +37,7 @@ contract FactoryProxyDeterministicParams is ZoraDeployerBase {
     }
 
     function calculateForFactoryProxy() internal {
-        bytes memory proxyCreationCode = type(Zora1155Factory).creationCode;
+        bytes memory proxyCreationCode = type(Coop1155Factory).creationCode;
 
         DeterministicParams memory deterministicParams = getDeterministicDeploymentParams(deployerAddress, proxyCreationCode, 100);
 

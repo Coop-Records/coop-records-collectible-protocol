@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import {Ownable2StepUpgradeable} from "../../src/utils/ownable/Ownable2StepUpgradeable.sol";
 import {IOwnable2StepUpgradeable} from "../../src/utils/ownable/IOwnable2StepUpgradeable.sol";
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
-import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
@@ -23,7 +23,7 @@ contract Ownable2StepUpgradableTest is Test {
             IMinter1155(address(0)),
             IMinter1155(address(0))
         );
-        Zora1155Factory proxy = new Zora1155Factory(address(factory), "");
+        Coop1155Factory proxy = new Coop1155Factory(address(factory), "");
         IZoraCreator1155Factory(address(proxy)).initialize(owner);
         ownable = Ownable2StepUpgradeable(address(proxy));
     }

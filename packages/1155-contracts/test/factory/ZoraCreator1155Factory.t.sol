@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
-import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {IZoraCreator1155Factory} from "../../src/interfaces/IZoraCreator1155Factory.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
@@ -31,7 +31,7 @@ contract ZoraCreator1155FactoryTest is Test {
         upgradeGate.initialize(zora);
 
         address factoryShimAddress = address(new ProxyShim(zora));
-        Zora1155Factory factoryProxy = new Zora1155Factory(factoryShimAddress, "");
+        Coop1155Factory factoryProxy = new Coop1155Factory(factoryShimAddress, "");
 
         address mockTimedSaleStrategy = makeAddr("timedSaleStrategy");
 
@@ -63,7 +63,7 @@ contract ZoraCreator1155FactoryTest is Test {
     function test_initialize(address initialOwner) external {
         vm.assume(initialOwner != address(0));
         address payable proxyAddress = payable(
-            address(new Zora1155Factory(address(factoryImpl), abi.encodeWithSelector(CoopCreator1155FactoryImpl.initialize.selector, initialOwner)))
+            address(new Coop1155Factory(address(factoryImpl), abi.encodeWithSelector(CoopCreator1155FactoryImpl.initialize.selector, initialOwner)))
         );
         CoopCreator1155FactoryImpl proxy = CoopCreator1155FactoryImpl(proxyAddress);
         assertEq(proxy.owner(), initialOwner);
@@ -116,7 +116,7 @@ contract ZoraCreator1155FactoryTest is Test {
         );
 
         address payable proxyAddress = payable(
-            address(new Zora1155Factory(address(factoryImpl), abi.encodeWithSelector(CoopCreator1155FactoryImpl.initialize.selector, initialOwner)))
+            address(new Coop1155Factory(address(factoryImpl), abi.encodeWithSelector(CoopCreator1155FactoryImpl.initialize.selector, initialOwner)))
         );
         CoopCreator1155FactoryImpl proxy = CoopCreator1155FactoryImpl(proxyAddress);
         vm.prank(initialOwner);
@@ -130,7 +130,7 @@ contract ZoraCreator1155FactoryTest is Test {
         MockContractMetadata mockContractMetadata = new MockContractMetadata("ipfs://asdfadsf", "name");
 
         address payable proxyAddress = payable(
-            address(new Zora1155Factory(address(factoryImpl), abi.encodeWithSelector(CoopCreator1155FactoryImpl.initialize.selector, initialOwner)))
+            address(new Coop1155Factory(address(factoryImpl), abi.encodeWithSelector(CoopCreator1155FactoryImpl.initialize.selector, initialOwner)))
         );
         CoopCreator1155FactoryImpl proxy = CoopCreator1155FactoryImpl(proxyAddress);
         vm.prank(initialOwner);

@@ -8,7 +8,7 @@ import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155Facto
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "../../src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
-import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
+import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {ProxyShim} from "../../src/utils/ProxyShim.sol";
 import {ZoraCreator1155Attribution, PremintEncoding, ContractCreationConfig, TokenCreationConfigV2, PremintConfigV2, PremintConfig} from "../../src/delegation/ZoraCreator1155Attribution.sol";
@@ -26,7 +26,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
     address internal creator;
     address internal collector;
     address internal zora;
-    Zora1155Factory internal factoryProxy;
+    Coop1155Factory internal factoryProxy;
     CoopCreator1155FactoryImpl factoryAtProxy;
     ZoraCreator1155PremintExecutorImpl preminterAtProxy;
 
