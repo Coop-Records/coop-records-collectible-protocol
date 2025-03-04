@@ -21,7 +21,7 @@ import {IHasContractName} from "../../src/interfaces/IContractMetadata.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IRenderer1155} from "../../src/interfaces/IRenderer1155.sol";
-import {IZoraCreator1155TypesV1} from "../../src/nft/IZoraCreator1155TypesV1.sol";
+import {ICoopCreator1155TypesV1} from "../../src/nft/ICoopCreator1155TypesV1.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ICoopCreator1155Factory} from "../../src/interfaces/ICoopCreator1155Factory.sol";
 import {ICreatorRendererControl} from "../../src/interfaces/ICreatorRendererControl.sol";
@@ -182,7 +182,7 @@ contract ZoraCreator1155Test is Test {
         setupActions[0] = abi.encodeWithSelector(ICoopCreator1155.setupNewToken.selector, "test", maxSupply);
         target.initialize("", "test", config, defaultAdmin, setupActions);
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(1);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(1);
         assertEq(tokenData.maxSupply, maxSupply);
     }
 
@@ -233,7 +233,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         uint256 tokenId = target.setupNewToken(newURI, _maxSupply);
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
 
         assertEq(tokenData.uri, newURI);
         assertEq(tokenData.maxSupply, _maxSupply);
@@ -478,7 +478,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.adminMint(recipient, tokenId, quantity, "");
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
         assertEq(tokenData.totalMinted, quantity);
         assertEq(target.balanceOf(recipient, tokenId), quantity);
     }
@@ -497,7 +497,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(address(0x394));
         target.adminMint(recipient, tokenId, quantity, "");
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
         assertEq(tokenData.totalMinted, quantity);
         assertEq(target.balanceOf(recipient, tokenId), quantity);
     }
@@ -514,7 +514,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.adminMint(recipient, tokenId, quantity, "");
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
         assertEq(tokenData.totalMinted, quantity);
         assertEq(target.balanceOf(recipient, tokenId), quantity);
     }
@@ -531,7 +531,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.adminMint(recipient, tokenId, quantity, "");
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
         assertEq(tokenData.totalMinted, 1000);
         assertEq(target.balanceOf(recipient, tokenId), quantity);
     }
@@ -586,7 +586,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.adminMint(recipient, tokenId1, quantity1, "");
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData1 = target.getTokenInfo(tokenId1);
+        ICoopCreator1155TypesV1.TokenData memory tokenData1 = target.getTokenInfo(tokenId1);
 
         assertEq(testHook.hasTransfer(tokenId1), true);
         assertEq(testHook.hasTransfer(1000), false);
@@ -624,7 +624,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.mint{value: totalReward}(simpleMinter, tokenId, quantity, defaultRewardsRecipients, abi.encode(recipient));
 
-        IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(tokenId);
         assertEq(tokenData.totalMinted, quantity);
         assertEq(target.balanceOf(recipient, tokenId), quantity);
     }

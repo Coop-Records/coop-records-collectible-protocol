@@ -8,7 +8,7 @@ import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IRenderer1155} from "../../src/interfaces/IRenderer1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
-import {IZoraCreator1155TypesV1} from "../../src/nft/IZoraCreator1155TypesV1.sol";
+import {ICoopCreator1155TypesV1} from "../../src/nft/ICoopCreator1155TypesV1.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ICoopCreator1155Factory} from "../../src/interfaces/ICoopCreator1155Factory.sol";
 import {ICreatorRendererControl} from "../../src/interfaces/ICreatorRendererControl.sol";
