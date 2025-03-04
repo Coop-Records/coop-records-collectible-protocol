@@ -10,7 +10,7 @@ import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {IOwnable} from "../interfaces/IOwnable.sol";
 import {IVersionedContract} from "@zoralabs/shared-contracts/interfaces/IVersionedContract.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
-import {IZoraCreator1155DelegatedCreation} from "./IZoraCreator1155DelegatedCreation.sol";
+import {ICoopCreator1155DelegatedCreation} from "./ICoopCreator1155DelegatedCreation.sol";
 import {IMintWithRewardsRecipients} from "./IMintWithRewardsRecipients.sol";
 import {IReduceSupply} from "@zoralabs/shared-contracts/interfaces/IReduceSupply.sol";
 
@@ -52,15 +52,14 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 */
 
-/// @notice Main interface for the ZoraCreator1155 contract
-/// @author @iainnash / @tbtstl
+/// @notice Main interface for the CoopCreator1155 contract
 interface ICoopCreator1155 is
     ICoopCreator1155TypesV1,
     ICoopCreator1155Errors,
     IVersionedContract,
     IOwnable,
     IERC1155MetadataURIUpgradeable,
-    IZoraCreator1155DelegatedCreation,
+    ICoopCreator1155DelegatedCreation,
     IMintWithRewardsRecipients,
     IReduceSupply
 {

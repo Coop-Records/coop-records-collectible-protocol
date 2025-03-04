@@ -17,7 +17,7 @@ import {ZoraCreator1155Attribution, DelegatedTokenCreation} from "./ZoraCreator1
 import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncoding.sol";
 import {ContractCreationConfig, ContractWithAdditionalAdminsCreationConfig, PremintConfig, PremintConfigV2, TokenCreationConfig, TokenCreationConfigV2, MintArguments, PremintResult, PremintConfigV3, TokenCreationConfigV3, PremintConfigEncoded} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {IZoraCreator1155PremintExecutor} from "../interfaces/IZoraCreator1155PremintExecutor.sol";
-import {IZoraCreator1155DelegatedCreationLegacy, IHasSupportedPremintSignatureVersions} from "../interfaces/IZoraCreator1155DelegatedCreation.sol";
+import {ICoopCreator1155DelegatedCreationLegacy, IHasSupportedPremintSignatureVersions} from "../interfaces/ICoopCreator1155DelegatedCreation.sol";
 import {IZoraCreator1155PremintExecutorAllVersions} from "@zoralabs/shared-contracts/interfaces/IZoraCreator1155PremintExecutorAllVersions.sol";
 import {CoopCreator1155FactoryImpl} from "../factory/CoopCreator1155FactoryImpl.sol";
 import {IRewardsErrors} from "@zoralabs/protocol-rewards/src/interfaces/IRewardsErrors.sol";
@@ -261,7 +261,7 @@ contract ZoraCreator1155PremintExecutorImpl is
 
         ICoopCreator1155 creatorContract = ICoopCreator1155(contractAddress);
         if (
-            creatorContract.supportsInterface(type(IZoraCreator1155DelegatedCreationLegacy).interfaceId) ||
+            creatorContract.supportsInterface(type(ICoopCreator1155DelegatedCreationLegacy).interfaceId) ||
             creatorContract.supportsInterface(type(IHasSupportedPremintSignatureVersions).interfaceId)
         ) {
             return IHasSupportedPremintSignatureVersions(contractAddress).supportedPremintSignatureVersions();
