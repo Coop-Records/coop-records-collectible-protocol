@@ -11,7 +11,7 @@ import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
-import {Zora1155} from "../../src/proxies/Zora1155.sol";
+import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {UpgradeGate} from "../../src/upgrades/UpgradeGate.sol";
 import {MockContractMetadata} from "../mock/MockContractMetadata.sol";
 import {ProxyShim} from "../../src/utils/ProxyShim.sol";

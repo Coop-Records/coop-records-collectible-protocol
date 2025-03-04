@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import "forge-std/Test.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {CoopCreator1155Impl} from "../../../src/nft/CoopCreator1155Impl.sol";
-import {Zora1155} from "../../../src/proxies/Zora1155.sol";
+import {Coop1155} from "../../../src/proxies/Coop1155.sol";
 import {IZoraCreator1155Errors} from "../../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IRenderer1155} from "../../../src/interfaces/IRenderer1155.sol";
 import {ICreatorRoyaltiesControl} from "../../../src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -30,7 +30,7 @@ contract ZoraCreatorMerkleMinterStrategyTest is Test {
         rewardRecipients = new address[](1);
         protocolRewards = new ProtocolRewards();
         CoopCreator1155Impl targetImpl = new CoopCreator1155Impl(zora, address(0x1234), address(protocolRewards), makeAddr("timedSaleStrategy"));
-        Zora1155 proxy = new Zora1155(address(targetImpl));
+        Coop1155 proxy = new Coop1155(address(targetImpl));
         target = CoopCreator1155Impl(payable(address(proxy)));
         target.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), admin, emptyData);
         merkleMinter = new ZoraCreatorMerkleMinterStrategy();

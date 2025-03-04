@@ -19,7 +19,7 @@ import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155Facto
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
 import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
-import {Zora1155} from "../../src/proxies/Zora1155.sol";
+import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {IERC20Minter} from "../../src/interfaces/IERC20Minter.sol";
 import {IMinterPremintSetup} from "../../src/interfaces/IMinterPremintSetup.sol";
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";

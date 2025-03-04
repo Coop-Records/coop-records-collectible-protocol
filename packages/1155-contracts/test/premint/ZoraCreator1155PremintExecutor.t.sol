@@ -6,7 +6,7 @@ import {Zora1155FactoryFixtures} from "../fixtures/Zora1155FactoryFixtures.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
-import {Zora1155} from "../../src/proxies/Zora1155.sol";
+import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
@@ -913,7 +913,7 @@ contract ZoraCreator1155PreminterTest is Test {
     }
 
     function test_premintExistingContract_worksOnNonPremintCreatedContracts() public {
-        CoopCreator1155Impl zora1155 = CoopCreator1155Impl(payable(address(new Zora1155(address(zoraCreator1155Impl)))));
+        CoopCreator1155Impl zora1155 = CoopCreator1155Impl(payable(address(new Coop1155(address(zoraCreator1155Impl)))));
 
         zora1155.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), payable(creator), _emptyInitData());
 

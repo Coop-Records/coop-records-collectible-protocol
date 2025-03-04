@@ -10,7 +10,7 @@ import {MathUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/cont
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ITransferHookReceiver} from "../../src/interfaces/ITransferHookReceiver.sol";
 import {IReduceSupply} from "@zoralabs/shared-contracts/interfaces/IReduceSupply.sol";
-import {Zora1155} from "../../src/proxies/Zora1155.sol";
+import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
 import {UpgradeGate} from "../../src/upgrades/UpgradeGate.sol";
 import {PremintConfigV2, TokenCreationConfigV2} from "../../src/delegation/ZoraCreator1155Attribution.sol";
@@ -116,7 +116,7 @@ contract ZoraCreator1155Test is Test {
         fixedPriceMinter = new ZoraCreatorFixedPriceSaleStrategy();
 
         zoraCreator1155Impl = new CoopCreator1155Impl(zora, address(upgradeGate), address(protocolRewards), address(simpleMinter));
-        target = CoopCreator1155Impl(payable(address(new Zora1155(address(zoraCreator1155Impl)))));
+        target = CoopCreator1155Impl(payable(address(new Coop1155(address(zoraCreator1155Impl)))));
 
         adminRole = target.PERMISSION_BIT_ADMIN();
         minterRole = target.PERMISSION_BIT_MINTER();
