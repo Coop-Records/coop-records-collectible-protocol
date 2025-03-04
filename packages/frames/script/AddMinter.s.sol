@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
 
-import {IZoraCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
 import {BoostedMinterImpl} from "../src/BoostedMinterImpl.sol";
 import {BoostedMinterFactory} from "../src/BoostedMinterFactory.sol";
 
@@ -17,7 +17,7 @@ contract AddMinter is Script {
         uint256 tokenId = vm.envUint("TOKEN_ID");
         address boostedMinter = vm.envAddress("BOOSTED_MINTER");
 
-        IZoraCreator1155 token = IZoraCreator1155(tokenContract);
+        ICoopCreator1155 token = ICoopCreator1155(tokenContract);
 
         vm.broadcast(deployerPrivateKey);
         token.addPermission(tokenId, boostedMinter, PERMISSION_BIT_MINTER);

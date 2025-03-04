@@ -7,7 +7,7 @@ import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155Facto
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {IZoraCreator1155Factory} from "../../src/interfaces/IZoraCreator1155Factory.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -85,7 +85,7 @@ contract ZoraCreator1155FactoryTest is Test {
         // Assume royalty recipient is not 0
         vm.assume(royaltyRecipient != payable(address(0)));
         bytes[] memory initSetup = new bytes[](1);
-        initSetup[0] = abi.encodeWithSelector(IZoraCreator1155.setupNewToken.selector, "ipfs://asdfadsf", 100);
+        initSetup[0] = abi.encodeWithSelector(ICoopCreator1155.setupNewToken.selector, "ipfs://asdfadsf", 100);
         address deployedAddress = factory.createContract(
             contractURI,
             name,
@@ -106,7 +106,7 @@ contract ZoraCreator1155FactoryTest is Test {
     function test_upgrade(address initialOwner) external {
         vm.assume(initialOwner != address(0));
 
-        IZoraCreator1155 mockNewContract = IZoraCreator1155(address(0x999));
+        ICoopCreator1155 mockNewContract = ICoopCreator1155(address(0x999));
 
         CoopCreator1155FactoryImpl newFactoryImpl = new CoopCreator1155FactoryImpl(
             mockNewContract,
@@ -161,7 +161,7 @@ contract ZoraCreator1155FactoryTest is Test {
             royaltyMintSchedule: 0
         });
         bytes[] memory initSetup = new bytes[](1);
-        initSetup[0] = abi.encodeWithSelector(IZoraCreator1155.setupNewToken.selector, "ipfs://asdfadsf", 100);
+        initSetup[0] = abi.encodeWithSelector(ICoopCreator1155.setupNewToken.selector, "ipfs://asdfadsf", 100);
 
         // create x number of contracts via the factory, this should affect the nonce.
         for (uint256 i = 0; i < numberOfCallsBeforeCreation; i++) {
@@ -189,7 +189,7 @@ contract ZoraCreator1155FactoryTest is Test {
         address contractCreator = vm.addr(1);
 
         bytes[] memory initSetup = new bytes[](1);
-        initSetup[0] = abi.encodeWithSelector(IZoraCreator1155.addPermission.selector, 0, contractCreator, 8);
+        initSetup[0] = abi.encodeWithSelector(ICoopCreator1155.addPermission.selector, 0, contractCreator, 8);
 
         // we can know ahead of time the expected address
         address expectedContractAddress = factory.deterministicContractAddressWithSetupActions(contractCreator, uri, nameA, contractAdmin, initSetup);
@@ -221,7 +221,7 @@ contract ZoraCreator1155FactoryTest is Test {
         address contractCreator = vm.addr(1);
 
         bytes[] memory initSetup = new bytes[](1);
-        initSetup[0] = abi.encodeWithSelector(IZoraCreator1155.addPermission.selector, 0, contractCreator, 8);
+        initSetup[0] = abi.encodeWithSelector(ICoopCreator1155.addPermission.selector, 0, contractCreator, 8);
 
         // we can know ahead of time the expected address
         address expectedContractAddress = factory.deterministicContractAddressWithSetupActions(contractCreator, uri, nameA, contractAdmin, initSetup);
@@ -255,7 +255,7 @@ contract ZoraCreator1155FactoryTest is Test {
         address contractCreator = vm.addr(1);
 
         bytes[] memory initSetup = new bytes[](1);
-        initSetup[0] = abi.encodeWithSelector(IZoraCreator1155.addPermission.selector, 0, contractCreator, 8);
+        initSetup[0] = abi.encodeWithSelector(ICoopCreator1155.addPermission.selector, 0, contractCreator, 8);
 
         // we can know ahead of time the expected address
         address expectedContractAddress = factory.deterministicContractAddressWithSetupActions(contractCreator, uri, nameA, contractAdmin, initSetup);
@@ -289,7 +289,7 @@ contract ZoraCreator1155FactoryTest is Test {
         // * create a new version of the erc1155 implementation
         // * create a new factory that points to that new erc1155 implementation,
         // * upgrade the proxy to point to the new factory
-        IZoraCreator1155 newZoraCreator = new CoopCreator1155Impl(zora, address(factory), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
+        ICoopCreator1155 newZoraCreator = new CoopCreator1155Impl(zora, address(factory), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
 
         CoopCreator1155FactoryImpl newFactoryImpl = new CoopCreator1155FactoryImpl(
             newZoraCreator,
@@ -330,7 +330,7 @@ contract ZoraCreator1155FactoryTest is Test {
             royaltyMintSchedule: 0
         });
         bytes[] memory initSetup = new bytes[](1);
-        initSetup[0] = abi.encodeWithSelector(IZoraCreator1155.setupNewToken.selector, "ipfs://asdfadsf", 100);
+        initSetup[0] = abi.encodeWithSelector(ICoopCreator1155.setupNewToken.selector, "ipfs://asdfadsf", 100);
 
         // now create deterministically, address should match expected address
         address createdAddress = factory.createContractDeterministic(uri, nameA, royaltyConfig, payable(contractAdmin), initSetup);
@@ -338,7 +338,7 @@ contract ZoraCreator1155FactoryTest is Test {
         CoopCreator1155Impl creatorProxy = CoopCreator1155Impl(payable(createdAddress));
 
         // 2. upgrade the created contract by creating a new contract and upgrading the existing one to point to it.
-        IZoraCreator1155 newZoraCreator = new CoopCreator1155Impl(zora, address(upgradeGate), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
+        ICoopCreator1155 newZoraCreator = new CoopCreator1155Impl(zora, address(upgradeGate), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
 
         address[] memory baseImpls = new address[](1);
         baseImpls[0] = address(factory.zora1155Impl());

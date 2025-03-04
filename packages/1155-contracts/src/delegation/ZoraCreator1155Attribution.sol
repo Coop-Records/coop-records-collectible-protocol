@@ -2,7 +2,7 @@
 pragma solidity 0.8.17;
 
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
-import {IZoraCreator1155} from "../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155Errors} from "@zoralabs/shared-contracts/interfaces/errors/IZoraCreator1155Errors.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {ECDSAUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/utils/cryptography/ECDSAUpgradeable.sol";
@@ -272,12 +272,12 @@ library PremintTokenSetup {
     ) private view returns (bytes[] memory calls) {
         calls = new bytes[](3);
 
-        calls[0] = abi.encodeWithSelector(IZoraCreator1155.addPermission.selector, newTokenId, minter, PERMISSION_BIT_MINTER);
+        calls[0] = abi.encodeWithSelector(ICoopCreator1155.addPermission.selector, newTokenId, minter, PERMISSION_BIT_MINTER);
 
-        calls[1] = abi.encodeWithSelector(IZoraCreator1155.callSale.selector, newTokenId, IMinter1155(minter), setupMinterCall);
+        calls[1] = abi.encodeWithSelector(ICoopCreator1155.callSale.selector, newTokenId, IMinter1155(minter), setupMinterCall);
 
         calls[2] = abi.encodeWithSelector(
-            IZoraCreator1155.updateRoyaltiesForToken.selector,
+            ICoopCreator1155.updateRoyaltiesForToken.selector,
             newTokenId,
             ICreatorRoyaltiesControl.RoyaltyConfiguration({royaltyBPS: royaltyBPS, royaltyRecipient: payoutRecipient, royaltyMintSchedule: 0})
         );

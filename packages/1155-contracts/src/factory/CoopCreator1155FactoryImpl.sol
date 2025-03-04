@@ -5,7 +5,7 @@ import {Initializable} from "@zoralabs/openzeppelin-contracts-upgradeable/contra
 import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import {IZoraCreator1155Factory} from "../interfaces/IZoraCreator1155Factory.sol";
 import {IZoraCreator1155Initializer} from "../interfaces/IZoraCreator1155Initializer.sol";
-import {IZoraCreator1155} from "../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {IContractMetadata} from "../interfaces/IContractMetadata.sol";
@@ -19,12 +19,12 @@ import {ContractVersionBase} from "../version/ContractVersionBase.sol";
 /// @title CoopCreator1155FactoryImpl
 /// @notice Factory contract for creating new CoopCreator1155 contracts
 contract CoopCreator1155FactoryImpl is IZoraCreator1155Factory, Ownable2StepUpgradeable, ContractVersionBase, UUPSUpgradeable, IContractMetadata {
-    IZoraCreator1155 public immutable zora1155Impl;
+    ICoopCreator1155 public immutable zora1155Impl;
     IMinter1155 public immutable merkleMinter;
     IMinter1155 public immutable fixedPriceMinter;
     IMinter1155 public immutable redeemMinterFactory;
 
-    constructor(IZoraCreator1155 _zora1155Impl, IMinter1155 _merkleMinter, IMinter1155 _fixedPriceMinter, IMinter1155 _redeemMinterFactory) initializer {
+    constructor(ICoopCreator1155 _zora1155Impl, IMinter1155 _merkleMinter, IMinter1155 _fixedPriceMinter, IMinter1155 _redeemMinterFactory) initializer {
         if (address(_zora1155Impl) == address(0)) {
             revert Constructor_ImplCannotBeZero();
         }

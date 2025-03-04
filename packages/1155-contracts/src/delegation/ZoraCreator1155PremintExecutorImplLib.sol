@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import {PremintConfig, ContractCreationConfig, ContractWithAdditionalAdminsCreationConfig, PremintResult, MintArguments, TokenCreationConfigV3, PremintConfigV3} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC20Minter} from "../interfaces/IERC20Minter.sol";
-import {IZoraCreator1155} from "../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155Factory} from "../interfaces/IZoraCreator1155Factory.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
@@ -18,7 +18,7 @@ interface ILegacyZoraCreator1155DelegatedMinter {
 }
 
 struct GetOrCreateContractResult {
-    IZoraCreator1155 tokenContract;
+    ICoopCreator1155 tokenContract;
     bool isNewContract;
 }
 
@@ -47,7 +47,7 @@ library ZoraCreator1155PremintExecutorImplLib {
     function createContract(
         IZoraCreator1155Factory zora1155Factory,
         ContractWithAdditionalAdminsCreationConfig memory contractConfig
-    ) internal returns (IZoraCreator1155 tokenContract) {
+    ) internal returns (ICoopCreator1155 tokenContract) {
         // we need to build the setup actions, that must:
         bytes[] memory setupActions = toSetupActions(contractConfig.additionalAdmins);
 
@@ -60,14 +60,14 @@ library ZoraCreator1155PremintExecutorImplLib {
             payable(contractConfig.contractAdmin),
             setupActions
         );
-        tokenContract = IZoraCreator1155(newContractAddresss);
+        tokenContract = ICoopCreator1155(newContractAddresss);
     }
 
     function toSetupActions(address[] memory additionalAdmins) internal pure returns (bytes[] memory setupActions) {
         setupActions = new bytes[](additionalAdmins.length);
 
         for (uint256 i = 0; i < additionalAdmins.length; i++) {
-            setupActions[i] = abi.encodeWithSelector(IZoraCreator1155.addPermission.selector, CONTRACT_BASE_ID, additionalAdmins[i], PERMISSION_BIT_ADMIN);
+            setupActions[i] = abi.encodeWithSelector(ICoopCreator1155.addPermission.selector, CONTRACT_BASE_ID, additionalAdmins[i], PERMISSION_BIT_ADMIN);
         }
     }
 
@@ -113,7 +113,7 @@ library ZoraCreator1155PremintExecutorImplLib {
     }
 
     function getOrCreateToken(
-        IZoraCreator1155 tokenContract,
+        ICoopCreator1155 tokenContract,
         bytes memory premintConfig,
         bytes32 premintConfigVersion,
         bytes calldata signature,
@@ -194,7 +194,7 @@ library ZoraCreator1155PremintExecutorImplLib {
     }
 
     function mintWithEth(
-        IZoraCreator1155 tokenContract,
+        ICoopCreator1155 tokenContract,
         address fixedPriceMinter,
         uint256 tokenId,
         uint256 quantityToMint,
@@ -238,7 +238,7 @@ library ZoraCreator1155PremintExecutorImplLib {
             }
         } else {
             // if contract has been created, signer must have mint new token permission
-            authorized = IZoraCreator1155(contractAddress).isAdminOrRole(signer, CONTRACT_BASE_ID, PERMISSION_BIT_MINTER);
+            authorized = ICoopCreator1155(contractAddress).isAdminOrRole(signer, CONTRACT_BASE_ID, PERMISSION_BIT_MINTER);
         }
     }
 

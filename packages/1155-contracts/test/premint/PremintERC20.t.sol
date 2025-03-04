@@ -9,7 +9,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 import {UpgradeGate} from "../../src/upgrades/UpgradeGate.sol";
 import {ERC20Minter} from "../../src/minters/erc20/ERC20Minter.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155PremintExecutor, ZoraCreator1155PremintExecutorImpl} from "../../src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
 import {ZoraCreator1155PremintExecutorImplLib} from "../../src/delegation/ZoraCreator1155PremintExecutorImplLib.sol";
 import {ZoraCreator1155Attribution} from "../../src/delegation/ZoraCreator1155Attribution.sol";
