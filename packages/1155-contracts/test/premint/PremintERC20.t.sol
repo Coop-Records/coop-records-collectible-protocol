@@ -58,7 +58,7 @@ contract PremintERC20Test is Test {
 
         zora1155Impl = address(new CoopCreator1155Impl(zora, address(new UpgradeGate()), address(protocolRewards), makeAddr("timedSaleStrategy")));
         factoryImpl = address(
-            new CoopCreator1155FactoryImpl(IZoraCreator1155(zora1155Impl), IMinter1155(address(0)), IMinter1155(address(0)), IMinter1155(address(0)))
+            new CoopCreator1155FactoryImpl(ICoopCreator1155(zora1155Impl), IMinter1155(address(0)), IMinter1155(address(0)), IMinter1155(address(0)))
         );
         factory = CoopCreator1155FactoryImpl(address(new Coop1155Factory(factoryImpl, abi.encodeWithSignature("initialize(address)", zora))));
         premintImpl = address(new ZoraCreator1155PremintExecutorImpl(factory));

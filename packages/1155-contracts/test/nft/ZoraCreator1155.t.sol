@@ -23,7 +23,7 @@ import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IRenderer1155} from "../../src/interfaces/IRenderer1155.sol";
 import {IZoraCreator1155TypesV1} from "../../src/nft/IZoraCreator1155TypesV1.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
-import {IZoraCreator1155Factory} from "../../src/interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../../src/interfaces/ICoopCreator1155Factory.sol";
 import {ICreatorRendererControl} from "../../src/interfaces/ICreatorRendererControl.sol";
 
 import {SimpleMinter} from "../mock/SimpleMinter.sol";

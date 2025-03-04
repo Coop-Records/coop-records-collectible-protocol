@@ -3,7 +3,7 @@ pragma solidity 0.8.17;
 
 import {Initializable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol";
 import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
-import {IZoraCreator1155Factory} from "../interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../interfaces/ICoopCreator1155Factory.sol";
 import {IZoraCreator1155Initializer} from "../interfaces/IZoraCreator1155Initializer.sol";
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
@@ -18,7 +18,7 @@ import {ContractVersionBase} from "../version/ContractVersionBase.sol";
 
 /// @title CoopCreator1155FactoryImpl
 /// @notice Factory contract for creating new CoopCreator1155 contracts
-contract CoopCreator1155FactoryImpl is IZoraCreator1155Factory, Ownable2StepUpgradeable, ContractVersionBase, UUPSUpgradeable, IContractMetadata {
+contract CoopCreator1155FactoryImpl is ICoopCreator1155Factory, Ownable2StepUpgradeable, ContractVersionBase, UUPSUpgradeable, IContractMetadata {
     ICoopCreator1155 public immutable zora1155Impl;
     IMinter1155 public immutable merkleMinter;
     IMinter1155 public immutable fixedPriceMinter;

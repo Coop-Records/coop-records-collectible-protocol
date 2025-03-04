@@ -9,7 +9,7 @@ import {IZoraCreator1155Errors} from "../../../src/interfaces/IZoraCreator1155Er
 import {IRenderer1155} from "../../../src/interfaces/IRenderer1155.sol";
 import {ICreatorRoyaltiesControl} from "../../../src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ILimitedMintPerAddressErrors} from "../../../src/interfaces/ILimitedMintPerAddress.sol";
-import {IZoraCreator1155Factory} from "../../../src/interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../../../src/interfaces/ICoopCreator1155Factory.sol";
 import {ZoraCreatorMerkleMinterStrategy} from "../../../src/minters/merkle/ZoraCreatorMerkleMinterStrategy.sol";
 
 contract ZoraCreatorMerkleMinterStrategyTest is Test {
