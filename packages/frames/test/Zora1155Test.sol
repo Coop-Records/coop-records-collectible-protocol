@@ -7,7 +7,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 import {RewardsSettings} from "@zoralabs/protocol-rewards/src/abstract/RewardSplits.sol";
 import {UpgradeGate} from "@zoralabs/zora-1155-contracts/src/upgrades/UpgradeGate.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
-import {Zora1155} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155.sol";
+import {Coop1155} from "@zoralabs/zora-1155-contracts/src/proxies/Coop1155.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from
     "@zoralabs/zora-1155-contracts/src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
 import {ICreatorRoyaltiesControl} from "@zoralabs/zora-1155-contracts/src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -34,7 +34,7 @@ contract Zora1155Test is Test {
         upgradeGate.initialize(zora);
 
         zora1155Impl = new CoopCreator1155Impl(zora, address(upgradeGate), address(protocolRewards));
-        zora1155 = CoopCreator1155Impl(payable(address(new Zora1155(address(zora1155Impl)))));
+        zora1155 = CoopCreator1155Impl(payable(address(new Coop1155(address(zora1155Impl)))));
         zora1155.initialize(
             "test",
             "test",

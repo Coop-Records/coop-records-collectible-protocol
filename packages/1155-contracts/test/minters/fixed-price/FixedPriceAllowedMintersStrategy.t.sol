@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {CoopCreator1155Impl} from "../../../src/nft/CoopCreator1155Impl.sol";
-import {Zora1155} from "../../../src/proxies/Zora1155.sol";
+import {Coop1155} from "../../../src/proxies/Coop1155.sol";
 import {IZoraCreator1155Errors} from "../../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IMinter1155} from "../../../src/interfaces/IMinter1155.sol";
 import {ICreatorRoyaltiesControl} from "../../../src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -44,7 +44,7 @@ contract FixedPriceAllowedMintersStrategyTest is Test {
         minters[0] = allowedMinter;
 
         targetImpl = new CoopCreator1155Impl(zora, address(0x1234), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
-        target = CoopCreator1155Impl(payable(address(new Zora1155(address(targetImpl)))));
+        target = CoopCreator1155Impl(payable(address(new Coop1155(address(targetImpl)))));
 
         target.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), admin, new bytes[](0));
         fixedPrice = new FixedPriceAllowedMintersStrategy();
