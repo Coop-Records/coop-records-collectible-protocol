@@ -12,7 +12,6 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 import {ProxyShim} from "../../src/utils/ProxyShim.sol";
 import {IUpgradeGate} from "../../src/interfaces/IUpgradeGate.sol";
 import {UpgradeGate} from "../../src/upgrades/UpgradeGate.sol";
-import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 
 library Zora1155FactoryFixtures {
     function setupZora1155Impl(
