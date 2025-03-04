@@ -76,7 +76,10 @@ library ZoraDeployerUtils {
     function deployMinters(
         ChainConfig memory chainConfig
     ) internal returns (address fixedPriceMinter, address merkleMinter, address redeemMinterFactory, address erc20Minter) {
-        fixedPriceMinter = deployFixedPriceMinter();
+        fixedPriceMinter = ImmutableCreate2FactoryUtils.safeCreate2OrGetExisting(
+            bytes32(0x0000000000000000000000000000000000000000000000000000000000000001),
+            type(ZoraCreatorFixedPriceSaleStrategy).creationCode
+        );
 
         merkleMinter = ImmutableCreate2FactoryUtils.safeCreate2OrGetExisting(
             bytes32(0x0000000000000000000000000000000000000000000000000000000000000001),
