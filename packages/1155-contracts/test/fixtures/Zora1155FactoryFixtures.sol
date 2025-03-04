@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {ZoraCreator1155Impl} from "../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
@@ -17,11 +17,11 @@ library Zora1155FactoryFixtures {
     function setupZora1155Impl(
         address zora,
         IUpgradeGate upgradeGate
-    ) internal returns (ProtocolRewards rewards, ZoraCreator1155Impl zora1155Impl, address timedSaleStrategy) {
+    ) internal returns (ProtocolRewards rewards, CoopCreator1155Impl coop1155Impl, address timedSaleStrategy) {
         // Ignore in this case
         timedSaleStrategy = address(0x0);
         rewards = new ProtocolRewards();
-        zora1155Impl = new ZoraCreator1155Impl(zora, address(upgradeGate), address(rewards), timedSaleStrategy);
+        zora1155Impl = new CoopCreator1155Impl(zora, address(upgradeGate), address(rewards), timedSaleStrategy);
     }
 
     function upgradeFactoryProxyToUse1155(
@@ -47,7 +47,7 @@ library Zora1155FactoryFixtures {
         address zora,
         IUpgradeGate upgradeGate,
         IMinter1155 fixedPriceMinter
-    ) internal returns (ProtocolRewards rewards, ZoraCreator1155Impl zoraCreator1155Impl, ZoraCreator1155FactoryImpl factoryImpl) {
+    ) internal returns (ProtocolRewards rewards, CoopCreator1155Impl zoraCreator1155Impl, ZoraCreator1155FactoryImpl factoryImpl) {
         (rewards, zoraCreator1155Impl, ) = setupZora1155Impl(zora, upgradeGate);
         factoryImpl = new ZoraCreator1155FactoryImpl(zoraCreator1155Impl, IMinter1155(address(1)), fixedPriceMinter, IMinter1155(address(3)));
     }
@@ -59,7 +59,7 @@ library Zora1155FactoryFixtures {
         internal
         returns (
             ProtocolRewards rewards,
-            ZoraCreator1155Impl zoraCreator1155Impl,
+            CoopCreator1155Impl zoraCreator1155Impl,
             IMinter1155 fixedPriceMinter,
             Zora1155Factory factoryProxy,
             IUpgradeGate upgradeGate

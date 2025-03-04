@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import {Zora1155FactoryFixtures} from "../fixtures/Zora1155FactoryFixtures.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 
-import {ZoraCreator1155Impl} from "../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155} from "../../src/proxies/Zora1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
@@ -47,7 +47,7 @@ contract ZoraCreator1155PreminterTest is Test {
 
     MintArguments defaultMintArguments;
     ProtocolRewards rewards;
-    ZoraCreator1155Impl zoraCreator1155Impl;
+    CoopCreator1155Impl zoraCreator1155Impl;
 
     event PremintedV2(
         address indexed contractAddress,
@@ -153,7 +153,7 @@ contract ZoraCreator1155PreminterTest is Test {
         IZoraCreator1155 created1155Contract = IZoraCreator1155(contractAddress);
         // get the created contract, and make sure that tokens have been minted to the address
         assertEq(created1155Contract.balanceOf(premintExecutor, tokenId), quantityToMint);
-        assertEq(ZoraCreator1155Impl(payable(address(created1155Contract))).delegatedTokenId(premintConfig.uid), tokenId);
+        assertEq(CoopCreator1155Impl(payable(address(created1155Contract))).delegatedTokenId(premintConfig.uid), tokenId);
     }
 
     function test_successfullyMintsTokens() external {
@@ -247,7 +247,7 @@ contract ZoraCreator1155PreminterTest is Test {
         // get the created contract, and make sure that tokens have been minted to the address
         assertEq(created1155Contract.balanceOf(premintExecutor, tokenId), 0);
 
-        assertEq(ZoraCreator1155Impl(payable(contractAddress)).firstMinters(tokenId), address(premintExecutor));
+        assertEq(CoopCreator1155Impl(payable(contractAddress)).firstMinters(tokenId), address(premintExecutor));
     }
 
     event CreatorAttribution(bytes32 structHash, string domainName, string version, address creator, bytes signature);
@@ -570,7 +570,7 @@ contract ZoraCreator1155PreminterTest is Test {
                 IZoraCreator1155Errors.UserMissingRoleForToken.selector,
                 address(preminter),
                 newTokenId,
-                ZoraCreator1155Impl(payable(address(created1155Contract))).PERMISSION_BIT_SALES()
+                CoopCreator1155Impl(payable(address(created1155Contract))).PERMISSION_BIT_SALES()
             )
         );
         vm.prank(address(preminter));
@@ -594,7 +594,7 @@ contract ZoraCreator1155PreminterTest is Test {
                 IZoraCreator1155Errors.UserMissingRoleForToken.selector,
                 address(preminter),
                 newTokenId,
-                ZoraCreator1155Impl(payable(address(created1155Contract))).PERMISSION_BIT_FUNDS_MANAGER()
+                CoopCreator1155Impl(payable(address(created1155Contract))).PERMISSION_BIT_FUNDS_MANAGER()
             )
         );
         vm.prank(address(preminter));
@@ -878,7 +878,7 @@ contract ZoraCreator1155PreminterTest is Test {
 
         uint256 createdTokenId = _signAndExecutePremint(contractConfig, premintConfig, creatorPrivateKey, block.chainid, premintExecutor, 1, "hi");
 
-        ZoraCreator1155Impl createdContract = ZoraCreator1155Impl(payable(preminter.getContractAddress(contractConfig)));
+        CoopCreator1155Impl createdContract = CoopCreator1155Impl(payable(preminter.getContractAddress(contractConfig)));
 
         address storedCreateReferral = createdContract.createReferrals(createdTokenId);
 
@@ -913,7 +913,7 @@ contract ZoraCreator1155PreminterTest is Test {
     }
 
     function test_premintExistingContract_worksOnNonPremintCreatedContracts() public {
-        ZoraCreator1155Impl zora1155 = ZoraCreator1155Impl(payable(address(new Zora1155(address(zoraCreator1155Impl)))));
+        CoopCreator1155Impl zora1155 = CoopCreator1155Impl(payable(address(new Zora1155(address(zoraCreator1155Impl)))));
 
         zora1155.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), payable(creator), _emptyInitData());
 

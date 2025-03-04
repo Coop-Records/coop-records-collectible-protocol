@@ -7,7 +7,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 import {IRewardSplits} from "@zoralabs/protocol-rewards/src/interfaces/IRewardSplits.sol";
 import {RewardSplitsLib} from "@zoralabs/protocol-rewards/src/abstract/RewardSplits.sol";
 import {MathUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/utils/math/MathUpgradeable.sol";
-import {ZoraCreator1155Impl} from "../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ITransferHookReceiver} from "../../src/interfaces/ITransferHookReceiver.sol";
 import {IReduceSupply} from "@zoralabs/shared-contracts/interfaces/IReduceSupply.sol";
 import {Zora1155} from "../../src/proxies/Zora1155.sol";
@@ -51,8 +51,8 @@ contract ZoraCreator1155Test is Test {
     using stdJson for string;
 
     ProtocolRewards internal protocolRewards;
-    ZoraCreator1155Impl internal zoraCreator1155Impl;
-    ZoraCreator1155Impl internal target;
+    CoopCreator1155Impl internal zoraCreator1155Impl;
+    CoopCreator1155Impl internal target;
 
     SimpleMinter simpleMinter;
     ZoraCreatorFixedPriceSaleStrategy internal fixedPriceMinter;
@@ -115,8 +115,8 @@ contract ZoraCreator1155Test is Test {
         simpleMinter = new SimpleMinter();
         fixedPriceMinter = new ZoraCreatorFixedPriceSaleStrategy();
 
-        zoraCreator1155Impl = new ZoraCreator1155Impl(zora, address(upgradeGate), address(protocolRewards), address(simpleMinter));
-        target = ZoraCreator1155Impl(payable(address(new Zora1155(address(zoraCreator1155Impl)))));
+        zoraCreator1155Impl = new CoopCreator1155Impl(zora, address(upgradeGate), address(protocolRewards), address(simpleMinter));
+        target = CoopCreator1155Impl(payable(address(new Zora1155(address(zoraCreator1155Impl)))));
 
         adminRole = target.PERMISSION_BIT_ADMIN();
         minterRole = target.PERMISSION_BIT_MINTER();
@@ -1490,7 +1490,7 @@ contract ZoraCreator1155Test is Test {
     }
 
     function test_unauthorizedUpgradeFails() external {
-        address new1155Impl = address(new ZoraCreator1155Impl(zora, address(0x1234), address(protocolRewards), address(0)));
+        address new1155Impl = address(new CoopCreator1155Impl(zora, address(0x1234), address(protocolRewards), address(0)));
 
         vm.expectRevert();
         target.upgradeTo(new1155Impl);
@@ -1502,7 +1502,7 @@ contract ZoraCreator1155Test is Test {
 
         oldImpls[0] = address(zoraCreator1155Impl);
 
-        address new1155Impl = address(new ZoraCreator1155Impl(zora, address(0x1234), address(protocolRewards), makeAddr("timedSaleStrategy")));
+        address new1155Impl = address(new CoopCreator1155Impl(zora, address(0x1234), address(protocolRewards), makeAddr("timedSaleStrategy")));
 
         vm.prank(upgradeGate.owner());
         upgradeGate.registerUpgradePath(oldImpls, new1155Impl);

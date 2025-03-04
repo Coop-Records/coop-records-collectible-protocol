@@ -16,7 +16,7 @@ import {ZoraCreator1155Attribution} from "../../src/delegation/ZoraCreator1155At
 import {TokenCreationConfigV3, PremintConfigV3, MintArguments, ContractWithAdditionalAdminsCreationConfig} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncoding.sol";
 import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
-import {ZoraCreator1155Impl} from "../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
 import {Zora1155} from "../../src/proxies/Zora1155.sol";
@@ -56,7 +56,7 @@ contract PremintERC20Test is Test {
         erc20Minter.initialize(zora, owner, 5, ethReward);
         protocolRewards = new ProtocolRewards();
 
-        zora1155Impl = address(new ZoraCreator1155Impl(zora, address(new UpgradeGate()), address(protocolRewards), makeAddr("timedSaleStrategy")));
+        zora1155Impl = address(new CoopCreator1155Impl(zora, address(new UpgradeGate()), address(protocolRewards), makeAddr("timedSaleStrategy")));
         factoryImpl = address(
             new ZoraCreator1155FactoryImpl(IZoraCreator1155(zora1155Impl), IMinter1155(address(0)), IMinter1155(address(0)), IMinter1155(address(0)))
         );

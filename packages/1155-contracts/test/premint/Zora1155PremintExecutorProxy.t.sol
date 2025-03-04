@@ -6,7 +6,7 @@ import {Zora1155FactoryFixtures} from "../fixtures/Zora1155FactoryFixtures.sol";
 import {Zora1155PremintFixtures} from "../fixtures/Zora1155PremintFixtures.sol";
 import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
 import {Zora1155PremintExecutor} from "../../src/proxies/Zora1155PremintExecutor.sol";
-import {ZoraCreator1155Impl} from "../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "../../src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
@@ -84,7 +84,7 @@ contract Zora1155PremintExecutorProxyTest is Test, IHasContractName {
         uint256 tokenId = preminterAtProxy
         .premintV2{value: mintFeeAmount}(contractConfig, premintConfig, signature, quantityToMint, defaultMintArguments).tokenId;
 
-        assertEq(ZoraCreator1155Impl(payable(deterministicAddress)).balanceOf(collector, tokenId), 1);
+        assertEq(CoopCreator1155Impl(payable(deterministicAddress)).balanceOf(collector, tokenId), 1);
     }
 
     function test_onlyOwnerCanUpgrade() external {

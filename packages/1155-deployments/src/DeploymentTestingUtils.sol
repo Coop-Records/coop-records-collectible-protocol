@@ -10,7 +10,7 @@ import {ZoraCreator1155Attribution} from "@zoralabs/zora-1155-contracts/src/dele
 import {ContractCreationConfig, PremintConfigV2, TokenCreationConfigV2, PremintConfig, TokenCreationConfig, MintArguments, PremintResult} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncoding.sol";
 import {ScriptDeploymentConfig} from "./DeploymentConfig.sol";
-import {ZoraCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 
 contract DeploymentTestingUtils is Script {
     function createAndSignPremintV1(
@@ -76,7 +76,7 @@ contract DeploymentTestingUtils is Script {
             mintArguments
         );
 
-        require(ZoraCreator1155Impl(payable(contractAddress)).delegatedTokenId(premintConfig.uid) == premintResult.tokenId, "token id mismatch");
+        require(CoopCreator1155Impl(payable(contractAddress)).delegatedTokenId(premintConfig.uid) == premintResult.tokenId, "token id mismatch");
     }
 
     function createAndSignPremintV2(
@@ -134,7 +134,7 @@ contract DeploymentTestingUtils is Script {
         // execute the premint
         uint256 tokenId = preminterAtProxy.premintV2{value: mintFee}(contractConfig, premintConfig, signature, quantityToMint, mintArguments).tokenId;
 
-        require(ZoraCreator1155Impl(payable(contractAddress)).delegatedTokenId(premintConfig.uid) == tokenId, "token id not created for uid");
+        require(CoopCreator1155Impl(payable(contractAddress)).delegatedTokenId(premintConfig.uid) == tokenId, "token id not created for uid");
     }
 
     function signPremint(PremintConfigV2 memory premintConfig, address deterministicAddress, uint256 privateKey) private view returns (bytes memory signature) {
