@@ -1,3 +1,0 @@
-[submodule "packages/1155-deployments/_imagine/forge-std"]
-	path = packages/1155-deployments/_imagine/forge-std
-	url = https://github.com/foundry-rs/forge-std
