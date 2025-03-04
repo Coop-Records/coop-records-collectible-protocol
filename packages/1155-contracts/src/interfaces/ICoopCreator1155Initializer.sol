@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 
-interface IZoraCreator1155Initializer {
+interface ICoopCreator1155Initializer {
     function initialize(
         string memory contractName,
         string memory newContractURI,
