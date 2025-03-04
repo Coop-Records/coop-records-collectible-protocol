@@ -7,7 +7,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Coop1155} from "../../src/proxies/Coop1155.sol";
-import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../../src/interfaces/ICoopCreator1155Errors.sol";
 import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {IMinterErrors} from "../../src/interfaces/IMinterErrors.sol";
@@ -500,7 +500,7 @@ contract ZoraCreator1155PreminterTest is Test {
         bytes memory signature = _signPremint(contractAddress, premintConfig, creatorPrivateKey, chainId);
 
         // now call the premint function, using the same config that was used to generate the digest, and the signature
-        vm.expectRevert(IZoraCreator1155Errors.PremintDeleted.selector);
+        vm.expectRevert(ICoopCreator1155Errors.PremintDeleted.selector);
         vm.prank(premintExecutor);
         uint256 newTokenId = preminter.premintV2(contractConfig, premintConfig, signature, quantityToMint, defaultMintArguments).tokenId;
 
@@ -567,7 +567,7 @@ contract ZoraCreator1155PreminterTest is Test {
         // the expected UserMissingRole error
         vm.expectRevert(
             abi.encodeWithSelector(
-                IZoraCreator1155Errors.UserMissingRoleForToken.selector,
+                ICoopCreator1155Errors.UserMissingRoleForToken.selector,
                 address(preminter),
                 newTokenId,
                 CoopCreator1155Impl(payable(address(created1155Contract))).PERMISSION_BIT_SALES()
@@ -591,7 +591,7 @@ contract ZoraCreator1155PreminterTest is Test {
         // have the premint contract try to set royalties config - it should revert
         vm.expectRevert(
             abi.encodeWithSelector(
-                IZoraCreator1155Errors.UserMissingRoleForToken.selector,
+                ICoopCreator1155Errors.UserMissingRoleForToken.selector,
                 address(preminter),
                 newTokenId,
                 CoopCreator1155Impl(payable(address(created1155Contract))).PERMISSION_BIT_FUNDS_MANAGER()
@@ -660,7 +660,7 @@ contract ZoraCreator1155PreminterTest is Test {
         bytes memory signature = _signPremint(preminter.getContractAddress(contractConfig), premintConfig, creatorPrivateKey, chainId);
 
         if (shouldRevert) {
-            vm.expectRevert(IZoraCreator1155Errors.MintNotYetStarted.selector);
+            vm.expectRevert(ICoopCreator1155Errors.MintNotYetStarted.selector);
         }
 
         uint256 mintCost = mintFeeAmount * quantityToMint;
@@ -797,7 +797,7 @@ contract ZoraCreator1155PreminterTest is Test {
         vm.deal(premintExecutor, mintCost);
 
         // try to mint, it should revert
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, newCreator, CONTRACT_BASE_ID, PERMISSION_BIT_MINTER));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, newCreator, CONTRACT_BASE_ID, PERMISSION_BIT_MINTER));
         vm.prank(premintExecutor);
         preminter.premintV2{value: mintCost}(contractConfig, premintConfig2, newCreatorSignature, quantityToMint, defaultMintArguments);
 
@@ -903,7 +903,7 @@ contract ZoraCreator1155PreminterTest is Test {
 
         // now call the premint function, using the same config that was used to generate the digest, and the signature
         vm.prank(executor);
-        vm.expectRevert(IZoraCreator1155Errors.ERC1155_MINT_TO_ZERO_ADDRESS.selector);
+        vm.expectRevert(ICoopCreator1155Errors.ERC1155_MINT_TO_ZERO_ADDRESS.selector);
 
         preminter.premintV2{value: mintCost}(contractConfig, premintConfig, signature, quantityToMint, mintArguments).tokenId;
     }

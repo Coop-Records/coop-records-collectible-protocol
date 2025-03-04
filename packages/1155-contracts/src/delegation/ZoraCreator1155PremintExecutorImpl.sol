@@ -6,7 +6,7 @@ import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/cont
 import {Ownable2StepUpgradeable} from "../utils/ownable/Ownable2StepUpgradeable.sol";
 import {IHasContractName} from "../interfaces/IContractMetadata.sol";
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
-import {IZoraCreator1155Errors} from "../interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../interfaces/ICoopCreator1155Errors.sol";
 import {ICoopCreator1155Factory} from "../interfaces/ICoopCreator1155Factory.sol";
 import {SharedBaseConstants} from "../shared/SharedBaseConstants.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
@@ -35,7 +35,7 @@ contract ZoraCreator1155PremintExecutorImpl is
     Ownable2StepUpgradeable,
     UUPSUpgradeable,
     IHasContractName,
-    IZoraCreator1155Errors,
+    ICoopCreator1155Errors,
     IRewardsErrors,
     ContractVersionBase
 {

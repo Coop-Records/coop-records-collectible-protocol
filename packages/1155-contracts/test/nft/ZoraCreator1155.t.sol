@@ -18,7 +18,7 @@ import {ZoraCreator1155Attribution} from "../../src/delegation/ZoraCreator1155At
 import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncoding.sol";
 import {IHasContractName} from "../../src/interfaces/IContractMetadata.sol";
 
-import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../../src/interfaces/ICoopCreator1155Errors.sol";
 import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IRenderer1155} from "../../src/interfaces/IRenderer1155.sol";
 import {ICoopCreator1155TypesV1} from "../../src/nft/ICoopCreator1155TypesV1.sol";
@@ -258,7 +258,7 @@ contract ZoraCreator1155Test is Test {
     function test_setupNewToken_revertOnlyAdminOrRole() external {
         init();
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, address(this), 0, target.PERMISSION_BIT_MINTER()));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, address(this), 0, target.PERMISSION_BIT_MINTER()));
         target.setupNewToken("test", 1);
     }
 
@@ -303,7 +303,7 @@ contract ZoraCreator1155Test is Test {
     function test_setTokenMetadataRenderer_revertOnlyAdminOrRole() external {
         init();
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, address(this), 0, target.PERMISSION_BIT_METADATA()));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, address(this), 0, target.PERMISSION_BIT_METADATA()));
         target.setTokenMetadataRenderer(0, IRenderer1155(address(0)));
     }
 
@@ -324,7 +324,7 @@ contract ZoraCreator1155Test is Test {
         vm.assume(tokenId != 0);
         init();
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, recipient, tokenId, adminRole));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, recipient, tokenId, adminRole));
         vm.prank(recipient);
         target.addPermission(tokenId, recipient, adminRole);
     }
@@ -401,7 +401,7 @@ contract ZoraCreator1155Test is Test {
         uint256 adminPermissionBit = target.PERMISSION_BIT_ADMIN();
 
         vm.prank(targetUser);
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, targetUser, 0, adminPermissionBit));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, targetUser, 0, adminPermissionBit));
         target.removePermission(0, userWithPermissions, permissions);
 
         assertEq(target.permissions(0, userWithPermissions), permissions);
@@ -463,7 +463,7 @@ contract ZoraCreator1155Test is Test {
         vm.assume(tokenId != 0);
         init();
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, recipient, tokenId, adminRole));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, recipient, tokenId, adminRole));
         vm.prank(recipient);
         target.removePermission(tokenId, address(0), adminRole);
     }
@@ -543,7 +543,7 @@ contract ZoraCreator1155Test is Test {
         uint256 tokenId = target.setupNewToken("test", 1000);
 
         vm.expectRevert(
-            abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, address(this), tokenId, target.PERMISSION_BIT_MINTER())
+            abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, address(this), tokenId, target.PERMISSION_BIT_MINTER())
         );
         target.adminMint(address(0), tokenId, 0, "");
     }
@@ -555,7 +555,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         uint256 tokenId = target.setupNewToken("test", quantity - 1);
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.CannotMintMoreTokens.selector, tokenId, quantity, 0, quantity - 1));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.CannotMintMoreTokens.selector, tokenId, quantity, 0, quantity - 1));
         vm.prank(admin);
         target.adminMint(recipient, tokenId, quantity, "");
     }
@@ -635,7 +635,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         uint256 tokenId = target.setupNewToken("test", 1000);
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.UserMissingRoleForToken.selector, address(0), tokenId, target.PERMISSION_BIT_MINTER()));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.UserMissingRoleForToken.selector, address(0), tokenId, target.PERMISSION_BIT_MINTER()));
         target.mint(SimpleMinter(payable(address(0))), tokenId, 0, defaultRewardsRecipients, "");
     }
 
@@ -651,7 +651,7 @@ contract ZoraCreator1155Test is Test {
 
         target.addPermission(tokenId, address(simpleMinter), adminRole);
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.CannotMintMoreTokens.selector, tokenId, 1001, 0, 1000));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.CannotMintMoreTokens.selector, tokenId, 1001, 0, 1000));
         target.mint{value: totalReward}(simpleMinter, tokenId, 1001, defaultRewardsRecipients, abi.encode(recipient));
 
         vm.stopPrank();
@@ -1301,7 +1301,7 @@ contract ZoraCreator1155Test is Test {
         target.callRenderer(tokenId, abi.encodeWithSelector(SimpleRenderer.setup.selector, "callRender successful"));
         assertEq(target.uri(tokenId), "callRender successful");
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.CallFailed.selector, ""));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.CallFailed.selector, ""));
         target.callRenderer(tokenId, abi.encodeWithSelector(SimpleRenderer.setup.selector, ""));
 
         vm.stopPrank();
@@ -1358,7 +1358,7 @@ contract ZoraCreator1155Test is Test {
         uint256 tokenId = target.setupNewToken("", 1);
         target.setTokenMetadataRenderer(tokenId, renderer);
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.CallFailed.selector, ""));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.CallFailed.selector, ""));
         target.callRenderer(tokenId, "0xfoobar");
     }
 
@@ -1484,7 +1484,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.mint{value: totalValue}(simpleMinter, tokenId, 1000, defaultRewardsRecipients, abi.encode(recipient));
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.ETHWithdrawFailed.selector, simpleMinter, 1 ether));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.ETHWithdrawFailed.selector, simpleMinter, 1 ether));
         vm.prank(address(simpleMinter));
         target.withdraw();
     }
@@ -1747,7 +1747,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(collector);
         target.mint{value: totalReward}(simpleMinter, tokenId, quantity, rewardsRecipients, abi.encode(recipient));
 
-        vm.expectRevert(IZoraCreator1155Errors.CannotReduceMaxSupplyBelowMinted.selector);
+        vm.expectRevert(ICoopCreator1155Errors.CannotReduceMaxSupplyBelowMinted.selector);
         simpleMinter.settleMint(address(target), tokenId, quantity - 1);
     }
 
@@ -1773,7 +1773,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(admin);
         target.removePermission(tokenId, address(simpleMinter), minterRole);
 
-        vm.expectRevert(IZoraCreator1155Errors.OnlyAllowedForRegisteredMinter.selector);
+        vm.expectRevert(ICoopCreator1155Errors.OnlyAllowedForRegisteredMinter.selector);
         simpleMinter.settleMint(address(target), tokenId, 0);
     }
 
@@ -1787,7 +1787,7 @@ contract ZoraCreator1155Test is Test {
         uint256 tokenId = target.setupNewToken("test", initialMaxSupply);
         target.addPermission(tokenId, address(admin), minterRole);
 
-        vm.expectRevert(IZoraCreator1155Errors.OnlyAllowedForTimedSaleStrategy.selector);
+        vm.expectRevert(ICoopCreator1155Errors.OnlyAllowedForTimedSaleStrategy.selector);
         target.reduceSupply(tokenId, 100000);
     }
 }

@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import {PremintConfig, PremintConfigV2, PremintConfigV3, PremintConfigEncoded, TokenCreationConfig, TokenCreationConfigV2, TokenCreationConfigV3} from "../entities/Premint.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
-import {IZoraCreator1155Errors} from "../interfaces/errors/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../interfaces/errors/ICoopCreator1155Errors.sol";
 
 library PremintEncoding {
     string internal constant VERSION_1 = "1";
@@ -56,7 +56,7 @@ library PremintEncoding {
 
             return (abi.encode(config), config.tokenConfig.minter);
         } else {
-            revert IZoraCreator1155Errors.InvalidSignatureVersion();
+            revert ICoopCreator1155Errors.InvalidSignatureVersion();
         }
     }
 }

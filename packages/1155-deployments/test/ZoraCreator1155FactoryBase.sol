@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import "forge-std/Test.sol";
 import {ICoopCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
-import {IZoraCreator1155Errors} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155Errors.sol";
 import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";

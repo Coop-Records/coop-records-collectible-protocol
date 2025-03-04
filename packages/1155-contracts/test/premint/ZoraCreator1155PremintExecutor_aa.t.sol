@@ -7,7 +7,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Coop1155} from "../../src/proxies/Coop1155.sol";
-import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../../src/interfaces/ICoopCreator1155Errors.sol";
 import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {IMinterErrors} from "../../src/interfaces/IMinterErrors.sol";
@@ -164,7 +164,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 mintCost = (mintFeeAmount + premintConfig.tokenConfig.pricePerToken) * quantityToMint;
 
         // this should revert - because the smart wallet param is not a contract.
-        vm.expectRevert(IZoraCreator1155Errors.premintSignerContractNotAContract.selector);
+        vm.expectRevert(ICoopCreator1155Errors.premintSignerContractNotAContract.selector);
         preminter.premint{value: mintCost}(
             contractConfig,
             address(0),
@@ -194,7 +194,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 quantityToMint = 2;
         uint256 mintCost = (mintFeeAmount + premintConfig.tokenConfig.pricePerToken) * quantityToMint;
 
-        vm.expectRevert(abi.encodeWithSelector(IZoraCreator1155Errors.InvalidSigner.selector, bytes4(0)));
+        vm.expectRevert(abi.encodeWithSelector(ICoopCreator1155Errors.InvalidSigner.selector, bytes4(0)));
         preminter.premint{value: mintCost}(
             contractConfig,
             address(0),
@@ -222,7 +222,7 @@ contract ZoraCreator1155PreminterTest is Test {
         // make the signature bad
         bytes memory signature = abi.encodePacked("bad");
 
-        vm.expectRevert(IZoraCreator1155Errors.premintSignerContractFailedToRecoverSigner.selector);
+        vm.expectRevert(ICoopCreator1155Errors.premintSignerContractFailedToRecoverSigner.selector);
         preminter.premint{value: mintCost}(
             contractConfig,
             address(0),
@@ -244,7 +244,7 @@ contract ZoraCreator1155PreminterTest is Test {
         PremintConfigV2 memory premintConfig = makePremintConfigWithCreateReferral(premintExecutor);
 
         // make the signature bad
-        vm.expectRevert(IZoraCreator1155Errors.premintSignerContractNotAContract.selector);
+        vm.expectRevert(ICoopCreator1155Errors.premintSignerContractNotAContract.selector);
         preminter.premint(
             contractConfig,
             address(0),
