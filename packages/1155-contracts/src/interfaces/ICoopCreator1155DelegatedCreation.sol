@@ -20,11 +20,11 @@ interface ISupportsAABasedDelegatedTokenCreation {
     ) external returns (uint256 newTokenId);
 }
 
-interface IZoraCreator1155DelegatedCreation is IHasCreatorAttribution, IHasSupportedPremintSignatureVersions, ISupportsAABasedDelegatedTokenCreation {}
+interface ICoopCreator1155DelegatedCreation is IHasCreatorAttribution, IHasSupportedPremintSignatureVersions, ISupportsAABasedDelegatedTokenCreation {}
 
 // this was the legacy interface which has both functions bundled in it - ideally these would be defined in their
 // own interfaces that can be checked if the interface method is supported.  going forward (above) they are separate
-interface IZoraCreator1155DelegatedCreationLegacy {
+interface ICoopCreator1155DelegatedCreationLegacy {
     event CreatorAttribution(bytes32 structHash, string domainName, string version, address creator, bytes signature);
 
     function supportedPremintSignatureVersions() external pure returns (string[] memory);

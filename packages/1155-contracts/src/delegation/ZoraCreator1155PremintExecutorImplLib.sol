@@ -9,7 +9,7 @@ import {ICoopCreator1155Factory} from "../interfaces/ICoopCreator1155Factory.sol
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {IZoraCreator1155PremintExecutor} from "../interfaces/IZoraCreator1155PremintExecutor.sol";
-import {IZoraCreator1155DelegatedCreation, IZoraCreator1155DelegatedCreationLegacy, ISupportsAABasedDelegatedTokenCreation} from "../interfaces/IZoraCreator1155DelegatedCreation.sol";
+import {ICoopCreator1155DelegatedCreation, ICoopCreator1155DelegatedCreationLegacy, ISupportsAABasedDelegatedTokenCreation} from "../interfaces/ICoopCreator1155DelegatedCreation.sol";
 import {IMintWithRewardsRecipients} from "../interfaces/IMintWithRewardsRecipients.sol";
 import {IMintWithRewardsLegacy} from "../interfaces/IMintWithRewardsLegacy.sol";
 
@@ -133,12 +133,12 @@ library ZoraCreator1155PremintExecutorImplLib {
                 firstMinter,
                 signerContract
             );
-        } else if (tokenContract.supportsInterface(type(IZoraCreator1155DelegatedCreationLegacy).interfaceId)) {
+        } else if (tokenContract.supportsInterface(type(ICoopCreator1155DelegatedCreationLegacy).interfaceId)) {
             if (signerContract != address(0)) {
                 revert("Smart contract signing not supported on version of 1155 contract");
             }
 
-            tokenId = IZoraCreator1155DelegatedCreationLegacy(address(tokenContract)).delegateSetupNewToken(
+            tokenId = ICoopCreator1155DelegatedCreationLegacy(address(tokenContract)).delegateSetupNewToken(
                 premintConfig,
                 premintConfigVersion,
                 signature,
