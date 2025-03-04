@@ -105,85 +105,65 @@ The goal is to help you maintain a big picture as well as the progress of the ta
 - Use `--verifier blockscout` and proper verifier URL for Abstract testnet contract verification
 - Keep broadcast logs clean by only tracking `run-latest.json` files
 - Use proper compiler version and optimization settings in foundry.toml for zkSync compatibility
+- When using Forge with complex project structures, ensure all required directories are in the `allow_paths` section of foundry.toml
+- When working with projects that use multiple import paths for the same contracts, standardize the imports to avoid verification issues
 
 # Scratchpad
 
-## Current Task: Create deploy-protocol Script
+## Current Task: Refactor ZoraCreator1155Impl to CoopCreator1155Impl
 
 ### Task Description
 
-Create a `deploy-protocol` script that will automate the deployment of the latest version of the collectibles protocol to any desired network.
+Refactor the `ZoraCreator1155Impl` contract to be renamed as `CoopCreator1155Impl` as specified in the roadmap.
 
 ### Analysis & Requirements
 
-1. Script Requirements:
+1. Identify all occurrences of `ZoraCreator1155Impl` in the codebase
+2. Rename the contract to `CoopCreator1155Impl`
+3. Update all imports and references to the contract
+4. Ensure all tests and deployment scripts continue to work
 
-   - Execute all deployment steps from README
-   - Support multiple networks
-   - Handle environment setup
-   - Verify contracts automatically
-   - Update addresses files
+### Findings
 
-2. Steps to Automate:
-   - Load environment variables
-   - Deploy implementations
-   - Copy deployed contracts
-   - Deploy factory proxy
-   - Update addresses
-   - Verify all contracts
+1. Main Contract Location:
+
+   - The `ZoraCreator1155Impl` contract is located at `packages/1155-contracts/src/nft/ZoraCreator1155Impl.sol`
+   - It's a large contract (892 lines) that implements the core functionality for the 1155 token standard
+
+2. Import References:
+
+   - The contract is imported in multiple files across the codebase
+   - Key files that import it include:
+     - `packages/1155-deployments/src/ZoraDeployerBase.sol`
+     - `packages/1155-deployments/src/ZoraDeployerUtils.sol`
+     - Various test files in `packages/1155-contracts/test/`
+     - Factory implementation in `packages/1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol`
+
+3. Interface Dependencies:
+   - The contract implements several interfaces, including `IZoraCreator1155` and `IZoraCreator1155Initializer`
+   - These interfaces are defined in the `packages/1155-contracts/src/interfaces/` directory
 
 ### Action Plan
 
-[X] Step 1: Create Base Script Structure
-
-Added `deploy-protocol` script to package.json that:
-
-- Sources environment variables
-- Deploys implementation contracts
-- Copies deployed contract addresses
-- Deploys factory proxy
-- Updates addresses file
-- Verifies all contracts
-
-Required Environment Variables:
-
-- RPC_URL: Network RPC endpoint
-- PRIVATE_KEY: Deployer wallet private key
-- ETHERSCAN_API_KEY: API key for contract verification
-
-[X] Step 2: Implement Core Deployment Logic
-
-- Added implementation deployment commands
-- Added factory deployment commands
-- Added contract verification commands
-- Added address update commands
-
-[X] Step 3: Add Error Handling & Validation
-
-- Environment variables are validated by forge
-- Dependencies checked through pnpm
-- Error handling through forge and script output
-- Deployment validation through verification
-
-[X] Step 4: Add Documentation
-
-- Added usage instructions to README.md
-- Documented required environment variables
-- Preserved manual deployment steps
-- Added quick deploy command documentation
+[X] Step 1: Locate the `ZoraCreator1155Impl` contract
+[X] Step 2: Create a new `CoopCreator1155Impl` contract based on the existing implementation
+[X] Rename the contract
+[X] Update NatSpec documentation
+[X] Keep all functionality the same
+[X] Step 3: Update all imports and references
+[X] Update imports in `ZoraDeployerBase.sol`
+[X] Update imports in `ZoraDeployerUtils.sol`
+[X] Update references in `ZoraCreator1155FactoryImpl.sol`
+[ ] Step 4: Update deployment scripts
+[ ] Ensure deployment scripts use the new contract name
+[ ] Step 5: Run tests to ensure everything works
 
 ### Progress
 
-Current Status: ✅ All tasks completed!
+Current Status: Created the new `CoopCreator1155Impl` contract and updated imports and references in key files.
 
-Completed steps:
+Next steps:
 
-1. [x] Create base script structure
-2. [x] Implement core deployment logic
-3. [x] Add error handling
-4. [x] Add documentation
-
-The deploy-protocol script has been successfully created and documented. Users can now deploy the protocol using either:
-
-1. Quick deploy: `pnpm deploy-protocol`
-2. Manual steps: Following the detailed steps in README.md
+1. Check for any remaining references to `ZoraCreator1155Impl` in other files
+2. Update deployment scripts if needed
+3. Run tests to ensure everything works correctly

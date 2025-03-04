@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import {Zora1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155Factory.sol";
-import {ZoraCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
 import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";
@@ -48,7 +48,7 @@ library ZoraDeployerUtils {
     ) internal returns (address factoryImplAddress, address contract1155ImplAddress, string memory contract1155ImplVersion) {
         ensureValidUpgradeGate(upgradeGateAddress);
 
-        ZoraCreator1155Impl zoraCreator1155Impl = new ZoraCreator1155Impl(mintFeeRecipient, upgradeGateAddress, protocolRewards, timedSaleStrategy);
+        CoopCreator1155Impl zoraCreator1155Impl = new CoopCreator1155Impl(mintFeeRecipient, upgradeGateAddress, protocolRewards, timedSaleStrategy);
 
         contract1155ImplVersion = zoraCreator1155Impl.contractVersion();
 
@@ -146,7 +146,7 @@ library ZoraDeployerUtils {
     function deployTestContractForVerification(address factoryProxy, address admin) internal returns (address) {
         bytes[] memory initUpdate = new bytes[](1);
         initUpdate[0] = abi.encodeWithSelector(
-            ZoraCreator1155Impl.setupNewToken.selector,
+            CoopCreator1155Impl.setupNewToken.selector,
             "ipfs://bafkreigu544g6wjvqcysurpzy5pcskbt45a5f33m6wgythpgb3rfqi3lzi",
             100
         );
