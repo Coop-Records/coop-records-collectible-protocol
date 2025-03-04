@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import "forge-std/Test.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
-import {ZoraCreator1155Impl} from "../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
 import {IZoraCreator1155Factory} from "../../src/interfaces/IZoraCreator1155Factory.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
@@ -36,7 +36,7 @@ contract ZoraCreator1155FactoryTest is Test {
         address mockTimedSaleStrategy = makeAddr("timedSaleStrategy");
 
         ProtocolRewards protocolRewards = new ProtocolRewards();
-        ZoraCreator1155Impl zoraCreator1155Impl = new ZoraCreator1155Impl(zora, address(upgradeGate), address(protocolRewards), mockTimedSaleStrategy);
+        CoopCreator1155Impl zoraCreator1155Impl = new CoopCreator1155Impl(zora, address(upgradeGate), address(protocolRewards), mockTimedSaleStrategy);
 
         factoryImpl = new ZoraCreator1155FactoryImpl(zoraCreator1155Impl, IMinter1155(address(1)), IMinter1155(address(2)), IMinter1155(address(3)));
         factory = ZoraCreator1155FactoryImpl(address(factoryProxy));
@@ -93,7 +93,7 @@ contract ZoraCreator1155FactoryTest is Test {
             admin,
             initSetup
         );
-        ZoraCreator1155Impl target = ZoraCreator1155Impl(payable(deployedAddress));
+        CoopCreator1155Impl target = CoopCreator1155Impl(payable(deployedAddress));
 
         ICreatorRoyaltiesControl.RoyaltyConfiguration memory config = target.getRoyalties(0);
         assertEq(config.royaltyMintSchedule, 0);
@@ -289,7 +289,7 @@ contract ZoraCreator1155FactoryTest is Test {
         // * create a new version of the erc1155 implementation
         // * create a new factory that points to that new erc1155 implementation,
         // * upgrade the proxy to point to the new factory
-        IZoraCreator1155 newZoraCreator = new ZoraCreator1155Impl(zora, address(factory), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
+        IZoraCreator1155 newZoraCreator = new CoopCreator1155Impl(zora, address(factory), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
 
         ZoraCreator1155FactoryImpl newFactoryImpl = new ZoraCreator1155FactoryImpl(
             newZoraCreator,
@@ -335,10 +335,10 @@ contract ZoraCreator1155FactoryTest is Test {
         // now create deterministically, address should match expected address
         address createdAddress = factory.createContractDeterministic(uri, nameA, royaltyConfig, payable(contractAdmin), initSetup);
 
-        ZoraCreator1155Impl creatorProxy = ZoraCreator1155Impl(payable(createdAddress));
+        CoopCreator1155Impl creatorProxy = CoopCreator1155Impl(payable(createdAddress));
 
         // 2. upgrade the created contract by creating a new contract and upgrading the existing one to point to it.
-        IZoraCreator1155 newZoraCreator = new ZoraCreator1155Impl(zora, address(upgradeGate), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
+        IZoraCreator1155 newZoraCreator = new CoopCreator1155Impl(zora, address(upgradeGate), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
 
         address[] memory baseImpls = new address[](1);
         baseImpls[0] = address(factory.zora1155Impl());

@@ -43,7 +43,7 @@ output_abi("EditionMetadataRenderer", editionMetadataRenderer.abi);
 output_abi("DropMetadataRenderer", dropMetadataRenderer.abi);
 
 output_abi("ZoraCreator1155FactoryImpl", zoraCreator1155FactoryImplABI);
-output_abi("ZoraCreator1155Impl", zoraCreator1155ImplABI);
+output_abi("CoopCreator1155Impl", zoraCreator1155ImplABI);
 output_abi(
   "ZoraCreator1155PremintExecutorImpl",
   zoraCreator1155PremintExecutorImplABI,

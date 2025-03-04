@@ -43,10 +43,10 @@ import {IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/IERC1155Re
 import {IReduceSupply} from "@zoralabs/shared-contracts/interfaces/IReduceSupply.sol";
 
 /// Imagine. Mint. Enjoy.
-/// @title ZoraCreator1155Impl
+/// @title CoopCreator1155Impl
 /// @notice The core implementation contract for a creator's 1155 token
 /// @author @iainnash / @tbtstl
-contract ZoraCreator1155Impl is
+contract CoopCreator1155Impl is
     IZoraCreator1155,
     IZoraCreator1155Initializer,
     ContractVersionBase,
@@ -817,7 +817,7 @@ contract ZoraCreator1155Impl is
     }
 
     function contractName() external view returns (string memory) {
-        return "Zora Creator 1155";
+        return "Coop Creator 1155";
     }
 
     /// @notice Returns the current implementation address

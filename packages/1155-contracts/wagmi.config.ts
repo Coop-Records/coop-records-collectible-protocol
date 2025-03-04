@@ -10,7 +10,7 @@ export default defineConfig({
       },
       include: [
         "ZoraCreator1155FactoryImpl",
-        "ZoraCreator1155Impl",
+        "CoopCreator1155Impl",
         "ZoraCreatorFixedPriceSaleStrategy",
         "ZoraCreatorMerkleMinterStrategy",
         "ZoraCreatorRedeemMinterFactory",

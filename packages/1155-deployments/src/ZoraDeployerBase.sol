@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
-import {ZoraCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {Zora1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155Factory.sol";
 import {ICreatorRoyaltiesControl} from "@zoralabs/zora-1155-contracts/src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ScriptDeploymentConfig, Deployment, ChainConfig} from "./DeploymentConfig.sol";
@@ -74,7 +74,7 @@ abstract contract ZoraDeployerBase is DeploymentTestingUtils, ScriptDeploymentCo
 
         deployment.factoryImpl = address(
             new ZoraCreator1155FactoryImpl({
-                _zora1155Impl: ZoraCreator1155Impl(payable(deployment.contract1155Impl)),
+                _zora1155Impl: CoopCreator1155Impl(payable(deployment.contract1155Impl)),
                 _merkleMinter: IMinter1155(deployment.merkleMintSaleStrategy),
                 _redeemMinterFactory: IMinter1155(deployment.redeemMinterFactory),
                 _fixedPriceMinter: IMinter1155(deployment.fixedPriceSaleStrategy)

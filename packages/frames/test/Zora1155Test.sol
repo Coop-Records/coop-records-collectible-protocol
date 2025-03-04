@@ -6,7 +6,7 @@ import "forge-std/Test.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {RewardsSettings} from "@zoralabs/protocol-rewards/src/abstract/RewardSplits.sol";
 import {UpgradeGate} from "@zoralabs/zora-1155-contracts/src/upgrades/UpgradeGate.sol";
-import {ZoraCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {Zora1155} from "@zoralabs/zora-1155-contracts/src/proxies/Zora1155.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from
     "@zoralabs/zora-1155-contracts/src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
@@ -21,8 +21,8 @@ contract Zora1155Test is Test {
 
     UpgradeGate internal upgradeGate;
     ProtocolRewards internal protocolRewards;
-    ZoraCreator1155Impl internal zora1155Impl;
-    ZoraCreator1155Impl internal zora1155;
+    CoopCreator1155Impl internal zora1155Impl;
+    CoopCreator1155Impl internal zora1155;
     uint256 internal zora1155TokenId;
 
     function setUp() public virtual {
@@ -33,8 +33,8 @@ contract Zora1155Test is Test {
         upgradeGate = new UpgradeGate();
         upgradeGate.initialize(zora);
 
-        zora1155Impl = new ZoraCreator1155Impl(zora, address(upgradeGate), address(protocolRewards));
-        zora1155 = ZoraCreator1155Impl(payable(address(new Zora1155(address(zora1155Impl)))));
+        zora1155Impl = new CoopCreator1155Impl(zora, address(upgradeGate), address(protocolRewards));
+        zora1155 = CoopCreator1155Impl(payable(address(new Zora1155(address(zora1155Impl)))));
         zora1155.initialize(
             "test",
             "test",

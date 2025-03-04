@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import "forge-std/Test.sol";
 
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
-import {ZoraCreator1155Impl} from "../../../src/nft/ZoraCreator1155Impl.sol";
+import {CoopCreator1155Impl} from "../../../src/nft/CoopCreator1155Impl.sol";
 import {Zora1155} from "../../../src/proxies/Zora1155.sol";
 import {IZoraCreator1155Errors} from "../../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IMinter1155} from "../../../src/interfaces/IMinter1155.sol";
@@ -15,8 +15,8 @@ import {ILimitedMintPerAddressErrors} from "../../../src/interfaces/ILimitedMint
 import {IFixedPriceAllowedMintersStrategy, FixedPriceAllowedMintersStrategy} from "../../../src/minters/fixed-price/FixedPriceAllowedMintersStrategy.sol";
 
 contract FixedPriceAllowedMintersStrategyTest is Test {
-    ZoraCreator1155Impl internal targetImpl;
-    ZoraCreator1155Impl internal target;
+    CoopCreator1155Impl internal targetImpl;
+    CoopCreator1155Impl internal target;
     FixedPriceAllowedMintersStrategy internal fixedPrice;
 
     address payable internal admin;
@@ -43,8 +43,8 @@ contract FixedPriceAllowedMintersStrategyTest is Test {
         minters = new address[](1);
         minters[0] = allowedMinter;
 
-        targetImpl = new ZoraCreator1155Impl(zora, address(0x1234), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
-        target = ZoraCreator1155Impl(payable(address(new Zora1155(address(targetImpl)))));
+        targetImpl = new CoopCreator1155Impl(zora, address(0x1234), address(new ProtocolRewards()), makeAddr("timedSaleStrategy"));
+        target = CoopCreator1155Impl(payable(address(new Zora1155(address(targetImpl)))));
 
         target.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), admin, new bytes[](0));
         fixedPrice = new FixedPriceAllowedMintersStrategy();

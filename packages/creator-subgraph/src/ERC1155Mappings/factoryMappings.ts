@@ -10,7 +10,7 @@ import {
   ZoraCreateContract,
 } from "../../generated/schema";
 import {
-  ZoraCreator1155Impl as ZoraCreator1155ImplTemplate,
+  CoopCreator1155Impl as ZoraCreator1155ImplTemplate,
   MetadataInfo as MetadataInfoTemplate,
   ZoraCreatorFixedPriceSaleStrategy,
   ZoraCreatorMerkleMinterStrategy,
@@ -19,7 +19,7 @@ import {
 import { makeTransaction } from "../common/makeTransaction";
 import { getIPFSHostFromURI } from "../common/getIPFSHostFromURI";
 import { TOKEN_STANDARD_ERC1155 } from "../constants/tokenStandard";
-import { ZoraCreator1155Impl } from "../../generated/templates/ZoraCreator1155Impl/ZoraCreator1155Impl";
+import { CoopCreator1155Impl } from "../../generated/templates/CoopCreator1155Impl/CoopCreator1155Impl";
 import { getContractId } from "../common/getContractId";
 import {
   extractIPFSIDFromContract,
@@ -29,14 +29,14 @@ import { BigInt } from "@graphprotocol/graph-ts";
 
 export function handleNewContractCreated(event: SetupNewContract): void {
   const createdContract = new ZoraCreateContract(
-    getContractId(event.params.newContract)
+    getContractId(event.params.newContract),
   );
 
   createdContract.address = event.params.newContract;
   createdContract.contractStandard = TOKEN_STANDARD_ERC1155;
   createdContract.contractURI = event.params.contractURI;
 
-  // The creator being msg.sender cannot be guaranteed for premint 
+  // The creator being msg.sender cannot be guaranteed for premint
   createdContract.creator = event.params.defaultAdmin;
 
   createdContract.initialDefaultAdmin = event.params.defaultAdmin;
@@ -61,7 +61,7 @@ export function handleNewContractCreated(event: SetupNewContract): void {
   createdContract.createdAtBlock = event.block.number;
 
   // query for more information about contract
-  const impl = ZoraCreator1155Impl.bind(event.params.newContract);
+  const impl = CoopCreator1155Impl.bind(event.params.newContract);
 
   // temporary fix: testnet deploy temporarily removed this function
   const attemptMintFee = impl.try_mintFee();
@@ -74,10 +74,10 @@ export function handleNewContractCreated(event: SetupNewContract): void {
   createdContract.contractStandard = TOKEN_STANDARD_ERC1155;
 
   createdContract.metadataIPFSID = extractIPFSIDFromContract(
-    impl.try_contractURI()
+    impl.try_contractURI(),
   );
   createdContract.metadata = loadMetadataInfoFromID(
-    createdContract.metadataIPFSID
+    createdContract.metadataIPFSID,
   );
 
   createdContract.save();
@@ -87,7 +87,7 @@ export function handleNewContractCreated(event: SetupNewContract): void {
 
 export function handle1155FactoryUpgraded(event: Upgraded): void {
   const upgrade = new Upgrade(
-    `${event.transaction.hash.toHex()}-${event.transactionLogIndex}`
+    `${event.transaction.hash.toHex()}-${event.transactionLogIndex}`,
   );
   const factory = new ZoraCreate1155Factory(event.address.toHex());
   const creator = ZoraCreator1155FactoryImpl.bind(event.address);

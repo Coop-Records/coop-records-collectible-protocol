@@ -41,7 +41,7 @@ contract ZoraCreator1155FactoryImpl is IZoraCreator1155Factory, Ownable2StepUpgr
 
     /// @notice The name of the sale strategy
     function contractName() external pure returns (string memory) {
-        return "ZORA 1155 Contract Factory";
+        return "COOP 1155 Contract Factory";
     }
 
     /// @notice The default minters for new 1155 contracts
