@@ -81,7 +81,7 @@ contract CoopCreator1155Impl is
     /// @notice Timed sale strategy allowed to reduce supply
     address internal immutable timedSaleStrategy;
 
-    uint256 constant MINT_FEE = 0.000111 ether;
+    uint256 constant MINT_FEE = 0.0004 ether;
 
     /// @notice This is the immutable constructor for defining onchain addresses that is updated on contract updates
     /// @param _mintFeeRecipient Recipient for the mint fee (used in rewards) (cannot be 0)

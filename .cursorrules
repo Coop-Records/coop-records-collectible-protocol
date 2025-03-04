@@ -107,63 +107,96 @@ The goal is to help you maintain a big picture as well as the progress of the ta
 - Use proper compiler version and optimization settings in foundry.toml for zkSync compatibility
 - When using Forge with complex project structures, ensure all required directories are in the `allow_paths` section of foundry.toml
 - When working with projects that use multiple import paths for the same contracts, standardize the imports to avoid verification issues
+- When renaming contracts, make sure to update all references including those in node_modules or create symbolic links
 
 # Scratchpad
 
-## Current Task: Refactor ZoraCreator1155Impl to CoopCreator1155Impl
+## Current Task: Update Protocol Fee Structure
 
 ### Task Description
 
-Refactor the `ZoraCreator1155Impl` contract to be renamed as `CoopCreator1155Impl` as specified in the roadmap.
+Update the protocol fee structure to align with the Coop strategy as specified in the roadmap:
+
+- Total fee: 0.0004 ETH
+- Distribution:
+  - 75% to the creatorReward (0.0003 ETH)
+  - 12.5% to the mintReferalReward (0.00005 ETH)
+  - 12.5% to Zora (0.00005 ETH)
+  - 0% to createReferralReward (0 ETH)
 
 ### Analysis & Requirements
 
-1. Identify all occurrences of `ZoraCreator1155Impl` in the codebase
-2. Rename the contract to `CoopCreator1155Impl`
-3. Update all imports and references to the contract
-4. Ensure all tests and deployment scripts continue to work
-
-### Findings
-
-1. Main Contract Location:
-
-   - The `ZoraCreator1155Impl` contract is located at `packages/1155-contracts/src/nft/ZoraCreator1155Impl.sol`
-   - It's a large contract (892 lines) that implements the core functionality for the 1155 token standard
-
-2. Import References:
-
-   - The contract is imported in multiple files across the codebase
-   - Key files that import it include:
-     - `packages/1155-deployments/src/ZoraDeployerBase.sol`
-     - `packages/1155-deployments/src/ZoraDeployerUtils.sol`
-     - Various test files in `packages/1155-contracts/test/`
-     - Factory implementation in `packages/1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol`
-
-3. Interface Dependencies:
-   - The contract implements several interfaces, including `IZoraCreator1155` and `IZoraCreator1155Initializer`
-   - These interfaces are defined in the `packages/1155-contracts/src/interfaces/` directory
+1. Identify where the fee structure is defined in the codebase
+2. Understand the current fee distribution mechanism
+3. Update the fee amounts and distribution percentages
+4. Ensure all calculations are accurate and maintain the total fee amount
+5. Update any related documentation or comments
 
 ### Action Plan
 
-[X] Step 1: Locate the `ZoraCreator1155Impl` contract
-[X] Step 2: Create a new `CoopCreator1155Impl` contract based on the existing implementation
-[X] Rename the contract
-[X] Update NatSpec documentation
-[X] Keep all functionality the same
-[X] Step 3: Update all imports and references
-[X] Update imports in `ZoraDeployerBase.sol`
-[X] Update imports in `ZoraDeployerUtils.sol`
-[X] Update references in `ZoraCreator1155FactoryImpl.sol`
-[ ] Step 4: Update deployment scripts
-[ ] Ensure deployment scripts use the new contract name
-[ ] Step 5: Run tests to ensure everything works
+[X] Step 1: Locate the fee structure in the codebase
+[X] Identify the contract(s) that define the protocol fees
+[X] Understand how fees are calculated and distributed
 
-### Progress
+[X] Step 2: Analyze the current implementation
+[X] Determine if fees are hardcoded or configurable
+[X] Identify all places where fee calculations occur
+[X] Understand the reward distribution mechanism
 
-Current Status: Created the new `CoopCreator1155Impl` contract and updated imports and references in key files.
+[ ] Step 3: Implement the changes
+[ ] Update the fee amounts to match the new structure
+[ ] Modify the distribution percentages
+[ ] Ensure the total fee remains at 0.0004 ETH
+[ ] Update any related constants or variables
 
-Next steps:
+[ ] Step 4: Test the changes
+[ ] Write or update tests to verify the new fee structure
+[ ] Ensure all fee calculations are correct
+[ ] Verify that rewards are distributed according to the new percentages
 
-1. Check for any remaining references to `ZoraCreator1155Impl` in other files
-2. Update deployment scripts if needed
-3. Run tests to ensure everything works correctly
+[ ] Step 5: Documentation
+[ ] Update NatSpec comments to reflect the new fee structure
+[ ] Document any changes to the fee mechanism
+[ ] Update the ROADMAP.md to mark this task as completed
+
+### Research Findings
+
+1. **Current Fee Structure:**
+
+   - The mint fee is defined in `CoopCreator1155Impl.sol` as `MINT_FEE = 0.000111 ether`
+   - The reward distribution is handled by the `RewardSplitsLib` in `packages/protocol-rewards/src/abstract/RewardSplits.sol`
+   - Current distribution percentages:
+     - For free mints:
+       - Creator: 42.8571% (CREATOR_REWARD_PCT)
+       - Create Referral: 14.2285% (CREATE_REFERRAL_FREE_MINT_REWARD_PCT)
+       - Mint Referral: 14.2285% (MINT_REFERRAL_FREE_MINT_REWARD_PCT)
+       - First Minter: 14.2285% (FIRST_MINTER_REWARD_PCT)
+       - Zora: 14.2285% (ZORA_FREE_MINT_REWARD_PCT)
+     - For paid mints:
+       - Creator: 0% (no creator reward for paid mints)
+       - Create Referral: 28.5714% (CREATE_REFERRAL_PAID_MINT_REWARD_PCT)
+       - Mint Referral: 28.5714% (MINT_REFERRAL_PAID_MINT_REWARD_PCT)
+       - First Minter: 14.2285% (FIRST_MINTER_REWARD_PCT)
+       - Zora: 28.5714% (ZORA_PAID_MINT_REWARD_PCT)
+
+2. **Required Changes:**
+
+   - Update `MINT_FEE` in `CoopCreator1155Impl.sol` from 0.000111 ETH to 0.0004 ETH
+   - Modify percentage constants in `RewardSplitsLib`:
+     - CREATOR_REWARD_PCT: 75% (from 42.8571%)
+     - MINT_REFERRAL_FREE_MINT_REWARD_PCT: 12.5% (from 14.2285%)
+     - ZORA_FREE_MINT_REWARD_PCT: 12.5% (from 14.2285%)
+     - CREATE_REFERRAL_FREE_MINT_REWARD_PCT: 0% (from 14.2285%)
+     - For paid mints, adjust percentages accordingly
+
+3. **Implementation Considerations:**
+   - The fee distribution is calculated using percentages of the total reward
+   - The `RewardSplitsLib` is used by both ERC-721 and ERC-1155 contracts
+   - The `getRewards` function calculates the actual reward amounts based on the percentages
+   - The `zoraReward` is calculated as the remainder after all other rewards are subtracted from the total
+
+### Next Steps
+
+1. Implement the changes to the fee structure in the identified files
+2. Update the tests to verify the new fee distribution works correctly
+3. Document the changes in the codebase and update the ROADMAP.md
