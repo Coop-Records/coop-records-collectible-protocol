@@ -7,11 +7,12 @@ import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Error
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
-import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {ProxyShim} from "../../src/utils/ProxyShim.sol";
 import {IUpgradeGate} from "../../src/interfaces/IUpgradeGate.sol";
 import {UpgradeGate} from "../../src/upgrades/UpgradeGate.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 
 library Zora1155FactoryFixtures {
     function setupZora1155Impl(
@@ -29,10 +30,10 @@ library Zora1155FactoryFixtures {
         IZoraCreator1155 zoraCreator1155Impl,
         IMinter1155 fixedPriceMinter,
         address admin
-    ) internal returns (ZoraCreator1155FactoryImpl factoryImpl) {
-        factoryImpl = new ZoraCreator1155FactoryImpl(zoraCreator1155Impl, IMinter1155(address(1)), fixedPriceMinter, IMinter1155(address(3)));
+    ) internal returns (CoopCreator1155FactoryImpl factoryImpl) {
+        factoryImpl = new CoopCreator1155FactoryImpl(zoraCreator1155Impl, IMinter1155(address(1)), fixedPriceMinter, IMinter1155(address(3)));
 
-        ZoraCreator1155FactoryImpl factoryAtProxy = ZoraCreator1155FactoryImpl(address(factoryProxy));
+        CoopCreator1155FactoryImpl factoryAtProxy = CoopCreator1155FactoryImpl(address(factoryProxy));
 
         factoryAtProxy.upgradeTo(address(factoryImpl));
         factoryAtProxy.initialize(admin);
@@ -47,9 +48,9 @@ library Zora1155FactoryFixtures {
         address zora,
         IUpgradeGate upgradeGate,
         IMinter1155 fixedPriceMinter
-    ) internal returns (ProtocolRewards rewards, CoopCreator1155Impl zoraCreator1155Impl, ZoraCreator1155FactoryImpl factoryImpl) {
+    ) internal returns (ProtocolRewards rewards, CoopCreator1155Impl zoraCreator1155Impl, CoopCreator1155FactoryImpl factoryImpl) {
         (rewards, zoraCreator1155Impl, ) = setupZora1155Impl(zora, upgradeGate);
-        factoryImpl = new ZoraCreator1155FactoryImpl(zoraCreator1155Impl, IMinter1155(address(1)), fixedPriceMinter, IMinter1155(address(3)));
+        factoryImpl = new CoopCreator1155FactoryImpl(zoraCreator1155Impl, IMinter1155(address(1)), fixedPriceMinter, IMinter1155(address(3)));
     }
 
     function setup1155AndFactoryProxy(

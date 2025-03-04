@@ -6,7 +6,7 @@ import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/Z
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
-import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {ProxyShim} from "../../src/utils/ProxyShim.sol";
 import {PremintConfig, ContractCreationConfig, TokenCreationConfigV2, TokenCreationConfig} from "../../src/delegation/ZoraCreator1155Attribution.sol";

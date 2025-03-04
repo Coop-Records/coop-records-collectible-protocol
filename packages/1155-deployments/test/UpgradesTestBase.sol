@@ -3,7 +3,7 @@ pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
 import {Vm} from "forge-std/Vm.sol";
-import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "@zoralabs/zora-1155-contracts/src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
 import {ForkDeploymentConfig, Deployment, ChainConfig} from "../src/DeploymentConfig.sol";
 import {ZoraDeployerUtils} from "../src/ZoraDeployerUtils.sol";
@@ -71,7 +71,7 @@ contract UpgradesTestBase is ForkDeploymentConfig, DeploymentTestingUtils, Test 
         address upgradeTarget = deployment.factoryProxy;
         address targetImpl = deployment.factoryImpl;
 
-        bool upgradeNeeded = targetImpl != ZoraCreator1155FactoryImpl(upgradeTarget).implementation();
+        bool upgradeNeeded = targetImpl != CoopCreator1155FactoryImpl(upgradeTarget).implementation();
         bytes memory upgradeCalldata;
 
         if (upgradeNeeded) {

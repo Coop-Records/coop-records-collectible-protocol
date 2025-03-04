@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import "forge-std/Test.sol";
 import {Ownable2StepUpgradeable} from "../../src/utils/ownable/Ownable2StepUpgradeable.sol";
 import {IOwnable2StepUpgradeable} from "../../src/utils/ownable/IOwnable2StepUpgradeable.sol";
-import {ZoraCreator1155FactoryImpl} from "../../src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {Zora1155Factory} from "../../src/proxies/Zora1155Factory.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
@@ -17,7 +17,7 @@ contract Ownable2StepUpgradableTest is Test {
 
     function setUp() external {
         owner = vm.addr(0x1);
-        ZoraCreator1155FactoryImpl factory = new ZoraCreator1155FactoryImpl(
+        CoopCreator1155FactoryImpl factory = new CoopCreator1155FactoryImpl(
             IZoraCreator1155(owner),
             IMinter1155(address(0)),
             IMinter1155(address(0)),

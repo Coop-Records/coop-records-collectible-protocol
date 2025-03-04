@@ -3,7 +3,7 @@ pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
 import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
-import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {IZoraCreator1155Errors} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
@@ -118,7 +118,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
         Deployment memory deployment = getDeployment();
 
         address factoryAddress = deployment.factoryProxy;
-        ZoraCreator1155FactoryImpl factory = ZoraCreator1155FactoryImpl(factoryAddress);
+        CoopCreator1155FactoryImpl factory = CoopCreator1155FactoryImpl(factoryAddress);
 
         assertEq(getChainConfig().factoryOwner, IOwnable(factoryAddress).owner(), "incorrect owner");
 

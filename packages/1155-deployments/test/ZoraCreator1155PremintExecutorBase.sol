@@ -7,12 +7,12 @@ import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncodin
 import {ZoraCreator1155Attribution} from "@zoralabs/zora-1155-contracts/src/delegation/ZoraCreator1155Attribution.sol";
 import {ContractCreationConfig, PremintConfig, PremintConfigV2, TokenCreationConfig, MintArguments} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {ZoraCreator1155PremintExecutorImpl} from "@zoralabs/zora-1155-contracts/src/delegation/ZoraCreator1155PremintExecutorImpl.sol";
-import {ZoraCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/ZoraCreator1155FactoryImpl.sol";
+import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {IZoraCreator1155PremintExecutor} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155PremintExecutor.sol";
 import {Zora1155PremintFixtures} from "../src/Zora1155PremintFixtures.sol";
 
 contract ZoraCreator1155PremintExecutorBase is ForkDeploymentConfig, Test {
-    ZoraCreator1155FactoryImpl factory;
+    CoopCreator1155FactoryImpl factory;
     ZoraCreator1155PremintExecutorImpl preminter;
     address creator;
     uint256 creatorPrivateKey;
@@ -30,7 +30,7 @@ contract ZoraCreator1155PremintExecutorBase is ForkDeploymentConfig, Test {
         address preminterAddress = getDeployment().preminterProxy;
 
         // override local preminter to use the addresses from the chain
-        factory = ZoraCreator1155FactoryImpl(getDeployment().factoryProxy);
+        factory = CoopCreator1155FactoryImpl(getDeployment().factoryProxy);
         preminter = ZoraCreator1155PremintExecutorImpl(preminterAddress);
 
         (creator, creatorPrivateKey) = makeAddrAndKey("creator");
