@@ -23,4 +23,5 @@ jobs:
       - name: Run Forge Tests
         run: |
           cd packages/1155-contracts
+          pnpm i
           forge test -vvv
