@@ -13,7 +13,7 @@ import {ReentrancyGuardUpgradeable} from "@zoralabs/openzeppelin-contracts-upgra
 import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import {MathUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/utils/math/MathUpgradeable.sol";
 
-import {IZoraCreator1155} from "../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155Initializer} from "../interfaces/IZoraCreator1155Initializer.sol";
 import {IERC7572} from "../interfaces/IERC7572.sol";
 import {ContractVersionBase} from "../version/ContractVersionBase.sol";
@@ -25,7 +25,7 @@ import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {IRenderer1155} from "../interfaces/IRenderer1155.sol";
 import {ITransferHookReceiver} from "../interfaces/ITransferHookReceiver.sol";
 import {IUpgradeGate} from "../interfaces/IUpgradeGate.sol";
-import {IZoraCreator1155} from "../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {LegacyNamingControl} from "../legacy-naming/LegacyNamingControl.sol";
 import {PublicMulticall} from "../utils/PublicMulticall.sol";
 import {SharedBaseConstants} from "../shared/SharedBaseConstants.sol";
@@ -47,7 +47,7 @@ import {IReduceSupply} from "@zoralabs/shared-contracts/interfaces/IReduceSupply
 /// @notice The core implementation contract for a creator's 1155 token
 /// @author @iainnash / @tbtstl
 contract CoopCreator1155Impl is
-    IZoraCreator1155,
+    ICoopCreator1155,
     IZoraCreator1155Initializer,
     ContractVersionBase,
     ReentrancyGuardUpgradeable,
@@ -658,7 +658,7 @@ contract CoopCreator1155Impl is
     ) public view virtual override(CreatorRoyaltiesControl, ERC1155Upgradeable, IERC165Upgradeable) returns (bool) {
         return
             super.supportsInterface(interfaceId) ||
-            interfaceId == type(IZoraCreator1155).interfaceId ||
+            interfaceId == type(ICoopCreator1155).interfaceId ||
             ERC1155Upgradeable.supportsInterface(interfaceId) ||
             interfaceId == type(IHasContractName).interfaceId ||
             interfaceId == type(IHasSupportedPremintSignatureVersions).interfaceId ||
@@ -742,7 +742,7 @@ contract CoopCreator1155Impl is
     }
 
     /// @notice Returns the URI for the contract
-    function contractURI() external view override(IERC7572, IZoraCreator1155) returns (string memory) {
+    function contractURI() external view override(IERC7572, ICoopCreator1155) returns (string memory) {
         IRenderer1155 customRenderer = getCustomRenderer(CONTRACT_BASE_ID);
         if (address(customRenderer) != address(0)) {
             return customRenderer.contractURI();

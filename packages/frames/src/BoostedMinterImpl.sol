@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import {IZoraCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {Initializable} from "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import {BoostedMinterStorageV1} from "./BoostedMinterStorageV1.sol";
@@ -26,8 +26,8 @@ contract BoostedMinterImpl is BoostedMinterStorageV1, ReentrancyGuard, Initializ
 
     modifier onlyCreatorAdmin() {
         if (
-            !IZoraCreator1155(tokenContract).isAdminOrRole(msg.sender, tokenId, CREATOR_ADMIN_ROLE_PERMISSION_BIT)
-                && !IZoraCreator1155(tokenContract).isAdminOrRole(msg.sender, 0, CREATOR_ADMIN_ROLE_PERMISSION_BIT)
+            !ICoopCreator1155(tokenContract).isAdminOrRole(msg.sender, tokenId, CREATOR_ADMIN_ROLE_PERMISSION_BIT)
+                && !ICoopCreator1155(tokenContract).isAdminOrRole(msg.sender, 0, CREATOR_ADMIN_ROLE_PERMISSION_BIT)
         ) {
             revert ONLY_ADMIN();
         }
@@ -48,7 +48,7 @@ contract BoostedMinterImpl is BoostedMinterStorageV1, ReentrancyGuard, Initializ
 
     function mint(address _to, uint256 _amount) external onlyFrameMinter {
         uint256 startGasSnapshot = gasleft();
-        IZoraCreator1155(tokenContract).adminMint(_to, tokenId, _amount, "");
+        ICoopCreator1155(tokenContract).adminMint(_to, tokenId, _amount, "");
         uint256 gasUsed = startGasSnapshot - gasleft();
 
         _withdrawGas(payable(frameMinter), (gasUsed * tx.gasprice) + FIXED_GAS_PREMIUM);

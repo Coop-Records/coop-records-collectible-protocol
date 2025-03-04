@@ -7,7 +7,7 @@ import {IOwnable2StepUpgradeable} from "../../src/utils/ownable/IOwnable2StepUpg
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {IZoraCreator1155Factory} from "../../src/interfaces/IZoraCreator1155Factory.sol";
 
@@ -18,7 +18,7 @@ contract Ownable2StepUpgradableTest is Test {
     function setUp() external {
         owner = vm.addr(0x1);
         CoopCreator1155FactoryImpl factory = new CoopCreator1155FactoryImpl(
-            IZoraCreator1155(owner),
+            ICoopCreator1155(owner),
             IMinter1155(address(0)),
             IMinter1155(address(0)),
             IMinter1155(address(0))

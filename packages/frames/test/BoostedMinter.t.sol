@@ -8,7 +8,7 @@ import {BoostedMinterFactory} from "../src/BoostedMinterFactory.sol";
 import {BoostedMinterFactoryImpl} from "../src/BoostedMinterFactoryImpl.sol";
 import {BoostedMinterImpl} from "../src/BoostedMinterImpl.sol";
 import {Zora1155Test} from "./Zora1155Test.sol";
-import {IZoraCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
 
 contract BoostedMinterTest is Zora1155Test {
     address internal owner;
@@ -16,7 +16,7 @@ contract BoostedMinterTest is Zora1155Test {
 
     BoostedMinterFactoryImpl internal factory;
     BoostedMinterImpl internal minter;
-    IZoraCreator1155 internal tokenContract;
+    ICoopCreator1155 internal tokenContract;
     address internal tokenAdmin;
 
     function setUp() public override {
@@ -25,7 +25,7 @@ contract BoostedMinterTest is Zora1155Test {
         owner = makeAddr("owner");
         recipient = makeAddr("recipient");
 
-        tokenContract = IZoraCreator1155(address(zora1155));
+        tokenContract = ICoopCreator1155(address(zora1155));
         tokenAdmin = zora1155.owner();
 
         BoostedMinterFactoryImpl factoryImpl = new BoostedMinterFactoryImpl();

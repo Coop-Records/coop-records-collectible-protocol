@@ -10,7 +10,7 @@ import {ZoraDeployerUtils} from "../src/ZoraDeployerUtils.sol";
 import {DeploymentTestingUtils} from "../src/DeploymentTestingUtils.sol";
 import {MintArguments, PremintResult} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {IZoraSparksManager} from "@zoralabs/sparks-contracts/src/interfaces/IZoraSparksManager.sol";
-import {IZoraCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155PremintExecutor} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155PremintExecutor.sol";
 import {ContractCreationConfig, PremintConfigV2} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {UpgradeGate} from "@zoralabs/zora-1155-contracts/src/upgrades/UpgradeGate.sol";

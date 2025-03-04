@@ -5,7 +5,7 @@ import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.s
 import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import {Ownable2StepUpgradeable} from "../utils/ownable/Ownable2StepUpgradeable.sol";
 import {IHasContractName} from "../interfaces/IContractMetadata.sol";
-import {IZoraCreator1155} from "../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155Errors} from "../interfaces/IZoraCreator1155Errors.sol";
 import {IZoraCreator1155Factory} from "../interfaces/IZoraCreator1155Factory.sol";
 import {SharedBaseConstants} from "../shared/SharedBaseConstants.sol";
@@ -86,7 +86,7 @@ contract ZoraCreator1155PremintExecutorImpl is
 
         // get or create the token for the given premint config
         uint256 tokenId = ZoraCreator1155PremintExecutorImplLib.getOrCreateToken(
-            IZoraCreator1155(premintCollection),
+            ICoopCreator1155(premintCollection),
             premintConfig,
             encodedPremintConfig.premintConfigVersion,
             signature,
@@ -100,7 +100,7 @@ contract ZoraCreator1155PremintExecutorImpl is
                 encodedPremintConfig.premintConfigVersion == PremintEncoding.HASHED_VERSION_1 ||
                 encodedPremintConfig.premintConfigVersion == PremintEncoding.HASHED_VERSION_2
             ) {
-                ZoraCreator1155PremintExecutorImplLib.mintWithEth(IZoraCreator1155(premintCollection), minter, tokenId, quantityToMint, mintArguments);
+                ZoraCreator1155PremintExecutorImplLib.mintWithEth(ICoopCreator1155(premintCollection), minter, tokenId, quantityToMint, mintArguments);
             } else if (encodedPremintConfig.premintConfigVersion == PremintEncoding.HASHED_VERSION_3) {
                 ZoraCreator1155PremintExecutorImplLib.performERC20Mint(minter, quantityToMint, premintCollection, tokenId, mintArguments);
             }
@@ -259,7 +259,7 @@ contract ZoraCreator1155PremintExecutorImpl is
             return DelegatedTokenCreation._supportedPremintSignatureVersions();
         }
 
-        IZoraCreator1155 creatorContract = IZoraCreator1155(contractAddress);
+        ICoopCreator1155 creatorContract = ICoopCreator1155(contractAddress);
         if (
             creatorContract.supportsInterface(type(IZoraCreator1155DelegatedCreationLegacy).interfaceId) ||
             creatorContract.supportsInterface(type(IHasSupportedPremintSignatureVersions).interfaceId)
@@ -309,6 +309,6 @@ contract ZoraCreator1155PremintExecutorImpl is
             return CoopCreator1155FactoryImpl(address(zora1155Factory)).zora1155Impl().mintFee();
         }
 
-        return IZoraCreator1155(collectionAddress).mintFee();
+        return ICoopCreator1155(collectionAddress).mintFee();
     }
 }

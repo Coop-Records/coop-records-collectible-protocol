@@ -8,7 +8,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {IMinterErrors} from "../../src/interfaces/IMinterErrors.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -143,7 +143,7 @@ contract ZoraCreator1155PreminterTest is Test {
 
         // then
         // owner should be the erc1271 contract
-        assertEq(IZoraCreator1155(premintResult.contractAddress).owner(), address(mockAA));
+        assertEq(ICoopCreator1155(premintResult.contractAddress).owner(), address(mockAA));
     }
 
     function test_premintV2_whenpremintSignerContract_revertsWhen_nonContractAtpremintSignerContract() external {

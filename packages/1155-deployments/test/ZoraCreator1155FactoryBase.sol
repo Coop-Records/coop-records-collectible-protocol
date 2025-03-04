@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {IZoraCreator1155Errors} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";
 import {IOwnable} from "@zoralabs/zora-1155-contracts/src/interfaces/IOwnable.sol";
@@ -31,7 +31,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
         collector = vm.addr(2);
     }
 
-    function _setupToken(IZoraCreator1155 target, IMinter1155 fixedPrice, uint96 tokenPrice) private returns (uint256 tokenId) {
+    function _setupToken(ICoopCreator1155 target, IMinter1155 fixedPrice, uint96 tokenPrice) private returns (uint256 tokenId) {
         string memory tokenURI = "ipfs://token";
 
         tokenId = target.setupNewToken(tokenURI, tokenMaxSupply);
@@ -55,7 +55,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
         );
     }
 
-    function _createErc1155Contract(IZoraCreator1155Factory factory) private returns (IZoraCreator1155 target) {
+    function _createErc1155Contract(IZoraCreator1155Factory factory) private returns (ICoopCreator1155 target) {
         // create the contract, with no toekns
         bytes[] memory initSetup = new bytes[](0);
 
@@ -76,7 +76,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
             initSetup
         );
 
-        target = IZoraCreator1155(deployedAddress);
+        target = ICoopCreator1155(deployedAddress);
 
         // ** 2. Setup a new token with the fixed price sales strategy **
     }
@@ -88,7 +88,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
         vm.startPrank(creator);
 
         // ** 1. Create the erc1155 contract **
-        IZoraCreator1155 target = _createErc1155Contract(factory);
+        ICoopCreator1155 target = _createErc1155Contract(factory);
 
         // ** 2. Setup a new token with the fixed price sales strategy and the token price **
         uint256 tokenId = _setupToken(target, fixedPrice, tokenPrice);

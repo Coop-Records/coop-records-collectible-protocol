@@ -19,7 +19,7 @@ import {PremintEncoding} from "@zoralabs/shared-contracts/premint/PremintEncodin
 import {IHasContractName} from "../../src/interfaces/IContractMetadata.sol";
 
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IRenderer1155} from "../../src/interfaces/IRenderer1155.sol";
 import {IZoraCreator1155TypesV1} from "../../src/nft/IZoraCreator1155TypesV1.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -179,7 +179,7 @@ contract ZoraCreator1155Test is Test {
         vm.assume(royaltyRecipient != address(0) && royaltyBPS != 0);
         ICreatorRoyaltiesControl.RoyaltyConfiguration memory config = ICreatorRoyaltiesControl.RoyaltyConfiguration(0, royaltyBPS, royaltyRecipient);
         bytes[] memory setupActions = new bytes[](1);
-        setupActions[0] = abi.encodeWithSelector(IZoraCreator1155.setupNewToken.selector, "test", maxSupply);
+        setupActions[0] = abi.encodeWithSelector(ICoopCreator1155.setupNewToken.selector, "test", maxSupply);
         target.initialize("", "test", config, defaultAdmin, setupActions);
 
         IZoraCreator1155TypesV1.TokenData memory tokenData = target.getTokenInfo(1);
@@ -1366,7 +1366,7 @@ contract ZoraCreator1155Test is Test {
         init();
 
         // TODO: make this static
-        bytes4 interfaceId = type(IZoraCreator1155).interfaceId;
+        bytes4 interfaceId = type(ICoopCreator1155).interfaceId;
         assertEq(target.supportsInterface(interfaceId), true);
 
         bytes4 erc1155InterfaceId = bytes4(0xd9b67a26);
@@ -1697,7 +1697,7 @@ contract ZoraCreator1155Test is Test {
         vm.prank(collector);
         target.mint{value: totalReward}(simpleMinter, tokenId, quantity, rewardsRecipients, abi.encode(recipient));
 
-        IZoraCreator1155.TokenData memory tokenData = target.getTokenInfo(tokenId);
+        ICoopCreator1155.TokenData memory tokenData = target.getTokenInfo(tokenId);
 
         assertEq(tokenData.totalMinted, quantity);
         assertEq(tokenData.maxSupply, initialMaxSupply);

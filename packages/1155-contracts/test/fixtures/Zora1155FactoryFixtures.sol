@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../../src/minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
@@ -26,7 +26,7 @@ library Zora1155FactoryFixtures {
 
     function upgradeFactoryProxyToUse1155(
         Coop1155Factory factoryProxy,
-        IZoraCreator1155 zoraCreator1155Impl,
+        ICoopCreator1155 zoraCreator1155Impl,
         IMinter1155 fixedPriceMinter,
         address admin
     ) internal returns (CoopCreator1155FactoryImpl factoryImpl) {

@@ -8,7 +8,7 @@ import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.so
 import {CoopCreator1155Impl} from "../../src/nft/CoopCreator1155Impl.sol";
 import {Coop1155} from "../../src/proxies/Coop1155.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155} from "../../src/interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {IMinterErrors} from "../../src/interfaces/IMinterErrors.sol";
 import {ICreatorRoyaltiesControl} from "../../src/interfaces/ICreatorRoyaltiesControl.sol";
@@ -150,7 +150,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 tokenId = preminter.premintV1{value: mintCost}(contractConfig, premintConfig, signature, quantityToMint, defaultMintArguments).tokenId;
 
         // get the contract address from the preminter based on the contract hash id.
-        IZoraCreator1155 created1155Contract = IZoraCreator1155(contractAddress);
+        ICoopCreator1155 created1155Contract = ICoopCreator1155(contractAddress);
         // get the created contract, and make sure that tokens have been minted to the address
         assertEq(created1155Contract.balanceOf(premintExecutor, tokenId), quantityToMint);
         assertEq(CoopCreator1155Impl(payable(address(created1155Contract))).delegatedTokenId(premintConfig.uid), tokenId);
@@ -188,7 +188,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 tokenId = preminter.premintV2{value: mintCost}(contractConfig, premintConfig, signature, quantityToMint, defaultMintArguments).tokenId;
 
         // get the contract address from the preminter based on the contract hash id.
-        IZoraCreator1155 created1155Contract = IZoraCreator1155(contractAddress);
+        ICoopCreator1155 created1155Contract = ICoopCreator1155(contractAddress);
 
         // get the created contract, and make sure that tokens have been minted to the address
         assertEq(created1155Contract.balanceOf(premintExecutor, tokenId), quantityToMint);
@@ -242,7 +242,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 tokenId = preminter.premintV2(contractConfig, premintConfig, signature, quantityToMint, defaultMintArguments).tokenId;
 
         // get the contract address from the preminter based on the contract hash id.
-        IZoraCreator1155 created1155Contract = IZoraCreator1155(contractAddress);
+        ICoopCreator1155 created1155Contract = ICoopCreator1155(contractAddress);
 
         // get the created contract, and make sure that tokens have been minted to the address
         assertEq(created1155Contract.balanceOf(premintExecutor, tokenId), 0);
@@ -340,7 +340,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 tokenId = preminter.premintV2{value: mintCost}(contractConfig, premintConfig, signature, quantityToMint, defaultMintArguments).tokenId;
 
         // get the contract address from the preminter based on the contract hash id.
-        IZoraCreator1155 created1155Contract = IZoraCreator1155(contractAddress);
+        ICoopCreator1155 created1155Contract = ICoopCreator1155(contractAddress);
 
         // console.log("getting balance");
         // get the created contract, and make sure that tokens have been minted to the address
@@ -379,7 +379,7 @@ contract ZoraCreator1155PreminterTest is Test {
         string memory comment = "I love it";
 
         address contractAddress = preminter.getContractAddress(contractConfig);
-        IZoraCreator1155 created1155Contract = IZoraCreator1155(contractAddress);
+        ICoopCreator1155 created1155Contract = ICoopCreator1155(contractAddress);
 
         uint256 firstTokenId = _signAndExecutePremint(contractConfig, premintConfig, creatorPrivateKey, chainId, premintExecutor, quantityToMint, comment);
 
@@ -551,7 +551,7 @@ contract ZoraCreator1155PreminterTest is Test {
         uint256 newTokenId = _signAndExecutePremint(contractConfig, premintConfig, creatorPrivateKey, chainId, premintExecutor, quantityToMint, comment);
 
         // get the contract address from the preminter based on the contract hash id.
-        IZoraCreator1155 created1155Contract = IZoraCreator1155(createdContractAddress);
+        ICoopCreator1155 created1155Contract = ICoopCreator1155(createdContractAddress);
 
         ZoraCreatorFixedPriceSaleStrategy.SalesConfig memory newSalesConfig = ZoraCreatorFixedPriceSaleStrategy.SalesConfig({
             pricePerToken: 5 ether,
@@ -626,17 +626,17 @@ contract ZoraCreator1155PreminterTest is Test {
         address firstContractAddress = preminter.getContractAddress(firstContractConfig);
         uint256 tokenId = _signAndExecutePremint(firstContractConfig, premintConfig, creatorPrivateKey, chainId, premintExecutor, quantityToMint, comment);
 
-        assertEq(IZoraCreator1155(firstContractAddress).balanceOf(premintExecutor, tokenId), quantityToMint);
+        assertEq(ICoopCreator1155(firstContractAddress).balanceOf(premintExecutor, tokenId), quantityToMint);
 
         premintConfig.uid = secondUid;
         tokenId = _signAndExecutePremint(firstContractConfig, premintConfig, creatorPrivateKey, chainId, premintExecutor, quantityToMint, comment);
 
-        assertEq(IZoraCreator1155(firstContractAddress).balanceOf(premintExecutor, tokenId), quantityToMint);
+        assertEq(ICoopCreator1155(firstContractAddress).balanceOf(premintExecutor, tokenId), quantityToMint);
 
         address secondContractAddress = preminter.getContractAddress(secondContractConfig);
         tokenId = _signAndExecutePremint(secondContractConfig, premintConfig, creatorPrivateKey, chainId, premintExecutor, quantityToMint, comment);
 
-        assertEq(IZoraCreator1155(secondContractAddress).balanceOf(premintExecutor, tokenId), quantityToMint);
+        assertEq(ICoopCreator1155(secondContractAddress).balanceOf(premintExecutor, tokenId), quantityToMint);
     }
 
     function test_premintCanOnlyBeExecutedAfterStartDate(uint8 startDate, uint8 currentTime) external {
@@ -717,7 +717,7 @@ contract ZoraCreator1155PreminterTest is Test {
         address[] memory rewardsRecipients = new address[](1);
 
         vm.deal(premintExecutor, mintCost);
-        IZoraCreator1155(contractAddress).mint{value: mintCost}(
+        ICoopCreator1155(contractAddress).mint{value: mintCost}(
             fixedPriceMinter,
             tokenId,
             quantityToMint,
@@ -803,7 +803,7 @@ contract ZoraCreator1155PreminterTest is Test {
 
         // now grant the new creator permission to mint
         vm.prank(creator);
-        IZoraCreator1155(contractAddress).addPermission(CONTRACT_BASE_ID, newCreator, PERMISSION_BIT_MINTER);
+        ICoopCreator1155(contractAddress).addPermission(CONTRACT_BASE_ID, newCreator, PERMISSION_BIT_MINTER);
 
         // should now be considered a valid signature
         isValidSignature = preminter.isAuthorizedToCreatePremint({
@@ -995,8 +995,8 @@ contract ZoraCreator1155PreminterTest is Test {
         );
 
         // both collaborators should be added as admins
-        assertTrue(IZoraCreator1155(contractAddress).isAdminOrRole(collaboratorA, 0, PERMISSION_BIT_ADMIN));
-        assertTrue(IZoraCreator1155(contractAddress).isAdminOrRole(collaboratorB, 0, PERMISSION_BIT_ADMIN));
+        assertTrue(ICoopCreator1155(contractAddress).isAdminOrRole(collaboratorA, 0, PERMISSION_BIT_ADMIN));
+        assertTrue(ICoopCreator1155(contractAddress).isAdminOrRole(collaboratorB, 0, PERMISSION_BIT_ADMIN));
 
         // premint against existing contract using the collaborators premint - it should succeed
         uint256 collaboratorTokenId = preminter
@@ -1062,9 +1062,9 @@ contract ZoraCreator1155PreminterTest is Test {
         );
 
         // both collaborators should be added as admins
-        assertTrue(IZoraCreator1155(contractAddress).isAdminOrRole(creator, 0, PERMISSION_BIT_ADMIN));
-        assertTrue(IZoraCreator1155(contractAddress).isAdminOrRole(collaboratorA, 0, PERMISSION_BIT_ADMIN));
-        assertTrue(IZoraCreator1155(contractAddress).isAdminOrRole(collaboratorB, 0, PERMISSION_BIT_ADMIN));
+        assertTrue(ICoopCreator1155(contractAddress).isAdminOrRole(creator, 0, PERMISSION_BIT_ADMIN));
+        assertTrue(ICoopCreator1155(contractAddress).isAdminOrRole(collaboratorA, 0, PERMISSION_BIT_ADMIN));
+        assertTrue(ICoopCreator1155(contractAddress).isAdminOrRole(collaboratorB, 0, PERMISSION_BIT_ADMIN));
 
         // premint against the existing contract using the original creators premint
         uint256 creatorTokenId = preminter

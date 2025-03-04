@@ -10,7 +10,7 @@ import {IVersionedContract} from "@zoralabs/shared-contracts/interfaces/IVersion
 import {IMinter1155} from "../../interfaces/IMinter1155.sol";
 import {ICreatorCommands} from "../../interfaces/ICreatorCommands.sol";
 import {ZoraCreatorRedeemMinterStrategy} from "./ZoraCreatorRedeemMinterStrategy.sol";
-import {IZoraCreator1155} from "../../interfaces/IZoraCreator1155.sol";
+import {ICoopCreator1155} from "../../interfaces/ICoopCreator1155.sol";
 import {SharedBaseConstants} from "../../shared/SharedBaseConstants.sol";
 import {IMinterErrors} from "../../interfaces/IMinterErrors.sol";
 
@@ -83,7 +83,7 @@ contract ZoraCreatorRedeemMinterFactory is Enjoy, IContractMetadata, SharedBaseC
 
     /// @notice Deploys a new ZoraCreatorRedeemMinterStrategy for caller ZoraCreator1155 contract if none exists
     function createMinterIfNoneExists() external {
-        if (!IERC165(msg.sender).supportsInterface(type(IZoraCreator1155).interfaceId)) {
+        if (!IERC165(msg.sender).supportsInterface(type(ICoopCreator1155).interfaceId)) {
             revert CallerNotZoraCreator1155();
         }
         if (doesRedeemMinterExistForCreatorContract(msg.sender)) {
