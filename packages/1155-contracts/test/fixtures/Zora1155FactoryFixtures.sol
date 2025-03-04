@@ -17,7 +17,7 @@ library Zora1155FactoryFixtures {
     function setupZora1155Impl(
         address zora,
         IUpgradeGate upgradeGate
-    ) internal returns (ProtocolRewards rewards, CoopCreator1155Impl coop1155Impl, address timedSaleStrategy) {
+    ) internal returns (ProtocolRewards rewards, CoopCreator1155Impl zora1155Impl, address timedSaleStrategy) {
         // Ignore in this case
         timedSaleStrategy = address(0x0);
         rewards = new ProtocolRewards();
