@@ -5,7 +5,7 @@ import {PremintConfig, ContractCreationConfig, ContractWithAdditionalAdminsCreat
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC20Minter} from "../interfaces/IERC20Minter.sol";
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
-import {IZoraCreator1155Factory} from "../interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../interfaces/ICoopCreator1155Factory.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {IZoraCreator1155PremintExecutor} from "../interfaces/IZoraCreator1155PremintExecutor.sol";
@@ -24,7 +24,7 @@ struct GetOrCreateContractResult {
 
 library ZoraCreator1155PremintExecutorImplLib {
     function getOrCreateContract(
-        IZoraCreator1155Factory zora1155Factory,
+        ICoopCreator1155Factory zora1155Factory,
         ContractWithAdditionalAdminsCreationConfig memory contractConfig
     ) internal returns (address tokenContract, bool isNewContract) {
         // get contract address based on contract creation parameters
@@ -45,7 +45,7 @@ library ZoraCreator1155PremintExecutorImplLib {
     uint256 private constant PERMISSION_BIT_MINTER = 2 ** 2;
 
     function createContract(
-        IZoraCreator1155Factory zora1155Factory,
+        ICoopCreator1155Factory zora1155Factory,
         ContractWithAdditionalAdminsCreationConfig memory contractConfig
     ) internal returns (ICoopCreator1155 tokenContract) {
         // we need to build the setup actions, that must:
@@ -74,13 +74,13 @@ library ZoraCreator1155PremintExecutorImplLib {
     /// Gets the deterministic contract address for the given contract creation config.
     /// Contract address is generated deterministically from a hash based on the contract uri, contract name,
     /// contract admin, and the msg.sender, which is this contract's address.
-    function getContractAddress(IZoraCreator1155Factory zora1155Factory, ContractCreationConfig calldata contractConfig) internal view returns (address) {
+    function getContractAddress(ICoopCreator1155Factory zora1155Factory, ContractCreationConfig calldata contractConfig) internal view returns (address) {
         return
             zora1155Factory.deterministicContractAddress(address(this), contractConfig.contractURI, contractConfig.contractName, contractConfig.contractAdmin);
     }
 
     function getContractWithAdditionalAdminsAddress(
-        IZoraCreator1155Factory zora1155Factory,
+        ICoopCreator1155Factory zora1155Factory,
         ContractWithAdditionalAdminsCreationConfig memory contractConfig
     ) internal view returns (address) {
         return

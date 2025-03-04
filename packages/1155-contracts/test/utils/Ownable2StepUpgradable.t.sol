@@ -9,7 +9,7 @@ import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
 import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
 import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
-import {IZoraCreator1155Factory} from "../../src/interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../../src/interfaces/ICoopCreator1155Factory.sol";
 
 contract Ownable2StepUpgradableTest is Test {
     Ownable2StepUpgradeable internal ownable;
@@ -24,7 +24,7 @@ contract Ownable2StepUpgradableTest is Test {
             IMinter1155(address(0))
         );
         Coop1155Factory proxy = new Coop1155Factory(address(factory), "");
-        IZoraCreator1155Factory(address(proxy)).initialize(owner);
+        ICoopCreator1155Factory(address(proxy)).initialize(owner);
         ownable = Ownable2StepUpgradeable(address(proxy));
     }
 

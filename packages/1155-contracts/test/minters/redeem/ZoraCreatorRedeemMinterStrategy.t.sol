@@ -11,7 +11,7 @@ import {Coop1155} from "../../../src/proxies/Coop1155.sol";
 import {ICoopCreator1155} from "../../../src/interfaces/ICoopCreator1155.sol";
 import {IRenderer1155} from "../../../src/interfaces/IRenderer1155.sol";
 import {ICreatorRoyaltiesControl} from "../../../src/interfaces/ICreatorRoyaltiesControl.sol";
-import {IZoraCreator1155Factory} from "../../../src/interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../../../src/interfaces/ICoopCreator1155Factory.sol";
 import {ZoraCreatorRedeemMinterStrategy} from "../../../src/minters/redeem/ZoraCreatorRedeemMinterStrategy.sol";
 
 /// @notice Contract versions after v1.4.0 will not support burn to redeem

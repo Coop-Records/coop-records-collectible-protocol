@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import {PremintEncoding, ZoraCreator1155Attribution, ContractCreationConfig, PremintConfig, PremintConfigV2, TokenCreationConfig, TokenCreationConfigV2} from "../delegation/ZoraCreator1155Attribution.sol";
 import {IOwnable2StepUpgradeable} from "../utils/ownable/IOwnable2StepUpgradeable.sol";
-import {IZoraCreator1155Factory} from "./IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "./ICoopCreator1155Factory.sol";
 import {IGetContractAddress} from "@zoralabs/shared-contracts/interfaces/IGetContractAddress.sol";
 import {MintArguments, PremintResult} from "@zoralabs/shared-contracts/entities/Premint.sol";
 import {IZoraCreator1155PremintExecutorV2} from "@zoralabs/shared-contracts/interfaces/IZoraCreator1155PremintExecutorV2.sol";
@@ -67,7 +67,7 @@ interface IZoraCreator1155PremintExecutor is ILegacyZoraCreator1155PremintExecut
         uint256 quantityMinted
     );
 
-    function zora1155Factory() external view returns (IZoraCreator1155Factory);
+    function zora1155Factory() external view returns (ICoopCreator1155Factory);
 
     function supportedPremintSignatureVersions(address contractAddress) external view returns (string[] memory);
 

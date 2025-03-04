@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import {Coop1155Factory} from "@zoralabs/zora-1155-contracts/src/proxies/Coop1155Factory.sol";
 import {CoopCreator1155Impl} from "@zoralabs/zora-1155-contracts/src/nft/CoopCreator1155Impl.sol";
-import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {IMinter1155} from "@zoralabs/zora-1155-contracts/src/interfaces/IMinter1155.sol";
 import {Deployment, ChainConfig} from "./DeploymentConfig.sol";
@@ -152,7 +152,7 @@ library ZoraDeployerUtils {
         );
         return
             address(
-                IZoraCreator1155Factory(factoryProxy).createContract(
+                ICoopCreator1155Factory(factoryProxy).createContract(
                     "ipfs://bafybeicgolwqpozsc7iwgytavete56a2nnytzix2nb2rxefdvbtwwtnnoe/metadata",
                     unicode"🪄",
                     ICreatorRoyaltiesControl.RoyaltyConfiguration({royaltyBPS: 0, royaltyRecipient: address(0), royaltyMintSchedule: 0}),

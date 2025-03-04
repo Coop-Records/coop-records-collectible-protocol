@@ -6,8 +6,7 @@ import {IMinter1155} from "./IMinter1155.sol";
 import {IVersionedContract} from "@zoralabs/shared-contracts/interfaces/IVersionedContract.sol";
 
 /// @notice Factory for 1155 contracts
-/// @author @iainnash / @tbtstl
-interface IZoraCreator1155Factory is IVersionedContract {
+interface ICoopCreator1155Factory is IVersionedContract {
     error Constructor_ImplCannotBeZero();
     error UpgradeToMismatchedContractName(string expected, string actual);
     error ExpectedContractAddressDoesNotMatchCalculatedContractAddress(address expectedContractAddress, address calculcatedContractAddress);

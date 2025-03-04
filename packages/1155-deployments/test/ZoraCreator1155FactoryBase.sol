@@ -2,7 +2,7 @@
 pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
-import {IZoraCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155Factory.sol";
 import {CoopCreator1155FactoryImpl} from "@zoralabs/zora-1155-contracts/src/factory/CoopCreator1155FactoryImpl.sol";
 import {IZoraCreator1155Errors} from "@zoralabs/zora-1155-contracts/src/interfaces/IZoraCreator1155Errors.sol";
 import {ICoopCreator1155} from "@zoralabs/zora-1155-contracts/src/interfaces/ICoopCreator1155.sol";
@@ -55,7 +55,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
         );
     }
 
-    function _createErc1155Contract(IZoraCreator1155Factory factory) private returns (ICoopCreator1155 target) {
+    function _createErc1155Contract(ICoopCreator1155Factory factory) private returns (ICoopCreator1155 target) {
         // create the contract, with no toekns
         bytes[] memory initSetup = new bytes[](0);
 
@@ -81,7 +81,7 @@ contract ZoraCreator1155FactoryBase is ForkDeploymentConfig, Test {
         // ** 2. Setup a new token with the fixed price sales strategy **
     }
 
-    function mintTokenAtFork(IZoraCreator1155Factory factory) internal {
+    function mintTokenAtFork(ICoopCreator1155Factory factory) internal {
         uint96 tokenPrice = 1 ether;
         IMinter1155 fixedPrice = factory.defaultMinters()[0];
         // now create a contract with the factory

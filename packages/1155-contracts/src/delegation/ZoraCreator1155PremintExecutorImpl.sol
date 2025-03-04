@@ -7,7 +7,7 @@ import {Ownable2StepUpgradeable} from "../utils/ownable/Ownable2StepUpgradeable.
 import {IHasContractName} from "../interfaces/IContractMetadata.sol";
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {IZoraCreator1155Errors} from "../interfaces/IZoraCreator1155Errors.sol";
-import {IZoraCreator1155Factory} from "../interfaces/IZoraCreator1155Factory.sol";
+import {ICoopCreator1155Factory} from "../interfaces/ICoopCreator1155Factory.sol";
 import {SharedBaseConstants} from "../shared/SharedBaseConstants.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
@@ -39,9 +39,9 @@ contract ZoraCreator1155PremintExecutorImpl is
     IRewardsErrors,
     ContractVersionBase
 {
-    IZoraCreator1155Factory public immutable zora1155Factory;
+    ICoopCreator1155Factory public immutable zora1155Factory;
 
-    constructor(IZoraCreator1155Factory _factory) {
+    constructor(ICoopCreator1155Factory _factory) {
         zora1155Factory = _factory;
         _disableInitializers();
     }
