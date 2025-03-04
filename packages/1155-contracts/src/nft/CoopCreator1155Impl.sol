@@ -14,7 +14,7 @@ import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/cont
 import {MathUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/utils/math/MathUpgradeable.sol";
 
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
-import {IZoraCreator1155Initializer} from "../interfaces/IZoraCreator1155Initializer.sol";
+import {ICoopCreator1155Initializer} from "../interfaces/ICoopCreator1155Initializer.sol";
 import {IERC7572} from "../interfaces/IERC7572.sol";
 import {ContractVersionBase} from "../version/ContractVersionBase.sol";
 import {CreatorPermissionControl} from "../permissions/CreatorPermissionControl.sol";
@@ -48,7 +48,7 @@ import {IReduceSupply} from "@zoralabs/shared-contracts/interfaces/IReduceSupply
 /// @author @iainnash / @tbtstl
 contract CoopCreator1155Impl is
     ICoopCreator1155,
-    IZoraCreator1155Initializer,
+    ICoopCreator1155Initializer,
     ContractVersionBase,
     ReentrancyGuardUpgradeable,
     PublicMulticall,

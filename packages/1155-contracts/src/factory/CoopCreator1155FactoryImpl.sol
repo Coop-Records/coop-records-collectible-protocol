@@ -4,7 +4,7 @@ pragma solidity 0.8.17;
 import {Initializable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol";
 import {UUPSUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/proxy/utils/UUPSUpgradeable.sol";
 import {ICoopCreator1155Factory} from "../interfaces/ICoopCreator1155Factory.sol";
-import {IZoraCreator1155Initializer} from "../interfaces/IZoraCreator1155Initializer.sol";
+import {ICoopCreator1155Initializer} from "../interfaces/ICoopCreator1155Initializer.sol";
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
@@ -165,7 +165,7 @@ contract CoopCreator1155FactoryImpl is ICoopCreator1155Factory, Ownable2StepUpgr
             defaultRoyaltyConfiguration: defaultRoyaltyConfiguration
         });
 
-        IZoraCreator1155Initializer(address(newContract)).initialize(name, newContractURI, defaultRoyaltyConfiguration, defaultAdmin, setupActions);
+        ICoopCreator1155Initializer(address(newContract)).initialize(name, newContractURI, defaultRoyaltyConfiguration, defaultAdmin, setupActions);
     }
 
     function _hashContract(
