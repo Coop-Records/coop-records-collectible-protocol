@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 import {IERC165Upgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/interfaces/IERC165Upgradeable.sol";
 import {IERC1155MetadataURIUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/interfaces/IERC1155MetadataURIUpgradeable.sol";
 import {ICoopCreator1155TypesV1} from "../nft/ICoopCreator1155TypesV1.sol";
-import {IZoraCreator1155Errors} from "./IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "./ICoopCreator1155Errors.sol";
 import {IRenderer1155} from "../interfaces/IRenderer1155.sol";
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {IOwnable} from "../interfaces/IOwnable.sol";
@@ -56,7 +56,7 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 /// @author @iainnash / @tbtstl
 interface ICoopCreator1155 is
     ICoopCreator1155TypesV1,
-    IZoraCreator1155Errors,
+    ICoopCreator1155Errors,
     IVersionedContract,
     IOwnable,
     IERC1155MetadataURIUpgradeable,

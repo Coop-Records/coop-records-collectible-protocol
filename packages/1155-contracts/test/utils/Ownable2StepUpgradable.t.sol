@@ -6,7 +6,7 @@ import {Ownable2StepUpgradeable} from "../../src/utils/ownable/Ownable2StepUpgra
 import {IOwnable2StepUpgradeable} from "../../src/utils/ownable/IOwnable2StepUpgradeable.sol";
 import {CoopCreator1155FactoryImpl} from "../../src/factory/CoopCreator1155FactoryImpl.sol";
 import {Coop1155Factory} from "../../src/proxies/Coop1155Factory.sol";
-import {IZoraCreator1155Errors} from "../../src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../../src/interfaces/ICoopCreator1155Errors.sol";
 import {ICoopCreator1155} from "../../src/interfaces/ICoopCreator1155.sol";
 import {IMinter1155} from "../../src/interfaces/IMinter1155.sol";
 import {ICoopCreator1155Factory} from "../../src/interfaces/ICoopCreator1155Factory.sol";

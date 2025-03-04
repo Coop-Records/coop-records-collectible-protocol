@@ -3,7 +3,7 @@ pragma solidity 0.8.17;
 
 import {IMinter1155} from "../interfaces/IMinter1155.sol";
 import {ICoopCreator1155} from "../interfaces/ICoopCreator1155.sol";
-import {IZoraCreator1155Errors} from "@zoralabs/shared-contracts/interfaces/errors/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "@zoralabs/shared-contracts/interfaces/errors/ICoopCreator1155Errors.sol";
 import {ICreatorRoyaltiesControl} from "../interfaces/ICreatorRoyaltiesControl.sol";
 import {ECDSAUpgradeable} from "@zoralabs/openzeppelin-contracts-upgradeable/contracts/utils/cryptography/ECDSAUpgradeable.sol";
 import {ZoraCreatorFixedPriceSaleStrategy} from "../minters/fixed-price/ZoraCreatorFixedPriceSaleStrategy.sol";
@@ -64,16 +64,16 @@ library ZoraCreator1155Attribution {
         if (premintSignerContract != address(0)) {
             // if the smart contract wallet is set, then the signature must be validated by that address
             if (premintSignerContract.code.length == 0) {
-                revert IZoraCreator1155Errors.premintSignerContractNotAContract();
+                revert ICoopCreator1155Errors.premintSignerContractNotAContract();
             }
 
             try IERC1271(premintSignerContract).isValidSignature(digest, signature) returns (bytes4 magicValue) {
                 if (MAGIC_VALUE == magicValue) {
                     return premintSignerContract;
                 }
-                revert IZoraCreator1155Errors.InvalidSigner(magicValue);
+                revert ICoopCreator1155Errors.InvalidSigner(magicValue);
             } catch {
-                revert IZoraCreator1155Errors.premintSignerContractFailedToRecoverSigner();
+                revert ICoopCreator1155Errors.premintSignerContractFailedToRecoverSigner();
             }
         } else {
             ECDSAUpgradeable.RecoverError recoverError;
@@ -81,7 +81,7 @@ library ZoraCreator1155Attribution {
             (signatory, recoverError) = ECDSAUpgradeable.tryRecover(digest, signature);
 
             if (recoverError != ECDSAUpgradeable.RecoverError.NoError) {
-                revert IZoraCreator1155Errors.InvalidSignature();
+                revert ICoopCreator1155Errors.InvalidSignature();
             }
         }
     }
@@ -379,7 +379,7 @@ library DelegatedTokenCreation {
 
             (params, tokenSetupActions) = _recoverDelegatedTokenSetup(premintConfig, newTokenId);
         } else {
-            revert IZoraCreator1155Errors.InvalidPremintVersion();
+            revert ICoopCreator1155Errors.InvalidPremintVersion();
         }
     }
 
@@ -464,12 +464,12 @@ library DelegatedTokenCreation {
     function validatePremint(uint64 mintStart, bool deleted) private view {
         if (mintStart != 0 && mintStart > block.timestamp) {
             // if the mint start is in the future, then revert
-            revert IZoraCreator1155Errors.MintNotYetStarted();
+            revert ICoopCreator1155Errors.MintNotYetStarted();
         }
         if (deleted) {
             // if the signature says to be deleted, then dont execute any further minting logic;
             // return 0
-            revert IZoraCreator1155Errors.PremintDeleted();
+            revert ICoopCreator1155Errors.PremintDeleted();
         }
     }
 }

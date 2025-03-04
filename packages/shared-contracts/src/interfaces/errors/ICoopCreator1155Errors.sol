@@ -12,7 +12,7 @@ interface ICreatorRoyaltyErrors {
     error InvalidMintSchedule();
 }
 
-interface IZoraCreator1155Errors is ICreatorRoyaltyErrors, ILimitedMintPerAddressErrors, IMinterErrors {
+interface ICoopCreator1155Errors is ICreatorRoyaltyErrors, ILimitedMintPerAddressErrors, IMinterErrors {
     error OnlyAllowedForTimedSaleStrategy();
     error OnlyAllowedForRegisteredMinter();
     error OnlyTransfersFromZoraMints();

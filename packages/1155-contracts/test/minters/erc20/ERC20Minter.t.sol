@@ -12,7 +12,7 @@ import {ERC20PresetMinterPauser} from "@openzeppelin/contracts/token/ERC20/prese
 import {ERC20Minter} from "../../../src/minters/erc20/ERC20Minter.sol";
 import {IERC20Minter} from "../../../src/interfaces/IERC20Minter.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {IZoraCreator1155Errors} from "../../../src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../../../src/interfaces/ICoopCreator1155Errors.sol";
 
 contract ERC20MinterTest is Test {
     CoopCreator1155Impl internal target;

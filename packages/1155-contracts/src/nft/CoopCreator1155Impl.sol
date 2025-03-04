@@ -31,7 +31,7 @@ import {PublicMulticall} from "../utils/PublicMulticall.sol";
 import {SharedBaseConstants} from "../shared/SharedBaseConstants.sol";
 import {TransferHelperUtils} from "../utils/TransferHelperUtils.sol";
 import {CoopCreator1155StorageV1} from "./CoopCreator1155StorageV1.sol";
-import {IZoraCreator1155Errors} from "../interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../interfaces/ICoopCreator1155Errors.sol";
 import {ERC1155DelegationStorageV1} from "../delegation/ERC1155DelegationStorageV1.sol";
 import {IZoraCreator1155DelegatedCreation, ISupportsAABasedDelegatedTokenCreation, IHasSupportedPremintSignatureVersions} from "../interfaces/IZoraCreator1155DelegatedCreation.sol";
 import {IMintWithRewardsRecipients} from "../interfaces/IMintWithRewardsRecipients.sol";
@@ -630,7 +630,7 @@ contract CoopCreator1155Impl is
 
         // Ensure the encoded token id matches the passed token id
         if (encodedTokenId != tokenId) {
-            revert IZoraCreator1155Errors.Call_TokenIdMismatch();
+            revert ICoopCreator1155Errors.Call_TokenIdMismatch();
         }
 
         (bool success, bytes memory why) = address(salesConfig).call(data);

@@ -6,7 +6,7 @@ import "forge-std/Test.sol";
 import {ProtocolRewards} from "@zoralabs/protocol-rewards/src/ProtocolRewards.sol";
 import {CoopCreator1155Impl} from "../../../src/nft/CoopCreator1155Impl.sol";
 import {Coop1155} from "../../../src/proxies/Coop1155.sol";
-import {IZoraCreator1155Errors} from "../../../src/interfaces/IZoraCreator1155Errors.sol";
+import {ICoopCreator1155Errors} from "../../../src/interfaces/ICoopCreator1155Errors.sol";
 import {IMinter1155} from "../../../src/interfaces/IMinter1155.sol";
 import {ICreatorRoyaltiesControl} from "../../../src/interfaces/ICreatorRoyaltiesControl.sol";
 import {ICoopCreator1155Factory} from "../../../src/interfaces/ICoopCreator1155Factory.sol";
