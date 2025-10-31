@@ -48,8 +48,6 @@ interface IERC20Minter is IMinterPremintSetup {
         address zoraRewardRecipientAddress;
         /// @notice The reward recipient percentage
         uint256 rewardRecipientPercentage;
-        /// @notice The ETH reward amount
-        uint256 ethReward;
     }
 
     /// @notice Rewards Deposit Event
@@ -149,7 +147,7 @@ interface IERC20Minter is IMinterPremintSetup {
         address currency,
         address mintReferral,
         string calldata comment
-    ) external payable;
+    ) external;
 
     /// @notice Sets the sale config for a given token
     /// @param tokenId The ID of the token to set the sale config for
@@ -168,9 +166,6 @@ interface IERC20Minter is IMinterPremintSetup {
 
     /// @notice Returns the reward recipient percentage
     function totalRewardPct() external view returns (uint256);
-
-    /// @notice Returns the ETH reward amount
-    function ethRewardAmount() external view returns (uint256);
 
     /// @notice Sets the ERC20MinterConfig
     /// @param config The ERC20MinterConfig to set

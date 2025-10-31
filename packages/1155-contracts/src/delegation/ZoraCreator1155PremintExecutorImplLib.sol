@@ -181,7 +181,7 @@ library ZoraCreator1155PremintExecutorImplLib {
 
         IERC20(currency).approve(erc20Minter, totalValue);
 
-        IERC20Minter(erc20Minter).mint{value: msg.value}(
+        IERC20Minter(erc20Minter).mint(
             mintArguments.mintRecipient,
             quantityToMint,
             contractAddress,
