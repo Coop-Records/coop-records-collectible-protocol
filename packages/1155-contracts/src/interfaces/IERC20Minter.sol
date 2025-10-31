@@ -167,8 +167,6 @@ interface IERC20Minter is IMinterPremintSetup {
     /// @notice Returns the reward recipient percentage
     function totalRewardPct() external view returns (uint256);
 
-    // ETH fees removed - ethRewardAmount() function deleted
-
     /// @notice Sets the ERC20MinterConfig
     /// @param config The ERC20MinterConfig to set
     function setERC20MinterConfig(ERC20MinterConfig memory config) external;
