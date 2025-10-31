@@ -27,12 +27,12 @@ contract ERC20MinterTest is Test {
     ERC20Minter internal minter;
     IERC20Minter.ERC20MinterConfig internal minterConfig;
 
-    uint256 internal constant TOTAL_REWARD_PCT = 5;
+    uint256 internal constant TOTAL_REWARD_PCT = 25;
     uint256 immutable BPS_TO_PERCENT = 100;
-    uint256 internal constant CREATE_REFERRAL_PAID_MINT_REWARD_PCT = 28_571400;
-    uint256 internal constant MINT_REFERRAL_PAID_MINT_REWARD_PCT = 28_571400;
-    uint256 internal constant ZORA_PAID_MINT_REWARD_PCT = 28_571400;
-    uint256 internal constant FIRST_MINTER_REWARD_PCT = 14_228500;
+    uint256 internal constant CREATE_REFERRAL_PAID_MINT_REWARD_PCT = 0;
+    uint256 internal constant MINT_REFERRAL_PAID_MINT_REWARD_PCT = 50_000000;
+    uint256 internal constant ZORA_PAID_MINT_REWARD_PCT = 50_000000;
+    uint256 internal constant FIRST_MINTER_REWARD_PCT = 0;
     uint256 immutable BPS_TO_PERCENT_8_DECIMAL_PERCISION = 100_000_000;
 
     event ERC20RewardsDeposit(
@@ -70,7 +70,7 @@ contract ERC20MinterTest is Test {
         target = CoopCreator1155Impl(payable(address(proxy)));
         target.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), admin, emptyData);
         minter = new ERC20Minter();
-        minter.initialize(zora, owner, 5);
+        minter.initialize(zora, owner, TOTAL_REWARD_PCT);
         vm.prank(admin);
         currency = new ERC20PresetMinterPauser("Test currency", "TEST");
         minterConfig = minter.getERC20MinterConfig();
@@ -111,26 +111,26 @@ contract ERC20MinterTest is Test {
         vm.expectEmit(true, true, true, true);
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: zora,
-            rewardRecipientPercentage: 5
+            rewardRecipientPercentage: TOTAL_REWARD_PCT
         });
         emit ERC20MinterConfigSet(newConfig);
 
         minter = new ERC20Minter();
-        minter.initialize(zora, owner, 5);
+        minter.initialize(zora, owner, TOTAL_REWARD_PCT);
     }
 
     function test_ERC20MinterZoraAddrCannotInitializeWithAddressZero() external {
         minter = new ERC20Minter();
 
         vm.expectRevert(abi.encodeWithSignature("AddressZero()"));
-        minter.initialize(address(0), owner, 5);
+        minter.initialize(address(0), owner, TOTAL_REWARD_PCT);
     }
 
     function test_ERC20MinterOwnerAddrCannotInitializeWithAddressZero() external {
         minter = new ERC20Minter();
 
         vm.expectRevert(abi.encodeWithSignature("OWNER_CANNOT_BE_ZERO_ADDRESS()"));
-        minter.initialize(zora, address(0), 5);
+        minter.initialize(zora, address(0), TOTAL_REWARD_PCT);
     }
 
     function test_ERC20MinterRewardPercentageCannotBeGreaterThan100() external {
@@ -150,10 +150,10 @@ contract ERC20MinterTest is Test {
 
     function test_ERC20MinterAlreadyInitalized() external {
         minter = new ERC20Minter();
-        minter.initialize(zora, owner, 5);
+        minter.initialize(zora, owner, TOTAL_REWARD_PCT);
 
         vm.expectRevert(abi.encodeWithSignature("INITIALIZABLE_CONTRACT_ALREADY_INITIALIZED()"));
-        minter.initialize(zora, owner, 5);
+        minter.initialize(zora, owner, TOTAL_REWARD_PCT);
     }
 
     function test_ERC20MinterSaleConfigPriceTooLow() external {
@@ -250,10 +250,10 @@ contract ERC20MinterTest is Test {
         uint256 totalValue = 500000000000000000; // 0.5 when converted from wei
         ERC20Minter.RewardsSettings memory rewardsSettings = minter.computePaidMintRewards(totalValue);
 
-        assertEq(rewardsSettings.createReferralReward, 142857000000000000);
-        assertEq(rewardsSettings.mintReferralReward, 142857000000000000);
-        assertEq(rewardsSettings.firstMinterReward, 71142500000000000);
-        assertEq(rewardsSettings.zoraReward, 143143500000000000);
+        assertEq(rewardsSettings.createReferralReward, 0);
+        assertEq(rewardsSettings.mintReferralReward, 250000000000000000); // 50% of totalValue
+        assertEq(rewardsSettings.firstMinterReward, 0);
+        assertEq(rewardsSettings.zoraReward, 250000000000000000); // 50% of totalValue
         assertEq(
             rewardsSettings.createReferralReward + rewardsSettings.mintReferralReward + rewardsSettings.zoraReward + rewardsSettings.firstMinterReward,
             totalValue
@@ -287,11 +287,11 @@ contract ERC20MinterTest is Test {
         vm.stopPrank();
 
         assertEq(target.balanceOf(tokenRecipient, newTokenId), quantity);
-        assertEq(currency.balanceOf(fundsRecipient), 19000);
-        assertEq(currency.balanceOf(address(zora)), 288);
-        assertEq(currency.balanceOf(mintReferral), 285);
-        assertEq(currency.balanceOf(admin), 142);
-        assertEq(currency.balanceOf(createReferral), 285);
+        assertEq(currency.balanceOf(fundsRecipient), 15000); // 75% of 20000
+        assertEq(currency.balanceOf(address(zora)), 2500); // 12.5% of 20000 (50% of 25% totalReward)
+        assertEq(currency.balanceOf(mintReferral), 2500); // 12.5% of 20000 (50% of 25% totalReward)
+        assertEq(currency.balanceOf(admin), 0); // No first minter reward
+        assertEq(currency.balanceOf(createReferral), 0); // No create referral reward
         assertEq(
             currency.balanceOf(address(zora)) +
                 currency.balanceOf(fundsRecipient) +
@@ -328,10 +328,10 @@ contract ERC20MinterTest is Test {
         vm.stopPrank();
 
         assertEq(target.balanceOf(tokenRecipient, newTokenId), quantity);
-        assertEq(currency.balanceOf(fundsRecipient), 475000000000000000);
-        assertEq(currency.balanceOf(address(zora)), 7157175000000000);
-        assertEq(currency.balanceOf(createReferral), 7142850000000000);
-        assertEq(currency.balanceOf(mintReferral), 7142850000000000);
+        assertEq(currency.balanceOf(fundsRecipient), 375000000000000000); // 75% of 0.5e18
+        assertEq(currency.balanceOf(address(zora)), 62500000000000000); // 12.5% of 0.5e18
+        assertEq(currency.balanceOf(createReferral), 0); // No create referral reward
+        assertEq(currency.balanceOf(mintReferral), 62500000000000000); // 12.5% of 0.5e18
         assertEq(
             currency.balanceOf(address(zora)) +
                 currency.balanceOf(fundsRecipient) +
@@ -442,7 +442,7 @@ contract ERC20MinterTest is Test {
         vm.expectEmit(true, true, true, true);
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: address(this),
-            rewardRecipientPercentage: 5
+            rewardRecipientPercentage: TOTAL_REWARD_PCT
         });
         emit ERC20MinterConfigSet(newConfig);
         minter.setERC20MinterConfig(newConfig);
@@ -455,7 +455,7 @@ contract ERC20MinterTest is Test {
         vm.expectRevert(abi.encodeWithSignature("ONLY_OWNER()"));
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: address(this),
-            rewardRecipientPercentage: 5
+            rewardRecipientPercentage: TOTAL_REWARD_PCT
         });
         minter.setERC20MinterConfig(newConfig);
     }
@@ -465,7 +465,7 @@ contract ERC20MinterTest is Test {
         vm.prank(owner);
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: address(0),
-            rewardRecipientPercentage: 5
+            rewardRecipientPercentage: TOTAL_REWARD_PCT
         });
         minter.setERC20MinterConfig(newConfig);
     }
