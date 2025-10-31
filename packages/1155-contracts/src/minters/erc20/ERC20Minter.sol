@@ -57,10 +57,10 @@ contract ERC20Minter is ReentrancyGuard, IERC20Minter, SaleStrategy, LimitedMint
 
     /// @notice Initializes the contract with a Zora rewards recipient address
     /// @dev Allows deterministic contract address, called on deploy
-    function initialize(address _zoraRewardRecipientAddress, address _owner, uint256 _rewardPct, uint256 _ethReward) external initializer {
+    function initialize(address _zoraRewardRecipientAddress, address _owner, uint256 _rewardPct) external initializer {
         __Ownable_init(_owner);
         _setERC20MinterConfig(
-            ERC20MinterConfig({zoraRewardRecipientAddress: _zoraRewardRecipientAddress, rewardRecipientPercentage: _rewardPct, ethReward: _ethReward})
+            ERC20MinterConfig({zoraRewardRecipientAddress: _zoraRewardRecipientAddress, rewardRecipientPercentage: _rewardPct})
         );
     }
 
@@ -176,13 +176,6 @@ contract ERC20Minter is ReentrancyGuard, IERC20Minter, SaleStrategy, LimitedMint
         );
     }
 
-    /// @notice Distributes the ETH rewards to the Zora rewards recipient
-    /// @param ethSent The amount of ETH to distribute
-    function _distributeEthRewards(uint256 ethSent) private {
-        if (!TransferHelperUtils.safeSendETH(minterConfig.zoraRewardRecipientAddress, ethSent, TransferHelperUtils.FUNDS_SEND_NORMAL_GAS_LIMIT)) {
-            revert FailedToSendEthReward();
-        }
-    }
 
     /// @notice Mints a token using an ERC20 currency, note the total value must have been approved prior to calling this function
     /// @param mintTo The address to mint the token to
@@ -202,11 +195,7 @@ contract ERC20Minter is ReentrancyGuard, IERC20Minter, SaleStrategy, LimitedMint
         address currency,
         address mintReferral,
         string calldata comment
-    ) external payable nonReentrant {
-        if (msg.value != minterConfig.ethReward * quantity) {
-            revert InvalidETHValue(minterConfig.ethReward * quantity, msg.value);
-        }
-
+    ) external nonReentrant {
         SalesConfig storage config = salesConfigs[tokenAddress][tokenId];
 
         if (config.currency == address(0) || config.currency != currency) {
@@ -237,7 +226,6 @@ contract ERC20Minter is ReentrancyGuard, IERC20Minter, SaleStrategy, LimitedMint
 
         _distributeRewards(totalReward, currency, tokenId, tokenAddress, mintReferral);
 
-        _distributeEthRewards(msg.value);
 
         IERC20(config.currency).safeTransfer(config.fundsRecipient, totalValue - totalReward);
 
@@ -249,11 +237,6 @@ contract ERC20Minter is ReentrancyGuard, IERC20Minter, SaleStrategy, LimitedMint
     /// @notice The percentage of the total value that is distributed as rewards
     function totalRewardPct() external view returns (uint256) {
         return minterConfig.rewardRecipientPercentage;
-    }
-
-    /// @notice The amount of ETH distributed as rewards
-    function ethRewardAmount() external view returns (uint256) {
-        return minterConfig.ethReward;
     }
 
     /// @notice The URI of the contract

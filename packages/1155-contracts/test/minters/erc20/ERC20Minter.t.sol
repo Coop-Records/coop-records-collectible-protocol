@@ -34,7 +34,6 @@ contract ERC20MinterTest is Test {
     uint256 internal constant ZORA_PAID_MINT_REWARD_PCT = 28_571400;
     uint256 internal constant FIRST_MINTER_REWARD_PCT = 14_228500;
     uint256 immutable BPS_TO_PERCENT_8_DECIMAL_PERCISION = 100_000_000;
-    uint256 internal constant ethReward = 0.000111 ether;
 
     event ERC20RewardsDeposit(
         address indexed createReferral,
@@ -71,7 +70,7 @@ contract ERC20MinterTest is Test {
         target = CoopCreator1155Impl(payable(address(proxy)));
         target.initialize("test", "test", ICreatorRoyaltiesControl.RoyaltyConfiguration(0, 0, address(0)), admin, emptyData);
         minter = new ERC20Minter();
-        minter.initialize(zora, owner, 5, ethReward);
+        minter.initialize(zora, owner, 5);
         vm.prank(admin);
         currency = new ERC20PresetMinterPauser("Test currency", "TEST");
         minterConfig = minter.getERC20MinterConfig();
@@ -112,34 +111,33 @@ contract ERC20MinterTest is Test {
         vm.expectEmit(true, true, true, true);
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: zora,
-            rewardRecipientPercentage: 5,
-            ethReward: ethReward
+            rewardRecipientPercentage: 5
         });
         emit ERC20MinterConfigSet(newConfig);
 
         minter = new ERC20Minter();
-        minter.initialize(zora, owner, 5, ethReward);
+        minter.initialize(zora, owner, 5);
     }
 
     function test_ERC20MinterZoraAddrCannotInitializeWithAddressZero() external {
         minter = new ERC20Minter();
 
         vm.expectRevert(abi.encodeWithSignature("AddressZero()"));
-        minter.initialize(address(0), owner, 5, ethReward);
+        minter.initialize(address(0), owner, 5);
     }
 
     function test_ERC20MinterOwnerAddrCannotInitializeWithAddressZero() external {
         minter = new ERC20Minter();
 
         vm.expectRevert(abi.encodeWithSignature("OWNER_CANNOT_BE_ZERO_ADDRESS()"));
-        minter.initialize(zora, address(0), 5, ethReward);
+        minter.initialize(zora, address(0), 5);
     }
 
     function test_ERC20MinterRewardPercentageCannotBeGreaterThan100() external {
         minter = new ERC20Minter();
 
         vm.expectRevert(abi.encodeWithSignature("InvalidValue()"));
-        minter.initialize(zora, owner, 101, ethReward);
+        minter.initialize(zora, owner, 101);
     }
 
     function test_ERC20MinterContractName() external {
@@ -152,10 +150,10 @@ contract ERC20MinterTest is Test {
 
     function test_ERC20MinterAlreadyInitalized() external {
         minter = new ERC20Minter();
-        minter.initialize(zora, owner, 5, ethReward);
+        minter.initialize(zora, owner, 5);
 
         vm.expectRevert(abi.encodeWithSignature("INITIALIZABLE_CONTRACT_ALREADY_INITIALIZED()"));
-        minter.initialize(zora, owner, 5, ethReward);
+        minter.initialize(zora, owner, 5);
     }
 
     function test_ERC20MinterSaleConfigPriceTooLow() external {
@@ -239,10 +237,8 @@ contract ERC20MinterTest is Test {
     function test_ERC20MinterRevertIfCurrencyDoesNotMatchSalesConfigCurrency() external {
         setUpTargetSale(10_000, fundsRecipient, address(currency), 1, minter);
 
-        vm.deal(tokenRecipient, ethReward);
-
         vm.expectRevert(abi.encodeWithSignature("InvalidCurrency()"));
-        minter.mint{value: ethReward}(tokenRecipient, 1, address(target), 1, 1, makeAddr("0x123"), address(0), "");
+        minter.mint(tokenRecipient, 1, address(target), 1, 1, makeAddr("0x123"), address(0), "");
     }
 
     function test_ERC20MinterRequestMintInvalid() external {
@@ -277,10 +273,8 @@ contract ERC20MinterTest is Test {
         vm.prank(tokenRecipient);
         currency.approve(address(minter), totalValue);
 
-        vm.deal(tokenRecipient, ethReward * quantity);
-
         vm.startPrank(tokenRecipient);
-        minter.mint{value: ethReward * quantity}(
+        minter.mint(
             tokenRecipient,
             quantity,
             address(target),
@@ -306,7 +300,6 @@ contract ERC20MinterTest is Test {
                 currency.balanceOf(createReferral),
             totalValue
         );
-        assertEq(address(zora).balance, ethReward * quantity);
     }
 
     function test_ERC20MinterSaleWithRewardsAddresses() external {
@@ -314,7 +307,6 @@ contract ERC20MinterTest is Test {
         uint256 quantity = 5;
         uint256 newTokenId = setUpTargetSale(pricePerToken, fundsRecipient, address(currency), quantity, minter);
 
-        vm.deal(tokenRecipient, ethReward * quantity);
         vm.prank(admin);
         uint256 totalValue = pricePerToken * quantity;
         currency.mint(address(tokenRecipient), totalValue);
@@ -323,7 +315,7 @@ contract ERC20MinterTest is Test {
         currency.approve(address(minter), totalValue);
 
         vm.startPrank(tokenRecipient);
-        minter.mint{value: ethReward * quantity}(
+        minter.mint(
             tokenRecipient,
             quantity,
             address(target),
@@ -348,17 +340,15 @@ contract ERC20MinterTest is Test {
                 currency.balanceOf(admin),
             totalValue
         );
-        assertEq(address(zora).balance, ethReward * quantity);
     }
 
-    function test_ERC20MinterSaleFuzz(uint96 pricePerToken, uint256 quantity, uint8 rewardPct, uint256 zoraEthReward) external {
+    function test_ERC20MinterSaleFuzz(uint96 pricePerToken, uint256 quantity, uint8 rewardPct) external {
         vm.assume(quantity > 0 && quantity < 1_000_000_000);
         vm.assume(pricePerToken > 10_000 && pricePerToken < type(uint96).max);
         vm.assume(rewardPct > 0 && rewardPct < 100);
-        vm.assume(zoraEthReward > 0 ether && zoraEthReward < 1 ether);
 
         ERC20Minter newMinter = new ERC20Minter();
-        newMinter.initialize(address(zora), owner, rewardPct, zoraEthReward);
+        newMinter.initialize(address(zora), owner, rewardPct);
 
         uint256 tokenId = setUpTargetSale(pricePerToken, fundsRecipient, address(currency), quantity, newMinter);
 
@@ -390,10 +380,9 @@ contract ERC20MinterTest is Test {
             firstMinterReward,
             zoraReward
         );
-        vm.deal(tokenRecipient, zoraEthReward * quantity);
 
         uint256 amount = pricePerToken * quantity;
-        newMinter.mint{value: zoraEthReward * quantity}(tokenRecipient, quantity, address(target), tokenId, amount, address(currency), mintReferral, "");
+        newMinter.mint(tokenRecipient, quantity, address(target), tokenId, amount, address(currency), mintReferral, "");
         vm.stopPrank();
 
         assertEq(target.balanceOf(tokenRecipient, tokenId), quantity);
@@ -410,7 +399,6 @@ contract ERC20MinterTest is Test {
                 currency.balanceOf(admin),
             totalValue
         );
-        assertEq(address(zora).balance, zoraEthReward * quantity);
     }
 
     function test_ERC20MinterCreateReferral() public {
@@ -437,11 +425,9 @@ contract ERC20MinterTest is Test {
         vm.prank(admin);
         currency.mint(collector, totalValue);
 
-        vm.deal(collector, ethReward * quantity);
-
         vm.startPrank(collector);
         currency.approve(address(minter), totalValue);
-        minter.mint{value: ethReward * quantity}(collector, quantity, address(target), tokenId, totalValue, address(currency), address(0), "");
+        minter.mint(collector, quantity, address(target), tokenId, totalValue, address(currency), address(0), "");
         vm.stopPrank();
 
         address firstMinter = minter.getFirstMinter(address(target), tokenId);
@@ -456,8 +442,7 @@ contract ERC20MinterTest is Test {
         vm.expectEmit(true, true, true, true);
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: address(this),
-            rewardRecipientPercentage: 5,
-            ethReward: ethReward
+            rewardRecipientPercentage: 5
         });
         emit ERC20MinterConfigSet(newConfig);
         minter.setERC20MinterConfig(newConfig);
@@ -470,8 +455,7 @@ contract ERC20MinterTest is Test {
         vm.expectRevert(abi.encodeWithSignature("ONLY_OWNER()"));
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: address(this),
-            rewardRecipientPercentage: 5,
-            ethReward: ethReward
+            rewardRecipientPercentage: 5
         });
         minter.setERC20MinterConfig(newConfig);
     }
@@ -481,8 +465,7 @@ contract ERC20MinterTest is Test {
         vm.prank(owner);
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: address(0),
-            rewardRecipientPercentage: 5,
-            ethReward: ethReward
+            rewardRecipientPercentage: 5
         });
         minter.setERC20MinterConfig(newConfig);
     }
@@ -494,27 +477,15 @@ contract ERC20MinterTest is Test {
         vm.expectRevert(abi.encodeWithSignature("InvalidValue()"));
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: zora,
-            rewardRecipientPercentage: 101,
-            ethReward: ethReward
+            rewardRecipientPercentage: 101
         });
         minter.setERC20MinterConfig(newConfig);
 
         vm.prank(owner);
         vm.expectEmit(true, true, true, true);
-        newConfig = IERC20Minter.ERC20MinterConfig({zoraRewardRecipientAddress: zora, rewardRecipientPercentage: percentageFuzz, ethReward: ethReward});
-        emit ERC20MinterConfigSet(newConfig);
-        minter.setERC20MinterConfig(newConfig);
-    }
-
-    function test_ERC20MinterSetEthReward(uint256 ethRewardFuzz) public {
-        vm.assume(ethRewardFuzz >= 0 ether && ethRewardFuzz < 10 ether);
-
-        vm.prank(owner);
-        vm.expectEmit(true, true, true, true);
-        IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
+        newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: zora,
-            rewardRecipientPercentage: minterConfig.rewardRecipientPercentage,
-            ethReward: ethRewardFuzz
+            rewardRecipientPercentage: percentageFuzz
         });
         emit ERC20MinterConfigSet(newConfig);
         minter.setERC20MinterConfig(newConfig);
@@ -525,8 +496,7 @@ contract ERC20MinterTest is Test {
         vm.expectRevert(abi.encodeWithSignature("ONLY_OWNER()"));
         IERC20Minter.ERC20MinterConfig memory newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: zora,
-            rewardRecipientPercentage: minterConfig.rewardRecipientPercentage,
-            ethReward: ethReward
+            rewardRecipientPercentage: minterConfig.rewardRecipientPercentage
         });
         minter.setERC20MinterConfig(newConfig);
 
@@ -534,34 +504,10 @@ contract ERC20MinterTest is Test {
         vm.expectEmit(true, true, true, true);
         newConfig = IERC20Minter.ERC20MinterConfig({
             zoraRewardRecipientAddress: zora,
-            rewardRecipientPercentage: minterConfig.rewardRecipientPercentage,
-            ethReward: ethReward
+            rewardRecipientPercentage: minterConfig.rewardRecipientPercentage
         });
         emit ERC20MinterConfigSet(newConfig);
         minter.setERC20MinterConfig(newConfig);
-    }
-
-    function test_ERC20MinterEthRewardTooLow(uint256 ethRewardLow) public {
-        vm.assume(ethRewardLow >= 0 ether && ethRewardLow < 0.000111 ether);
-
-        uint96 pricePerToken = 10_000;
-        uint256 quantity = 2;
-        uint256 newTokenId = setUpTargetSale(pricePerToken, fundsRecipient, address(currency), quantity, minter);
-
-        vm.deal(tokenRecipient, 1 ether);
-        vm.prank(admin);
-        uint256 totalValue = pricePerToken * quantity;
-        currency.mint(address(tokenRecipient), totalValue);
-
-        vm.prank(tokenRecipient);
-        currency.approve(address(minter), totalValue);
-
-        vm.deal(tokenRecipient, ethRewardLow);
-
-        vm.startPrank(tokenRecipient);
-        vm.expectRevert(abi.encodeWithSelector(IERC20Minter.InvalidETHValue.selector, 0.000111 ether * quantity, ethRewardLow));
-        minter.mint{value: ethRewardLow}(tokenRecipient, quantity, address(target), newTokenId, pricePerToken * quantity, address(currency), mintReferral, "");
-        vm.stopPrank();
     }
 
     function test_ERC20MinterSetPremintSale() public {
