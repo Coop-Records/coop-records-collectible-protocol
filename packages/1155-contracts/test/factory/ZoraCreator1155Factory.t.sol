@@ -53,7 +53,7 @@ contract ZoraCreator1155FactoryTest is Test {
     }
 
     function test_contractName() external {
-        assertEq(factory.contractName(), "ZORA 1155 Contract Factory");
+        assertEq(factory.contractName(), "COOP 1155 Contract Factory");
     }
 
     function test_contractURI() external {
@@ -134,7 +134,7 @@ contract ZoraCreator1155FactoryTest is Test {
         );
         CoopCreator1155FactoryImpl proxy = CoopCreator1155FactoryImpl(proxyAddress);
         vm.prank(initialOwner);
-        vm.expectRevert(abi.encodeWithSignature("UpgradeToMismatchedContractName(string,string)", "ZORA 1155 Contract Factory", "name"));
+        vm.expectRevert(abi.encodeWithSignature("UpgradeToMismatchedContractName(string,string)", "COOP 1155 Contract Factory", "name"));
         proxy.upgradeTo(address(mockContractMetadata));
     }
 

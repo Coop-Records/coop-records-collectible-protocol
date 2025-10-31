@@ -290,7 +290,7 @@ contract ZoraCreatorFixedPriceSaleStrategyTest is Test {
         target.mint{value: totalValue}(fixedPrice, newTokenId, numTokens, rewardsRecipients, abi.encode(tokenRecipient, ""));
     }
 
-    function testFail_setupMint() external {
+    function test_RevertWhen_MintingExceedsMaxTokensPerAddress() external {
         vm.startPrank(admin);
         uint256 newTokenId = target.setupNewToken("https://zora.co/testing/token.json", 10);
         target.addPermission(newTokenId, address(fixedPrice), target.PERMISSION_BIT_MINTER());
@@ -311,13 +311,24 @@ contract ZoraCreatorFixedPriceSaleStrategyTest is Test {
         );
         vm.stopPrank();
 
-        vm.deal(tokenRecipient, 20 ether);
+        uint256 numTokens = 10;
+        uint256 totalReward = target.computeTotalReward(target.mintFee(), numTokens);
+        uint256 totalValue = (1 ether * numTokens) + totalReward;
+
+        vm.deal(tokenRecipient, totalValue);
 
         vm.startPrank(tokenRecipient);
-        target.mint{value: 10 ether}(fixedPrice, newTokenId, 10, rewardsRecipients, abi.encode(tokenRecipient));
-
-        assertEq(target.balanceOf(tokenRecipient, newTokenId), 10);
-        assertEq(address(target).balance, 10 ether);
+        // Attempting to mint 10 tokens when maxTokensPerAddress is 9 should revert
+        // The error is triggered after incrementing, so requestedAmount will be 10 (the amount that exceeds the limit)
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                ILimitedMintPerAddressErrors.UserExceedsMintLimit.selector,
+                tokenRecipient,
+                9, // limit
+                10 // requestedAmount (after increment, user has 10 which exceeds limit of 9)
+            )
+        );
+        target.mint{value: totalValue}(fixedPrice, newTokenId, 10, rewardsRecipients, abi.encode(tokenRecipient));
 
         vm.stopPrank();
     }
