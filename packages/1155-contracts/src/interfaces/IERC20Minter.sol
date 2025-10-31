@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import {IMinterPremintSetup} from "./IMinterPremintSetup.sol";
-
-interface IERC20Minter is IMinterPremintSetup {
+interface IERC20Minter {
     struct RewardsSettings {
         /// @notice Amount of the create referral reward
         uint256 createReferralReward;
@@ -21,19 +19,6 @@ interface IERC20Minter is IMinterPremintSetup {
         /// @notice Unix timestamp for the sale end
         uint64 saleEnd;
         /// @notice Max tokens that can be minted for an address, 0 if unlimited
-        uint64 maxTokensPerAddress;
-        /// @notice Price per token in ERC20 currency
-        uint256 pricePerToken;
-        /// @notice Funds recipient (0 if no different funds recipient than the contract global)
-        address fundsRecipient;
-        /// @notice ERC20 Currency address
-        address currency;
-    }
-
-    struct PremintSalesConfig {
-        /// @notice Duration of the sale
-        uint64 duration;
-        /// @notice Max tokens that can be minted for an address, `0` if unlimited
         uint64 maxTokensPerAddress;
         /// @notice Price per token in ERC20 currency
         uint256 pricePerToken;
@@ -154,11 +139,6 @@ interface IERC20Minter is IMinterPremintSetup {
     /// @param salesConfig The sale config to set
     function setSale(uint256 tokenId, SalesConfig memory salesConfig) external;
 
-    /// @notice Dynamically builds a SalesConfig from a PremintSalesConfig, taking into consideration the current block timestamp
-    /// and the PremintSalesConfig's duration.
-    /// @param config The PremintSalesConfig to build the SalesConfig from
-    function buildSalesConfigForPremint(PremintSalesConfig memory config) external view returns (SalesConfig memory);
-
     /// @notice Returns the sale config for a given token
     /// @param tokenContract The TokenContract address
     /// @param tokenId The ID of the token to get the sale config for
@@ -173,11 +153,4 @@ interface IERC20Minter is IMinterPremintSetup {
 
     /// @notice Gets the ERC20MinterConfig
     function getERC20MinterConfig() external view returns (ERC20MinterConfig memory);
-
-    /// @notice Sets the sales config based for the msg.sender on the tokenId from the abi encoded premint sales config by
-    /// abi decoding it and dynamically building the SalesConfig. The saleStart will be the current block timestamp
-    /// and saleEnd will be the current block timestamp + the duration in the PremintSalesConfig.
-    /// @param tokenId The ID of the token to set the sale config for
-    /// @param encodedPremintSalesConfig The abi encoded PremintSalesConfig
-    function setPremintSale(uint256 tokenId, bytes calldata encodedPremintSalesConfig) external override;
 }
