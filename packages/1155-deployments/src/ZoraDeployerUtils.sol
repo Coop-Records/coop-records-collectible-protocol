@@ -65,10 +65,8 @@ library ZoraDeployerUtils {
 
     function deployErc20Minter(ChainConfig memory chainConfig) internal returns (address erc20Minter) {
         ERC20Minter minter = new ERC20Minter();
-        // todo: load these from config
-        uint256 rewardPct = 5;
-        uint256 ethReward = 0.000111 ether;
-        minter.initialize(chainConfig.mintFeeRecipient, chainConfig.factoryOwner, rewardPct, ethReward);
+        uint256 rewardPct = 25;
+        minter.initialize(chainConfig.mintFeeRecipient, chainConfig.factoryOwner, rewardPct);
 
         return address(minter);
     }

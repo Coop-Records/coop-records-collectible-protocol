@@ -15,7 +15,8 @@
     "unlink-contracts": "pnpm unlink-common && pnpm run unlink-protocol-rewards && pnpm run unlink-1155",
     "link-contracts": "rm -rf ./node_modules && cd .. && pnpm install",
     "generate": "pnpm tsx script/generateForkTests.ts",
-    "deploy-protocol": "source .env && forge script script/DeployMintersAndImplementations.s.sol:DeployMintersAndImplementations --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts && forge script script/DeployFactory.s.sol:DeployFactory --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts"
+    "deploy-protocol": "source .env && forge script script/DeployMintersAndImplementations.s.sol:DeployMintersAndImplementations --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts && forge script script/DeployFactory.s.sol:DeployFactory --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts",
+    "deploy-usdc-minter": "source .env && forge script script/DeployERC20Minter.s.sol:DeployErc20Minter --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv && pnpm copy-deployed-contracts"
   },
   "devDependencies": {
     "@lavamoat/preinstall-always-fail": "2.0.0",
