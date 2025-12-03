@@ -1143,9 +1143,11 @@ contract ZoraCreator1155Test is Test {
         vm.deal(collector, totalReward);
 
         vm.prank(collector);
+        address expectedCreator = settings.creatorReward == 0 ? address(0) : collaborator;
+
         vm.expectEmit(true, true, true, true);
         emit RewardsDeposit(
-            collaborator,
+            expectedCreator,
             zora,
             zora,
             collaborator,
