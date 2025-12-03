@@ -8,16 +8,16 @@ library RewardSplitsLib {
     uint256 internal constant BPS_TO_PERCENT = 10_0000000;
     uint256 internal constant TOTAL_REWARD_PER_MINT_PCT = 10_0000000;
 
-    uint256 internal constant CREATOR_REWARD_PCT = 75_000000; // 75%, 0.0003 ETH at a 0.0004 ETH value
+    uint256 internal constant CREATOR_REWARD_PCT = 0; // 0%, no reward for creator
     uint256 internal constant FIRST_MINTER_REWARD_PCT = 0; // 0%, no reward for first minter
 
     uint256 internal constant CREATE_REFERRAL_FREE_MINT_REWARD_PCT = 0; // 0%, no reward for create referral
-    uint256 internal constant MINT_REFERRAL_FREE_MINT_REWARD_PCT = 12_500000; // 12.5%, 0.00005 ETH at a 0.0004 ETH value
-    uint256 internal constant ZORA_FREE_MINT_REWARD_PCT = 12_500000; // 12.5%, 0.00005 ETH at a 0.0004 ETH value
+    uint256 internal constant MINT_REFERRAL_FREE_MINT_REWARD_PCT = 0; // 0%, no reward for mint referral
+    uint256 internal constant ZORA_FREE_MINT_REWARD_PCT = 10_0000000; // 100%, 0.005 ETH at a 0.005 ETH value
 
     uint256 internal constant CREATE_REFERRAL_PAID_MINT_REWARD_PCT = 0; // 0%, no reward for create referral
-    uint256 internal constant MINT_REFERRAL_PAID_MINT_REWARD_PCT = 25_000000; // 12.5%, 0.00005 ETH at a 0.0004 ETH value
-    uint256 internal constant ZORA_PAID_MINT_REWARD_PCT = 75_000000; // 87.5%, 0.00035 ETH at a 0.0004 ETH value (no creator reward for paid mints)
+    uint256 internal constant MINT_REFERRAL_PAID_MINT_REWARD_PCT = 0; // 0%, no reward for mint referral
+    uint256 internal constant ZORA_PAID_MINT_REWARD_PCT = 10_0000000; // 100%, 0.005 ETH at a 0.005 ETH value(no creator reward for paid mints)
 
     function computeRewardsPct(uint256 totalReward, uint256 rewardPct) internal pure returns (uint256) {
         return (totalReward * rewardPct) / BPS_TO_PERCENT;
